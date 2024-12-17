@@ -1,7 +1,11 @@
-export default function Home() {
+import ImageContent from '@/components/landing/ImageContent';
+import KeyVisual from '@/components/landing/KeyVisual';
+
+export default function Landing() {
   return (
     <div>
-			<h1>랜딩 페이지</h1>
+      <KeyVisual />
+      <ImageContent />
     </div>
   );
 }

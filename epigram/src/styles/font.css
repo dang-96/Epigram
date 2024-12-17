@@ -1,0 +1,49 @@
+/* 제목 폰트 */
+@font-face {
+  font-family: 'Iropke';
+  src:
+    url('../lib/fonts/iropkeBatang/IropkeBatangM.woff') format('woff'),
+    url('../lib/fonts/iropkeBatang/IropkeBatangM.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* 기본 폰트 bold */
+@font-face {
+  font-family: 'Pretendard';
+  src:
+    url('../lib/fonts/pretendard/Pretendard-Bold.woff') format('woff'),
+    url('../lib/fonts/pretendard/Pretendard-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+/* 기본 폰트 semi-bold */
+@font-face {
+  font-family: 'Pretendard';
+  src:
+    url('../lib/fonts/pretendard/Pretendard-SemiBold.woff') format('woff'),
+    url('../lib/fonts/pretendard/Pretendard-SemiBold.ttf') format('truetype');
+  font-weight: 600; /* Semi Bold */
+  font-style: normal;
+}
+
+/* 기본 폰트 medium */
+@font-face {
+  font-family: 'Pretendard';
+  src:
+    url('../lib/fonts/pretendard/Pretendard-Medium.woff') format('woff'),
+    url('../lib/fonts/pretendard/Pretendard-Medium.ttf') format('truetype');
+  font-weight: 500; /* Medium */
+  font-style: normal;
+}
+
+/* 기본 폰트 regular */
+@font-face {
+  font-family: 'Pretendard';
+  src:
+    url('../lib/fonts/pretendard/Pretendard-Regular.woff') format('woff'),
+    url('../lib/fonts/pretendard/Pretendard-Regular.ttf') format('truetype');
+  font-weight: 400; /* Regular */
+  font-style: normal;
+}
