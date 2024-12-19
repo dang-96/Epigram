@@ -2,18 +2,21 @@ export default function ImageContent() {
   const contentWrap =
     'mx-auto flex w-full max-w-[1200px] items-end justify-between py-[180px]';
   const imageClass =
-    'h-[388px] w-[744px] rounded-2xl border-[1px] border-[#D2D9E3] bg-blue-200';
+    'h-[388px] w-[744px] rounded-2xl border-[1px] border-[#D2D9E3] bg-blue-200 bg-center bg-cover bg-no-repeat';
   const bigText = 'mb-10 text-[32px] font-bold leading-normal';
   const smallText = 'text-2xl font-medium leading-normal text-blue-600';
   return (
     <div className="relative bg-background pb-[30px] pt-[60px]">
       <div
         className="absolute left-0 top-0 z-10 h-[15px] w-full bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: 'url(/images/line-bottom.png)' }}
+        style={{ backgroundImage: 'url(/images/line-top.png)' }}
       />
 
       <div className={contentWrap}>
-        <div className={imageClass}>이미지 영역</div>
+        <div
+          className={imageClass}
+          style={{ backgroundImage: 'url(/images/landing01.png)' }}
+        />
         <div className="text-left">
           <h3 className={bigText}>
             명언이나 글귀,
@@ -36,11 +39,17 @@ export default function ImageContent() {
           </h3>
           <p className={smallText}>태그를 통해 글을 모아 볼 수 있어요.</p>
         </div>
-        <div className={imageClass}>이미지 영역</div>
+        <div
+          className={imageClass}
+          style={{ backgroundImage: 'url(/images/landing02.png)' }}
+        />
       </div>
 
       <div className={contentWrap}>
-        <div className={imageClass}>이미지 영역</div>
+        <div
+          className={imageClass}
+          style={{ backgroundImage: 'url(/images/landing03.png)' }}
+        />
         <div className="text-left">
           <h3 className={bigText}>
             내가 요즘 어떤 감정 상태인지
