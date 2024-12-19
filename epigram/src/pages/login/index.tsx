@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -19,14 +20,25 @@ export default function LoginPage() {
       <form className="w-full">
         <div className="flex flex-col items-center justify-center">
           <label className="mb-4 block h-[64px] w-full max-w-[640px]">
-            <input type="text" className={INPUT_CLASS} placeholder="이메일" />
+            <input type="email" className={INPUT_CLASS} placeholder="이메일" />
           </label>
-          <label className="block h-[64px] w-full max-w-[640px]">
+          <label className="relative block h-[64px] w-full max-w-[640px]">
             <input
               type="password"
-              className={INPUT_CLASS}
+              className={clsx(INPUT_CLASS, 'pr-14')}
               placeholder="비밀번호"
             />
+            <button
+              type="button"
+              className="absolute right-4 top-[50%] translate-y-[-50%]"
+            >
+              <Image
+                src="/icons/visibility-off-icon.svg"
+                width={24}
+                height={24}
+                alt="비밀번호 숨기기 아이콘"
+              />
+            </button>
           </label>
           <button
             type="submit"
