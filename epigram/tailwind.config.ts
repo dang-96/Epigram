@@ -41,6 +41,10 @@ export default {
           900: '#2D394E',
           950: '#1A212D',
         },
+        line: {
+          100: '#F2F2F2',
+          200: '#CFDBEA',
+        },
       },
       fontFamily: {
         point: ['Iropke', 'Pretendard', 'sans-serif'],
