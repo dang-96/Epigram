@@ -1,10 +1,12 @@
 import NewEpigram from '@/components/main/NewEpigram';
 import TodayState from '@/components/main/TodayState';
+import ReviewModal from '@/components/modal/ReviewModal';
 import Image from 'next/image';
 
 export default function MyPage() {
   return (
     <div className="relative bg-background py-32">
+      <ReviewModal />
       <div className="w-ful mb-24 h-full rounded-3xl bg-white pb-20">
         <div className="mx-auto w-full max-w-[640px]">
           <div className="mb-24 flex translate-y-[-60px] flex-col items-center justify-center">
