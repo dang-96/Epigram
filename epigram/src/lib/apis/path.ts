@@ -1,4 +1,4 @@
-const END_POINT = {
+export const END_POINT = {
   epigram: {
     base: '/epigrams/',
     today: '/epigrams/today/',
