@@ -74,7 +74,7 @@ export default function Signup() {
     shouldFocusError: true, // 에러가 발생한 input에 포커스 적용
   });
 
-  const passwordValue = watch('password', '');
+  const passwordValue = watch('password', ''); // 비밀번호의 값을 저장
 
   const router = useRouter();
 
@@ -93,7 +93,7 @@ export default function Signup() {
         passwordCheck: cleanedPasswordCheck,
       });
 
-      // 로그인 페이지로 이동
+      // 회원가입 후 로그인 페이지로 이동
       router.push('/login');
     } catch (error) {
       console.log('회원가입 도중 에러 발생', error);
