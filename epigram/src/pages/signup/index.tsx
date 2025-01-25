@@ -1,10 +1,13 @@
 import { fetchSignUp } from '@/lib/apis/api';
+import { LoggedInReDirect } from '@/lib/hooks/LoggedInReDirect';
 import clsx from 'clsx';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
+// Todo - 회원가입 페이지 컴포넌트 나누기
+// Todo - 회원가입 상태 토스트 메시지로 띄우기
 export default function Signup() {
   const [passwordView, setPasswordView] = useState<boolean>(false);
   const [passwordCheckView, setPasswordCheckView] = useState<boolean>(false);
@@ -99,6 +102,10 @@ export default function Signup() {
       console.log('회원가입 도중 에러 발생', error);
     }
   };
+
+  // 로그인이 되어있는 상태로 접근시 메인 페이지로 리다이렉트
+  LoggedInReDirect();
+
   return (
     <div className="flex h-full w-full flex-col items-center justify-center bg-background pb-44 pt-20">
       <h2 className="mb-20">
