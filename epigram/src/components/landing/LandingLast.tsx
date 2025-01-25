@@ -1,7 +1,10 @@
+import { useAuth } from '@/lib/context/AuthContext';
 import Image from 'next/image';
 import Link from 'next/link';
 
 export default function LandingLast() {
+  const { loginState } = useAuth();
+
   return (
     <div
       className="relative flex h-screen w-full flex-col items-center justify-center bg-cover bg-center bg-repeat-x"
@@ -16,7 +19,7 @@ export default function LandingLast() {
         />
       </h2>
       <Link
-        href="/"
+        href={loginState ? '/main' : '/'}
         className="flex h-16 w-72 items-center justify-center rounded-xl bg-black-500 text-xl font-semibold text-white"
       >
         시작하기

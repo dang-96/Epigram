@@ -1,7 +1,10 @@
+import { useAuth } from '@/lib/context/AuthContext';
 import Image from 'next/image';
 import Link from 'next/link';
 
 export default function KeyVisual() {
+  const { loginState } = useAuth();
+
   return (
     <div
       className="relative flex h-[calc(100vh-80px)] w-full flex-col items-center justify-center gap-10 bg-cover bg-center bg-repeat-x text-center"
@@ -18,8 +21,8 @@ export default function KeyVisual() {
       </span>
 
       <Link
-        href="/"
-        className="bg-black-500 flex h-16 w-72 items-center justify-center rounded-xl text-xl font-semibold text-white"
+        href={loginState ? '/main' : '/'}
+        className="flex h-16 w-72 items-center justify-center rounded-xl bg-black-500 text-xl font-semibold text-white"
       >
         시작하기
       </Link>

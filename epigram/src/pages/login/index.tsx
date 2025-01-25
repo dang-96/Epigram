@@ -1,4 +1,6 @@
 import { fetchLogin } from '@/lib/apis/api';
+import { useAuth } from '@/lib/context/AuthContext';
+import { LoggedInReDirect } from '@/lib/hooks/LoggedInReDirect';
 import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -6,6 +8,8 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
+// Todo - 로그인 페이지 컴포넌트 나누기
+// Todo - 로그인 상태 토스트 메시지로 띄우기
 export default function LoginPage() {
   const [passwordView, setPasswordView] = useState<boolean>(false);
   const LOGIN_INPUT_LIST = [
@@ -52,6 +56,8 @@ export default function LoginPage() {
 
   const router = useRouter();
 
+  const { loginState, login } = useAuth();
+
   const onSubmit = async (data: any) => {
     try {
       // 이메일, 비밀번호 공백 제거
@@ -64,8 +70,7 @@ export default function LoginPage() {
         password: cleanedPassword,
       });
 
-      localStorage.setItem('userInfo', JSON.stringify(res.user));
-      localStorage.setItem('accessToken', res.accessToken);
+      login(res);
       console.log(res);
 
       // 로그인 후 메인 페이지로 이동
@@ -83,6 +88,9 @@ export default function LoginPage() {
       }
     }
   };
+
+  // 로그인이 되어있는 상태로 접근시 메인 페이지로 리다이렉트
+  LoggedInReDirect();
 
   return (
     <div className="flex h-[calc(100vh-80px)] w-full flex-col items-center justify-center bg-background">
