@@ -22,3 +22,21 @@ export interface UserInfoType {
   updatedAt: string;
   image: string | null;
 }
+
+// 에피그램 태그 타입
+export interface Tag {
+  id: number;
+  name: string;
+}
+
+// 에피그램 타입
+export interface EpigramType {
+  author: string;
+  content: string;
+  id: number;
+  likeCount: number;
+  referenceTitle: string;
+  referenceUrl: string;
+  writerId: number;
+  tags: Tag[];
+}
