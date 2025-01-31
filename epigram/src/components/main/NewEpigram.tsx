@@ -14,7 +14,6 @@ export default function NewEpigram({ marginBottom }: NewEpigramProps) {
     queryKey: ['newEpigram'],
     queryFn: async () => {
       const res = await fetchNewEpigram({ limit: 3, cursor: 0 });
-      console.log(res);
       return res;
     },
   });
@@ -38,7 +37,7 @@ export default function NewEpigram({ marginBottom }: NewEpigramProps) {
         최신 에피그램
       </h2>
       {data.list.map((epigram: EpigramType) => {
-        return <Epigram data={epigram} />;
+        return <Epigram key={epigram.id} data={epigram} />;
       })}
       <div className="flex justify-center">
         <Link

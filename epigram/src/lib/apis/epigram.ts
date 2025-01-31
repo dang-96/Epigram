@@ -9,6 +9,7 @@ export const fetchTodayEpigram = async () => {
     return response;
   } catch (error) {
     console.log('오늘의 에피그램 api 오류', error);
+    throw new Error('오늘의 에피그램 데이터를 가져오는데 실패했습니다.');
   }
 };
 

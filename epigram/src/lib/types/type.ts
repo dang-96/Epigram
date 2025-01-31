@@ -48,3 +48,27 @@ export interface EpigramParamsType {
   keyword?: string;
   writerId?: string;
 }
+
+// 최신 댓글 params
+export interface CommentParamsType {
+  limit: number;
+  cursor?: number;
+}
+
+// 댓글 작성자
+export interface Writer {
+  image: string;
+  nickname: string;
+  id: number;
+}
+
+// 댓글 타입
+export interface CommentType {
+  epigramId: number;
+  writer: Writer;
+  updatedAt: string;
+  createdAt: string;
+  isPrivate: boolean;
+  content: string;
+  id: number;
+}
