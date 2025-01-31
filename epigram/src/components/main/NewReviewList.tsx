@@ -20,7 +20,7 @@ export default function NewReviewList() {
   useEffect(() => {
     const userInfo = localStorage.getItem('userInfo');
     const userInfoParse = userInfo && JSON.parse(userInfo);
-    setUserId(userInfoParse.id);
+    setUserId(userInfoParse?.id);
   }, []);
 
   if (isLoading) {

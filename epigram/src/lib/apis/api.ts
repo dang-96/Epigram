@@ -3,7 +3,7 @@ import { END_POINT } from './path';
 import { LoginType, SignUpType } from '../types/type';
 
 // 회원가입 api
-export const fetchSignUp = async ({
+export const postSignUp = async ({
   email,
   nickname,
   password,
@@ -17,7 +17,6 @@ export const fetchSignUp = async ({
       passwordConfirmation: passwordCheck,
     });
 
-    // console.log(response);
     return response;
   } catch (error: any) {
     // console.log('회원가입 에러:', error.response.data.message);
@@ -26,14 +25,13 @@ export const fetchSignUp = async ({
 };
 
 // 로그인 api
-export const fetchLogin = async ({ email, password }: LoginType) => {
+export const postLogin = async ({ email, password }: LoginType) => {
   try {
     const response = await axiosInstance.post(END_POINT.auth.signIn, {
       email: email,
       password: password,
     });
 
-    console.log(response.data);
     return response.data;
   } catch (error: any) {
     console.log('로그인 api 에러', error.response.data.message);

@@ -1,4 +1,4 @@
-import { fetchLogin } from '@/lib/apis/api';
+import { postLogin } from '@/lib/apis/api';
 import { useAuth } from '@/lib/context/AuthContext';
 import { LoggedInReDirect } from '@/lib/hooks/LoggedInReDirect';
 import clsx from 'clsx';
@@ -64,7 +64,7 @@ export default function LoginPage() {
       const cleanedEmail = data.email.replace(/\s+/g, '');
       const cleanedPassword = data.password.replace(/\s+/g, '');
 
-      const res = await fetchLogin({
+      const res = await postLogin({
         ...data,
         email: cleanedEmail,
         password: cleanedPassword,
