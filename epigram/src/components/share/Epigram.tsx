@@ -27,7 +27,7 @@ export default function Epigram({ data, height }: EpigramProps) {
             </>
           ) : (
             <p className="text-center font-point text-xl font-medium leading-[1.5] text-black-600">
-              오늘의 에피그램이 없습니다.
+              에피그램이 없습니다.
               <br />
               에피그램을 작성해보세요.
             </p>

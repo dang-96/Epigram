@@ -40,3 +40,11 @@ export interface EpigramType {
   writerId: number;
   tags: Tag[];
 }
+
+// 최신 에피그램 params
+export interface EpigramParamsType {
+  limit: number;
+  cursor?: number;
+  keyword?: string;
+  writerId?: string;
+}
