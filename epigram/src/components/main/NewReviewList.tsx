@@ -46,7 +46,7 @@ export default function NewReviewList() {
             height={144}
             alt="컨텐츠 없는 경우 아이콘"
           />
-          <p className="text-center text-xl ">최신 댓글이 없습니다.</p>
+          <p className="text-center text-xl">최신 댓글이 없습니다.</p>
         </div>
       )}
       {data.list.length > 0 && (
