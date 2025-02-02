@@ -22,3 +22,53 @@ export interface UserInfoType {
   updatedAt: string;
   image: string | null;
 }
+
+// 에피그램 태그 타입
+export interface Tag {
+  id: number;
+  name: string;
+}
+
+// 에피그램 타입
+export interface EpigramType {
+  author: string;
+  content: string;
+  id: number;
+  likeCount: number;
+  referenceTitle: string;
+  referenceUrl: string;
+  writerId: number;
+  tags: Tag[];
+}
+
+// 최신 에피그램 params
+export interface EpigramParamsType {
+  limit: number;
+  cursor?: number;
+  keyword?: string;
+  writerId?: string;
+}
+
+// 최신 댓글 params
+export interface CommentParamsType {
+  limit: number;
+  cursor?: number;
+}
+
+// 댓글 작성자
+export interface Writer {
+  image: string;
+  nickname: string;
+  id: number;
+}
+
+// 댓글 타입
+export interface CommentType {
+  epigramId: number;
+  writer: Writer;
+  updatedAt: string;
+  createdAt: string;
+  isPrivate: boolean;
+  content: string;
+  id: number;
+}

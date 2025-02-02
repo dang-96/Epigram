@@ -1,4 +1,4 @@
-import { fetchSignUp } from '@/lib/apis/api';
+import { postSignUp } from '@/lib/apis/api';
 import { LoggedInReDirect } from '@/lib/hooks/LoggedInReDirect';
 import clsx from 'clsx';
 import Image from 'next/image';
@@ -89,7 +89,7 @@ export default function Signup() {
       const cleanedPasswordCheck = data.passwordCheck.replace(/\s+/g, '');
 
       // 회원가입 api 호출(이메일, 비밀번호, 비밀번호 확인은 공백이 제거된 상태로 서버에 전송)
-      const res = await fetchSignUp({
+      const res = await postSignUp({
         ...data,
         email: cleanedEmail,
         password: cleanedPassword,

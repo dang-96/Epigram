@@ -1,10 +1,11 @@
-import clsx from 'clsx';
+import { EpigramType } from '@/lib/types/type';
 
 interface EpigramProps {
+  data?: EpigramType;
   height?: number;
 }
 
-export default function Epigram({ height }: EpigramProps) {
+export default function Epigram({ data, height }: EpigramProps) {
   return (
     <div className="mx-auto w-full max-w-[640px]">
       <div style={{ marginBottom: height ? '0px' : '56px' }}>
@@ -15,19 +16,34 @@ export default function Epigram({ height }: EpigramProps) {
             height: height && `${height}px`,
           }}
         >
-          <p className="text-left font-point text-xl font-medium text-black-600">
-            오랫동안 꿈을 그리는 사람은 마침내 그 꿈을 닮아 간다.
-          </p>
-          <span className="block text-right text-xl text-blue-400">
-            - 앙드레 말로 -
-          </span>
+          {data ? (
+            <>
+              <p className="text-left font-point text-xl font-medium text-black-600">
+                {data?.content}
+              </p>
+              <span className="block text-right text-xl text-blue-400">
+                - {data?.author} -
+              </span>
+            </>
+          ) : (
+            <p className="text-center font-point text-xl font-medium leading-[1.5] text-black-600">
+              에피그램이 없습니다.
+              <br />
+              에피그램을 작성해보세요.
+            </p>
+          )}
         </div>
-        <ul className="flex items-center justify-end gap-4">
-          <li className="text-xl font-medium text-blue-400">#나아가야할때</li>
-          <li className="text-xl font-medium text-blue-400">
-            #꿈을이루고싶을때
-          </li>
-        </ul>
+        {data && (
+          <ul className="flex items-center justify-end gap-4">
+            {data?.tags.map((tag) => {
+              return (
+                <li key={tag.id} className="text-xl font-medium text-blue-400">
+                  #{tag.name}
+                </li>
+              );
+            })}
+          </ul>
+        )}
       </div>
     </div>
   );
