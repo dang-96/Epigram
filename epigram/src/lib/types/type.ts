@@ -41,6 +41,11 @@ export interface EpigramType {
   tags: Tag[];
 }
 
+// 에피그램 상세 타입
+export interface EpigramDetailType extends EpigramType {
+  isLiked: boolean;
+}
+
 // 최신 에피그램 params
 export interface EpigramParamsType {
   limit: number;
@@ -55,6 +60,11 @@ export interface CommentParamsType {
   cursor?: number;
 }
 
+// 상세 댓글 params
+export interface CommentDetailParamsType extends CommentParamsType {
+  id: string;
+}
+
 // 댓글 작성자
 export interface Writer {
   image: string;
@@ -62,8 +72,8 @@ export interface Writer {
   id: number;
 }
 
-// 댓글 타입
-export interface CommentType {
+// 댓글 리스트 타입
+export interface CommentListType {
   epigramId: number;
   writer: Writer;
   updatedAt: string;
@@ -71,4 +81,11 @@ export interface CommentType {
   isPrivate: boolean;
   content: string;
   id: number;
+}
+
+// 댓글 타입
+export interface CommentType {
+  list: CommentListType[];
+  nextCursor: number | null;
+  totalCount: number;
 }
