@@ -31,3 +31,15 @@ export const fetchNewEpigram = async ({
     throw new Error('최신 에피그램 데이터를 가져오는데 실패했습니다.');
   }
 };
+
+// 에피그램 상세 정보(get)
+export const fetchEpigramDetail = async (id: string) => {
+  try {
+    const response = await axiosInstance.get(END_POINT.epigram.detail.base(id));
+
+    return response.data;
+  } catch (error) {
+    console.log('에피그램 상세 데이터 api 오류', error);
+    throw new Error('에피그램 상세 데이터를 가져오는데 실패했습니다.');
+  }
+};
