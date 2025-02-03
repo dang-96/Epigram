@@ -1,10 +1,7 @@
-import { fetchEpigramDetail } from '@/lib/apis/epigram';
 import { EpigramDetailType, Tag } from '@/lib/types/type';
-import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface EpigramDetailProps {
