@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Review from '../share/Review';
 import { useQuery } from '@tanstack/react-query';
 import { fetchNewComment } from '@/lib/apis/comment';
-import { CommentType } from '@/lib/types/type';
+import { CommentListType } from '@/lib/types/type';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
@@ -35,7 +35,7 @@ export default function NewReviewList() {
     <div className="mx-auto w-full max-w-[640px]">
       <h2 className="mb-10 text-2xl font-semibold text-black-600">최신 댓글</h2>
       {data.list.length > 0 ? (
-        data.list.map((comment: CommentType) => {
+        data.list.map((comment: CommentListType) => {
           return <Review key={comment.id} data={comment} userId={userId} />;
         })
       ) : (

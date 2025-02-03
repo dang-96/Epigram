@@ -1,7 +1,7 @@
-import { CommentType } from '@/lib/types/type';
+import { CommentListType } from '@/lib/types/type';
 
 interface ReviewProps {
-  data: CommentType;
+  data: CommentListType;
   userId: number;
 }
 
