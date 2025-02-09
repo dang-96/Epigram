@@ -41,6 +41,12 @@ export interface EpigramType {
   tags: Tag[];
 }
 
+// 에피그럄 작성 타입
+export type EpigramWriteType = Omit<
+  EpigramType,
+  'id' | 'likeCount' | 'writerId'
+>;
+
 // 에피그램 상세 타입
 export interface EpigramDetailType extends EpigramType {
   isLiked: boolean;
