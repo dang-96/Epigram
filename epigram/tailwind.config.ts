@@ -49,6 +49,20 @@ export default {
       fontFamily: {
         point: ['Iropke', 'Pretendard', 'sans-serif'],
       },
+      animation: {
+        modalFadeIn: 'modalFadeIn 0.5s forwards',
+        modalFadeOut: 'modalFadeOut 0.5s forwards',
+      },
+      keyframes: {
+        modalFadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        modalFadeOut: {
+          '0%': { opacity: '1' },
+          '100%': { opacity: '0' },
+        },
+      },
     },
   },
   plugins: [],
