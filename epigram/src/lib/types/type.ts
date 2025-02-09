@@ -89,3 +89,18 @@ export interface CommentType {
   nextCursor: number | null;
   totalCount: number;
 }
+
+// 댓글 작성 타입
+export interface CommentPostType {
+  epigramId: number;
+  isPrivate: boolean;
+  content: string;
+}
+
+// 댓글 수정 타입
+export type PatchComment = Pick<CommentPostType, 'isPrivate' | 'content'> & {
+  commentId: string;
+};
+
+// 댓글 수정 함수 타입
+export type modifyComment = Pick<CommentPostType, 'isPrivate' | 'content'>;
