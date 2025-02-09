@@ -5,7 +5,7 @@ export default function FixedMenu() {
   return (
     <>
       <Link
-        href="/"
+        href="/write"
         className="fixed bottom-[20%] right-28 flex h-16 w-full max-w-48 items-center justify-center rounded-full bg-blue-900 text-xl font-semibold text-blue-100 shadow-[4px_4px_4px_rgba(172,172,172,0.3)]"
       >
         + 에피그램 만들기
