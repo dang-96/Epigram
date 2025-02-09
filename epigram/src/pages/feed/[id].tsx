@@ -2,6 +2,7 @@ import CommentDetail from '@/components/detail/CommentDetail';
 import EpigramDetail from '@/components/detail/EpigramDetail';
 import { fetchCommentDetail } from '@/lib/apis/comment';
 import { fetchEpigramDetail } from '@/lib/apis/epigram';
+import { CommentType, EpigramDetailType } from '@/lib/types/type';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -12,14 +13,15 @@ export default function DetailPage() {
 
   const router = useRouter();
   const { id } = router.query; // url의 에피그램 id 쿼리값 가져오기
+  const commentId: string | undefined = Array.isArray(id) ? id[0] : id;
 
   // 에피그램 상세 데이터
   const {
     data: epigramDetailData,
     isLoading: epigramDetailLoading,
     isError: epigramDetailError,
-  } = useQuery({
-    queryKey: ['epigramDetail', id, userId],
+  } = useQuery<EpigramDetailType>({
+    queryKey: ['epigramDetail', commentId, userId],
     queryFn: async () => {
       if (typeof id === 'string') {
         const res = await fetchEpigramDetail(id);
@@ -39,8 +41,9 @@ export default function DetailPage() {
     data: commentDetailData,
     isLoading: commentDetailLoading,
     isError: commentDetailError,
-  } = useQuery({
-    queryKey: ['commentDetail', id],
+    refetch,
+  } = useQuery<CommentType>({
+    queryKey: ['commentDetail', Number(commentId)],
     queryFn: async () => {
       if (typeof id === 'string') {
         const res = await fetchCommentDetail({ id: id, limit: 4, cursor: 0 });
@@ -71,7 +74,12 @@ export default function DetailPage() {
   return (
     <div>
       <EpigramDetail data={epigramDetailData} isMore={isMore} />
-      <CommentDetail data={commentDetailData} userId={userId} />
+      <CommentDetail
+        data={commentDetailData}
+        userId={userId}
+        epigramId={Number(commentId)}
+        refetch={refetch}
+      />
     </div>
   );
 }

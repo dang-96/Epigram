@@ -38,3 +38,14 @@ export const postLogin = async ({ email, password }: LoginType) => {
     throw new Error(error.response.data.message || '로그인에 실패했습니다.');
   }
 };
+
+export const fetchUserInfo = async () => {
+  try {
+    const response = await axiosInstance.get(END_POINT.user.me);
+
+    return response.data;
+  } catch (error) {
+    console.log('유저 정보 가져오기 api 에러', error);
+    throw new Error('유저 정보 데이터를 가져오는데 실패했습니다.');
+  }
+};

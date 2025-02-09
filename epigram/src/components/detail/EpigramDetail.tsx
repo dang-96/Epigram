@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface EpigramDetailProps {
-  data: EpigramDetailType;
+  data: EpigramDetailType | undefined;
   isMore: boolean;
 }
 

@@ -1,5 +1,5 @@
 import { postSignUp } from '@/lib/apis/api';
-import { LoggedInReDirect } from '@/lib/hooks/LoggedInReDirect';
+import { useLoggedInReDirect } from '@/lib/hooks/useLoggedInRedirect';
 import clsx from 'clsx';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -104,7 +104,7 @@ export default function Signup() {
   };
 
   // 로그인이 되어있는 상태로 접근시 메인 페이지로 리다이렉트
-  LoggedInReDirect();
+  useLoggedInReDirect();
 
   return (
     <div className="flex h-full w-full flex-col items-center justify-center bg-background pb-44 pt-20">
