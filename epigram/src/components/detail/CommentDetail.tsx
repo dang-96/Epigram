@@ -78,7 +78,6 @@ export default function CommentDetail({
 
           {/* 댓글 리스트 */}
           {data?.list.map((comment: CommentListType) => {
-            console.log(comment);
             return (
               <Comment
                 key={comment.id}

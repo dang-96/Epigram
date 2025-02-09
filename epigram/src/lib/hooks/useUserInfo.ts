@@ -12,7 +12,6 @@ export const useUserInfo = () => {
     queryFn: async () => {
       const res = await fetchUserInfo();
 
-      console.log(res);
       return res;
     },
   });

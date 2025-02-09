@@ -15,7 +15,6 @@ export default function CommentWrite({
   commentRefetch,
 }: CommentWriteProps) {
   const { userData, userDataLoading, userDataError, error } = useUserInfo();
-  console.log(userData?.image);
 
   const {
     register,

@@ -19,7 +19,7 @@ export const postSignUp = async ({
 
     return response;
   } catch (error: any) {
-    // console.log('회원가입 에러:', error.response.data.message);
+    console.log('회원가입 에러:', error.response.data.message);
     throw new Error(error.response.data.message || '회원가입에 실패했습니다.');
   }
 };
