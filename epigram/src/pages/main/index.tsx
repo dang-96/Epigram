@@ -1,5 +1,5 @@
 import NewEpigram from '@/components/main/NewEpigram';
-import NewCommentList from '@/components/main/NewReviewList';
+import NewCommentList from '@/components/main/NewCommentList';
 import TodayEpigram from '@/components/main/TodayEpigram';
 import TodayState from '@/components/main/TodayState';
 import FixedMenu from '@/components/share/FixedMenu';

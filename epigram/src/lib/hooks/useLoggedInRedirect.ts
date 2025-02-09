@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
-export const LoggedInReDirect = () => {
+export const useLoggedInReDirect = () => {
   const router = useRouter();
 
   useEffect(() => {
