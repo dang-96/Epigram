@@ -1,6 +1,6 @@
 import { postLogin } from '@/lib/apis/api';
 import { useAuth } from '@/lib/context/AuthContext';
-import { LoggedInReDirect } from '@/lib/hooks/LoggedInReDirect';
+import { useLoggedInReDirect } from '@/lib/hooks/useLoggedInRedirect';
 import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -90,7 +90,7 @@ export default function LoginPage() {
   };
 
   // 로그인이 되어있는 상태로 접근시 메인 페이지로 리다이렉트
-  LoggedInReDirect();
+  useLoggedInReDirect();
 
   return (
     <div className="flex h-[calc(100vh-80px)] w-full flex-col items-center justify-center bg-background">

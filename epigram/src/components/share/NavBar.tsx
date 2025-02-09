@@ -11,7 +11,7 @@ export default function NavBar() {
         <div className="mx-auto flex h-[80px] w-full max-w-[1680px] items-center justify-between gap-5">
           <div className="flex items-center gap-8">
             <h1>
-              <Link href={loginState ? 'main' : '/'}>
+              <Link href={loginState ? '/main' : '/'}>
                 <Image
                   src="/images/logo.png"
                   width={131}
