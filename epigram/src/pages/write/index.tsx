@@ -1,16 +1,75 @@
+import { useUserInfo } from '@/lib/hooks/useUserInfo';
 import clsx from 'clsx';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 
 export default function Write() {
   const subTitleClass = 'mb-7 text-xl font-semibold';
-  const contentMb = 'mb-14';
+  const contentMb = 'relative mb-14';
   const inputTextClass =
-    'h-16 w-full rounded-xl border-[1px] border-blue-300 p-4 text-xl font-normal placeholder:text-blue-400';
+    'h-16 w-full rounded-xl border-[1px] border-blue-300 p-4 text-xl font-normal placeholder:text-blue-400 disabled:border-gray-100 disabled:bg-gray-50 disabled:text-gray-300 disabled:placeholder:text-gray-300';
   const customInputRadio =
     'flex h-6 w-6 appearance-none items-center justify-center rounded-full border-2 border-blue-300 checked:border-blue-500 checked:before:block checked:before:h-3 checked:before:w-3 checked:before:rounded-full checked:before:bg-blue-800';
+  const radioList = [
+    {
+      id: 'manual',
+      text: '직접 입력',
+    },
+    {
+      id: 'unknown',
+      text: '알 수 없음',
+    },
+    {
+      id: 'self',
+      text: '본인',
+    },
+  ];
+  const [tagList, setTagList] = useState<string[]>([]);
+  const [inputTag, setInputTag] = useState<string>('');
 
-  const [isButton, setIsButton] = useState<boolean>(false);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    formState: { errors, isValid },
+  } = useForm({
+    mode: 'onBlur',
+    shouldFocusError: true, // 에러가 발생한 input에 포커스 적용
+  });
   const [isRadio, setIsRadio] = useState<string>('manual');
+
+  const { userData, userDataLoading, userDataError } = useUserInfo();
+
+  const handleTag = () => {
+    if (inputTag !== '') {
+      const newInputTag = inputTag.trim();
+      setTagList((prev) => [...prev, newInputTag]);
+      setInputTag('');
+    }
+  };
+
+  useEffect(() => {
+    switch (isRadio) {
+      case 'manual':
+        setValue('author', '', { shouldValidate: true, shouldDirty: true });
+        break;
+      case 'unknown':
+        setValue('author', '익명', {
+          shouldValidate: true,
+          shouldDirty: true,
+        });
+        break;
+      case 'self':
+        setValue('author', userData.nickname, {
+          shouldValidate: true,
+          shouldDirty: true,
+        });
+        break;
+      default:
+        setValue('author', '', { shouldValidate: true, shouldDirty: true });
+    }
+  }, [isRadio, setValue]);
 
   return (
     <div className="py-14">
@@ -25,74 +84,71 @@ export default function Write() {
             </h3>
             <textarea
               id="feedContent"
-              className="h-36 w-full resize-none rounded-xl border-[1px] border-blue-300 px-4 py-[10px] text-xl font-normal placeholder:text-blue-400"
+              className={clsx(
+                'h-36 w-full resize-none rounded-xl border-[1px] border-blue-300 px-4 py-[10px] text-xl font-normal placeholder:text-blue-400',
+                errors.content && 'border-red focus:border-red'
+              )}
               placeholder="500자 이내로 입력해주세요."
               maxLength={500}
+              {...register('content', { required: '내용을 입력해주세요.' })}
             ></textarea>
+            {errors.content && (
+              <p className="absolute bottom-[-22px] left-0 text-base text-red">
+                {String(errors.content?.message) || '오류가 발생했습니다.'}
+              </p>
+            )}
           </div>
 
           <div className={contentMb}>
             <h3 className={subTitleClass}>
-              저자 <span className="text-sm text-red">*</span>
+              <label htmlFor="author">
+                저자 <span className="text-sm text-red">*</span>
+              </label>
             </h3>
             <div className="mb-4 flex items-center justify-start gap-6">
-              <div className="flex items-center justify-start gap-2">
-                <input
-                  id="manual"
-                  type="radio"
-                  name="author"
-                  className={customInputRadio}
-                  checked={isRadio === 'manual'}
-                  onChange={() => setIsRadio('manual')}
-                />
-                <label
-                  htmlFor="manual"
-                  className="text-xl font-medium text-black-600"
-                >
-                  직접 입력
-                </label>
-              </div>
-
-              <div className="flex items-center justify-start gap-2">
-                <input
-                  id="unknown"
-                  type="radio"
-                  name="author"
-                  className={customInputRadio}
-                  checked={isRadio === 'unknown'}
-                  onChange={() => setIsRadio('unknown')}
-                />
-                <label
-                  htmlFor="unknown"
-                  className="text-xl font-medium text-black-600"
-                >
-                  알 수 없음
-                </label>
-              </div>
-
-              <div className="flex items-center justify-start gap-2">
-                <input
-                  id="self"
-                  type="radio"
-                  name="author"
-                  className={customInputRadio}
-                  checked={isRadio === 'self'}
-                  onChange={() => setIsRadio('self')}
-                />
-                <label
-                  htmlFor="self"
-                  className="text-xl font-medium text-black-600"
-                >
-                  본인
-                </label>
-              </div>
+              {radioList.map((radio) => {
+                return (
+                  <div
+                    key={radio.id}
+                    className="flex items-center justify-start gap-2"
+                  >
+                    <input
+                      id={radio.id}
+                      type="radio"
+                      name="author"
+                      className={customInputRadio}
+                      checked={isRadio === radio.id}
+                      onChange={() => {
+                        setIsRadio(radio.id);
+                      }}
+                    />
+                    <label
+                      htmlFor={radio.id}
+                      className="text-xl font-medium text-black-600"
+                    >
+                      {radio.text}
+                    </label>
+                  </div>
+                );
+              })}
             </div>
 
             <input
               type="text"
-              className={inputTextClass}
+              id="author"
+              className={clsx(
+                inputTextClass,
+                errors.author && 'border-red focus:border-red'
+              )}
               placeholder="저자 이름 입력"
+              disabled={isRadio !== 'manual'}
+              {...register('author', { required: '저자를 입력해주세요.' })}
             />
+            {errors.author && (
+              <p className="absolute bottom-[-28px] left-0 text-base text-red">
+                {String(errors.author?.message) || '오류가 발생했습니다.'}
+              </p>
+            )}
           </div>
 
           <div className={contentMb}>
@@ -111,21 +167,53 @@ export default function Write() {
 
           <div className={contentMb}>
             <h3 className={subTitleClass}>태그</h3>
-            <input
-              type="text"
-              className={inputTextClass}
-              placeholder="입력하여 태그 작성 (최대 10자)"
-            />
+            <div className="relative mb-5">
+              <input
+                type="text"
+                className={clsx(inputTextClass, 'pr-[100px]')}
+                placeholder="입력하여 태그 작성 (최대 10자)"
+                value={inputTag}
+                onChange={(e) => {
+                  setInputTag(e.target.value);
+                }}
+              />
+              <button
+                type="button"
+                className="absolute right-4 top-[50%] h-12 min-w-20 translate-y-[-50%] rounded-xl bg-black-500 font-semibold text-white disabled:bg-[#CBD3E1]"
+                onClick={handleTag}
+              >
+                추가
+              </button>
+            </div>
+            {tagList.length > 0 && (
+              <ul className="flex flex-wrap gap-4">
+                {tagList.map((tag, index) => {
+                  return (
+                    <li
+                      key={index}
+                      className="relative flex h-14 items-center justify-center rounded-xl bg-background px-3 text-xl font-normal text-black-300"
+                    >
+                      {tag}
+                      <button
+                        type="button"
+                        className="absolute right-[-5px] top-[-5px] flex h-5 w-5 items-center justify-center rounded-full bg-gray-300 pb-[2px] text-sm font-semibold text-white"
+                      >
+                        x
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
           </div>
 
           <div>
             <button
               type="submit"
               className={clsx(
-                isButton ? 'bg-black-500' : 'bg-[#CBD3E1]',
-                'h-16 w-full rounded-xl text-xl font-semibold text-white'
+                'h-16 w-full rounded-xl bg-black-500 text-xl font-semibold text-white disabled:bg-[#CBD3E1]'
               )}
-              disabled={!isButton}
+              disabled={!isValid}
             >
               작성 완료
             </button>
