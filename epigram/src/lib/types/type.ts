@@ -35,17 +35,19 @@ export interface EpigramType {
   content: string;
   id: number;
   likeCount: number;
-  referenceTitle: string;
-  referenceUrl: string;
+  referenceTitle?: string;
+  referenceUrl?: string;
   writerId: number;
-  tags: Tag[];
+  tags?: Tag[];
 }
 
 // 에피그럄 작성 타입
 export type EpigramWriteType = Omit<
   EpigramType,
-  'id' | 'likeCount' | 'writerId'
->;
+  'id' | 'likeCount' | 'writerId' | 'tags'
+> & {
+  tags?: string[];
+};
 
 // 에피그램 상세 타입
 export interface EpigramDetailType extends EpigramType {
