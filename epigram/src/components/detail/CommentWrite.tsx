@@ -85,7 +85,7 @@ export default function CommentWrite({
               className="h-11 w-[60px] rounded-lg bg-black-500 text-base font-semibold text-white disabled:bg-gray-400"
               disabled={!isValid}
             >
-              저장
+              작성
             </button>
           </div>
         </div>

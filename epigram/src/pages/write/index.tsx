@@ -71,12 +71,11 @@ export default function Write() {
       });
 
       reset();
-      console.log(response);
       router.push('/feed');
       return response;
     } catch (error) {
       console.log('에피그램 작성 api 호출 에러', error);
-      // throw new Error('에피그램 작성 api 호출에 실패했습니다.');
+      throw new Error('에피그램 작성 api 호출에 실패했습니다.');
     }
   };
 

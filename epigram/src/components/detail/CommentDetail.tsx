@@ -7,6 +7,7 @@ import { useDeleteComment } from '@/lib/hooks/useDeleteComment';
 import CommentModifyModal from '../modal/CommentModifyModal';
 import { useModifyComment } from '@/lib/hooks/useModifyComment';
 import CommentDeleteModal from '../modal/CommentDeleteModal';
+import Image from 'next/image';
 
 interface CommentDetailProps {
   data: CommentType | undefined;
@@ -23,6 +24,7 @@ export default function CommentDetail({
 }: CommentDetailProps) {
   const { isOpen, setIsOpen, setCommentId, handleDeleteComment } =
     useDeleteComment();
+  console.log(data);
 
   const {
     isOpen: modifyIsOpen,
@@ -77,19 +79,35 @@ export default function CommentDetail({
           />
 
           {/* 댓글 리스트 */}
-          {data?.list.map((comment: CommentListType) => {
-            return (
-              <Comment
-                key={comment.id}
-                data={comment}
-                userId={userId}
-                setIsOpen={setIsOpen}
-                setCommentId={setCommentId}
-                modifySetIsOpen={modifySetIsOpen}
-                modifySetCommentId={modifySetCommentId}
+          {data?.list && data.list.length > 0 ? (
+            data.list.map((comment: CommentListType) => {
+              return (
+                <Comment
+                  key={comment.id}
+                  data={comment}
+                  userId={userId}
+                  setIsOpen={setIsOpen}
+                  setCommentId={setCommentId}
+                  modifySetIsOpen={modifySetIsOpen}
+                  modifySetCommentId={modifySetCommentId}
+                />
+              );
+            })
+          ) : (
+            <div className="my-40 flex flex-col items-center justify-center gap-6">
+              <Image
+                src="/images/not-content.png"
+                width={144}
+                height={144}
+                alt="댓글이 없는경우 아이콘"
               />
-            );
-          })}
+              <p className="text-center text-xl font-normal leading-[1.5] text-black-600">
+                아직 댓글이 없어요!
+                <br />
+                댓글을 달고 다른 사람들과 교류해보세요.
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </>
