@@ -33,7 +33,7 @@ export const fetchNewEpigram = async ({
 };
 
 // 에피그램 상세 정보(get)
-export const fetchEpigramDetail = async (id: string) => {
+export const fetchEpigramDetail = async (id: number) => {
   try {
     const response = await axiosInstance.get(END_POINT.epigram.detail.base(id));
 
@@ -65,5 +65,19 @@ export const postEpigram = async ({
   } catch (error) {
     console.log('에피그램 작성 api 오류', error);
     throw new Error('에피그램 작성을 실패했습니다.');
+  }
+};
+
+// 에피그램 삭제(delete)
+export const deleteEpigram = async (id: number) => {
+  try {
+    const response = await axiosInstance.delete(
+      END_POINT.epigram.detail.base(id)
+    );
+
+    return response.status;
+  } catch (error) {
+    console.log('에피그램 삭제 api 오류', error);
+    throw new Error('에피그램 삭제를 실패했습니다.');
   }
 };
