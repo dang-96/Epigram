@@ -1,4 +1,8 @@
-import { EpigramParamsType, EpigramWriteType } from '../types/type';
+import {
+  EpigramParamsType,
+  EpigramPatchType,
+  EpigramWriteType,
+} from '../types/type';
 import axiosInstance from './instance';
 import { END_POINT } from './path';
 
@@ -65,6 +69,34 @@ export const postEpigram = async ({
   } catch (error) {
     console.log('에피그램 작성 api 오류', error);
     throw new Error('에피그램 작성을 실패했습니다.');
+  }
+};
+
+// 에피그램 수정(patch)
+export const patchEpigram = async ({
+  id,
+  tags,
+  referenceUrl,
+  referenceTitle,
+  author,
+  content,
+}: EpigramPatchType) => {
+  try {
+    const response = await axiosInstance.patch(
+      END_POINT.epigram.detail.base(id),
+      {
+        tags: tags,
+        referenceUrl: referenceUrl,
+        referenceTitle: referenceTitle,
+        author: author,
+        content: content,
+      }
+    );
+
+    return response.status;
+  } catch (error) {
+    console.log('에피그램 수정 api 오류', error);
+    throw new Error('에피그램 수정을 실패했습니다.');
   }
 };
 
