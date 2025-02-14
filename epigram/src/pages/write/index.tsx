@@ -201,7 +201,7 @@ export default function Write() {
               type="text"
               className={clsx(
                 inputTextClass,
-                errors.sourceUrl && 'border-red focus:border-red'
+                errors.referenceUrl && 'border-red focus:border-red'
               )}
               placeholder="URL (ex. https://www.website.com)"
               {...register('referenceUrl', {
@@ -213,7 +213,7 @@ export default function Write() {
             />
             {errors.referenceUrl && (
               <p className="absolute bottom-[-28px] left-0 text-base text-red">
-                {String(errors.sourceUrl?.message) || '오류가 발생했습니다.'}
+                {String(errors.referenceUrl?.message) || '오류가 발생했습니다.'}
               </p>
             )}
           </div>
