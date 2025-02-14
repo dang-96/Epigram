@@ -9,7 +9,7 @@ export const useDeleteComment = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [commentId, setCommentId] = useState<string>('');
+  const [commentId, setCommentId] = useState<number>(0);
 
   const handleDeleteComment = async ({
     commentRefetch,

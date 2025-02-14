@@ -68,7 +68,7 @@ export const postComment = async ({
 };
 
 // 댓글 삭제(delete)
-export const deleteComment = async (commentId: string) => {
+export const deleteComment = async (commentId: number) => {
   try {
     const response = await axiosInstance.delete(
       END_POINT.comment.detail(commentId)

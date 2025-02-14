@@ -35,11 +35,26 @@ export interface EpigramType {
   content: string;
   id: number;
   likeCount: number;
-  referenceTitle: string;
-  referenceUrl: string;
+  referenceTitle?: string;
+  referenceUrl?: string;
   writerId: number;
-  tags: Tag[];
+  tags?: Tag[];
 }
+
+// 에피그럄 작성 타입
+export type EpigramWriteType = Omit<
+  EpigramType,
+  'id' | 'likeCount' | 'writerId' | 'tags'
+> & {
+  tags?: string[];
+};
+
+export type EpigramPatchType = Omit<
+  EpigramType,
+  'likeCount' | 'writerId' | 'tags'
+> & {
+  tags?: string[];
+};
 
 // 에피그램 상세 타입
 export interface EpigramDetailType extends EpigramType {
@@ -62,7 +77,7 @@ export interface CommentParamsType {
 
 // 상세 댓글 params
 export interface CommentDetailParamsType extends CommentParamsType {
-  id: string;
+  id: number;
 }
 
 // 댓글 작성자
@@ -99,7 +114,7 @@ export interface CommentPostType {
 
 // 댓글 수정 타입
 export type PatchComment = Pick<CommentPostType, 'isPrivate' | 'content'> & {
-  commentId: string;
+  commentId: number;
 };
 
 // 댓글 수정 함수 타입

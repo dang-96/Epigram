@@ -71,7 +71,6 @@ export default function LoginPage() {
       });
 
       login(res);
-      console.log(res);
 
       // 로그인 후 메인 페이지로 이동
       router.push('/main');

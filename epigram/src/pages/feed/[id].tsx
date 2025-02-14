@@ -2,13 +2,14 @@ import CommentDetail from '@/components/detail/CommentDetail';
 import EpigramDetail from '@/components/detail/EpigramDetail';
 import { fetchCommentDetail } from '@/lib/apis/comment';
 import { fetchEpigramDetail } from '@/lib/apis/epigram';
+import { useUserInfo } from '@/lib/hooks/useUserInfo';
 import { CommentType, EpigramDetailType } from '@/lib/types/type';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 export default function DetailPage() {
-  const [userId, setUserId] = useState<number | null>(null); // 유저 id
+  const { userData } = useUserInfo(); // 유저 정보
   const [isMore, setIsMore] = useState<boolean>(false); // 에피그램 드롭다운 버튼 display 상태
 
   const router = useRouter();
@@ -20,12 +21,13 @@ export default function DetailPage() {
     data: epigramDetailData,
     isLoading: epigramDetailLoading,
     isError: epigramDetailError,
+    refetch: epigramDetailRefetch,
   } = useQuery<EpigramDetailType>({
-    queryKey: ['epigramDetail', commentId, userId],
+    queryKey: ['epigramDetail', commentId, userData?.id],
     queryFn: async () => {
       if (typeof id === 'string') {
-        const res = await fetchEpigramDetail(id);
-        if (userId === res.writerId) {
+        const res = await fetchEpigramDetail(Number(id));
+        if (userData?.id === res.writerId) {
           setIsMore(true);
         } else {
           setIsMore(false);
@@ -33,7 +35,7 @@ export default function DetailPage() {
         return res;
       }
     },
-    enabled: typeof id === 'string' && userId !== null,
+    enabled: typeof id === 'string' && userData?.id !== null,
   });
 
   // 에피그램 상세 댓글 데이터
@@ -46,19 +48,16 @@ export default function DetailPage() {
     queryKey: ['commentDetail', Number(commentId)],
     queryFn: async () => {
       if (typeof id === 'string') {
-        const res = await fetchCommentDetail({ id: id, limit: 4, cursor: 0 });
+        const res = await fetchCommentDetail({
+          id: Number(id),
+          limit: 4,
+          cursor: 0,
+        });
         return res;
       }
     },
     enabled: typeof id === 'string',
   });
-
-  // 로컬 스토리지에서 유저 id 가져오기
-  useEffect(() => {
-    const userInfo = localStorage.getItem('userInfo');
-    const userInfoParse = userInfo && JSON.parse(userInfo);
-    setUserId(userInfoParse?.id || null);
-  }, []);
 
   const isLoading = epigramDetailLoading || commentDetailLoading;
   const isError = epigramDetailError || commentDetailError;
@@ -73,10 +72,14 @@ export default function DetailPage() {
 
   return (
     <div>
-      <EpigramDetail data={epigramDetailData} isMore={isMore} />
+      <EpigramDetail
+        data={epigramDetailData}
+        isMore={isMore}
+        refetch={epigramDetailRefetch}
+      />
       <CommentDetail
         data={commentDetailData}
-        userId={userId}
+        userId={userData?.id}
         epigramId={Number(commentId)}
         refetch={refetch}
       />

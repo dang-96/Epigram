@@ -3,9 +3,9 @@ export const END_POINT = {
     base: '/epigrams/',
     today: '/epigrams/today/',
     detail: {
-      base: (id: string) => `/epigrams/${id}/`,
-      like: (id: string) => `/epigrams/${id}/like/`,
-      comments: (id: string) => `/epigrams/${id}/comments/`,
+      base: (id: number) => `/epigrams/${id}/`,
+      like: (id: number) => `/epigrams/${id}/like/`,
+      comments: (id: number) => `/epigrams/${id}/comments/`,
     },
   },
   emotionLog: {
@@ -14,7 +14,7 @@ export const END_POINT = {
   },
   comment: {
     base: '/comments/',
-    detail: (id: string) => `/comments/${id}/`,
+    detail: (id: number) => `/comments/${id}/`,
   },
   auth: {
     signUp: '/auth/signUp/',
@@ -23,7 +23,7 @@ export const END_POINT = {
   },
   user: {
     me: '/users/me/',
-    detail: (id: string) => `/users/${id}/`,
-    comment: (id: string) => `/users/${id}/comments/`,
+    detail: (id: number) => `/users/${id}/`,
+    comment: (id: number) => `/users/${id}/comments/`,
   },
 };
