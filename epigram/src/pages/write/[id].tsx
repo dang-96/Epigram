@@ -1,11 +1,17 @@
-import { postEpigram } from '@/lib/apis/epigram';
+import {
+  fetchEpigramDetail,
+  patchEpigram,
+  postEpigram,
+} from '@/lib/apis/epigram';
 import { useUserInfo } from '@/lib/hooks/useUserInfo';
+import { EpigramDetailType } from '@/lib/types/type';
+import { useQuery } from '@tanstack/react-query';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-export default function Write() {
+export default function Modify() {
   const subTitleClass = 'mb-7 text-xl font-semibold';
   const contentMb = 'relative mb-14';
   const inputTextClass =
@@ -26,17 +32,33 @@ export default function Write() {
       text: '본인',
     },
   ];
+  const router = useRouter();
+  const { id } = router.query; // url의 에피그램 id 쿼리값 가져오기
+  const epigramId: string | undefined = Array.isArray(id) ? id[0] : id; // 배열로된 id 쿼리값 string값으로 변경
+  const { userData, userDataLoading, userDataError } = useUserInfo(); // 유저 정보
   const [tagList, setTagList] = useState<string[]>([]); // 태그 리스트
   const [inputTag, setInputTag] = useState<string>(''); // 태그 input값
   const [isRadio, setIsRadio] = useState<string>('manual'); // 저자 체크값
-  const { userData, userDataLoading, userDataError } = useUserInfo(); // 유저 정보
-  const router = useRouter();
+  // 에피그램 상세 정보 가져오기
+  const {
+    data: epigramDetailData,
+    isLoading: epigramDetailLoading,
+    isError: epigramDetailError,
+  } = useQuery<EpigramDetailType>({
+    queryKey: ['epigramDetail', epigramId, userData?.id],
+    queryFn: async () => {
+      if (typeof id === 'string') {
+        const res = await fetchEpigramDetail(Number(id));
+        return res;
+      }
+    },
+    enabled: typeof id === 'string' && userData?.id !== null,
+  });
 
   const {
     register,
     handleSubmit,
     setValue,
-    reset,
     formState: { errors, isValid },
   } = useForm({
     mode: 'onBlur',
@@ -58,12 +80,13 @@ export default function Write() {
     setTagList((prev) => prev.filter((_, index) => index !== removeIndex));
   };
 
-  // 에피그램 작성
+  // 에피그램 수정
   const onSubmit = async (data: any) => {
     const defaultUrl =
       data.referenceUrl === '' ? 'https://example.com' : data.referenceUrl;
     try {
-      const response = await postEpigram({
+      const response = await patchEpigram({
+        id: Number(epigramId),
         tags: tagList,
         referenceUrl: defaultUrl,
         referenceTitle: data.referenceTitle,
@@ -71,8 +94,7 @@ export default function Write() {
         content: data.content,
       });
 
-      reset();
-      router.push('/feed');
+      router.push(`/feed/${epigramId}`);
       return response;
     } catch (error) {
       console.log('에피그램 작성 api 호출 에러', error);
@@ -103,11 +125,30 @@ export default function Write() {
     }
   }, [isRadio, setValue]);
 
-  if (userDataLoading) {
+  // 에피그램 상세 데이터가 있는경우 해당 값들로 input 채우기
+  useEffect(() => {
+    if (epigramDetailData) {
+      const nameArray = epigramDetailData?.tags?.map((tag) => tag.name);
+      setValue('content', epigramDetailData.content);
+      setValue('referenceTitle', epigramDetailData.referenceTitle);
+      setValue('referenceUrl', epigramDetailData.referenceUrl);
+      setTagList(nameArray || []);
+      if (epigramDetailData.author === userData?.nickname) {
+        setIsRadio('self');
+      } else if (epigramDetailData.author === '익명') {
+        setIsRadio('unknown');
+      } else {
+        setIsRadio('manual');
+        setValue('author', epigramDetailData.author);
+      }
+    }
+  }, [epigramDetailData, setValue]);
+
+  if (userDataLoading && epigramDetailLoading) {
     return <div>로딩중</div>;
   }
 
-  if (userDataError) {
+  if (userDataError && epigramDetailError) {
     return <div>에러</div>;
   }
 
@@ -273,7 +314,7 @@ export default function Write() {
               )}
               disabled={!isValid}
             >
-              작성 완료
+              수정 완료
             </button>
           </div>
         </form>

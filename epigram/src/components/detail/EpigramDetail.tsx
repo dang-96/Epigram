@@ -21,9 +21,9 @@ export default function EpigramDetail({ data, isMore }: EpigramDetailProps) {
     setIsDropDown((prev) => !prev);
   };
 
-  const handleDeleteEpigram = async (id: number) => {
+  const handleDeleteEpigram = async () => {
     try {
-      const res = await deleteEpigram(id);
+      const res = await deleteEpigram(Number(data?.id));
 
       router.push('/feed');
       return res;
@@ -31,6 +31,10 @@ export default function EpigramDetail({ data, isMore }: EpigramDetailProps) {
       console.log('에피그램 삭제 api 호출 오류', error);
       throw new Error('에피그램 삭제 api 호출에 실패했습니다.');
     }
+  };
+
+  const handleModifyEpigram = () => {
+    router.push(`/write/${data?.id}`);
   };
   return (
     <div
@@ -66,17 +70,12 @@ export default function EpigramDetail({ data, isMore }: EpigramDetailProps) {
                   className="absolute right-0 top-[52px] overflow-hidden rounded-2xl border-[1px] border-blue-300 bg-background text-xl font-normal"
                 >
                   <li className="px-8 py-3">
-                    <button type="button">수정하기</button>
+                    <button type="button" onClick={handleModifyEpigram}>
+                      수정하기
+                    </button>
                   </li>
                   <li className="px-8 py-3">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        if (data?.id !== undefined) {
-                          handleDeleteEpigram(data.id);
-                        }
-                      }}
-                    >
+                    <button type="button" onClick={handleDeleteEpigram}>
                       삭제하기
                     </button>
                   </li>
