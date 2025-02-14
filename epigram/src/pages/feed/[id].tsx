@@ -21,6 +21,7 @@ export default function DetailPage() {
     data: epigramDetailData,
     isLoading: epigramDetailLoading,
     isError: epigramDetailError,
+    refetch: epigramDetailRefetch,
   } = useQuery<EpigramDetailType>({
     queryKey: ['epigramDetail', commentId, userData?.id],
     queryFn: async () => {
@@ -71,7 +72,11 @@ export default function DetailPage() {
 
   return (
     <div>
-      <EpigramDetail data={epigramDetailData} isMore={isMore} />
+      <EpigramDetail
+        data={epigramDetailData}
+        isMore={isMore}
+        refetch={epigramDetailRefetch}
+      />
       <CommentDetail
         data={commentDetailData}
         userId={userData?.id}

@@ -1,26 +1,39 @@
 import { EpigramDetailType, Tag } from '@/lib/types/type';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useUserInfo } from '@/lib/hooks/useUserInfo';
-import { deleteEpigram } from '@/lib/apis/epigram';
+import {
+  deleteEpigram,
+  deleteEpigramLike,
+  postEpigramLike,
+} from '@/lib/apis/epigram';
 import { useRouter } from 'next/router';
+import clsx from 'clsx';
 
 interface EpigramDetailProps {
   data: EpigramDetailType | undefined;
   isMore: boolean;
+  refetch: () => void;
 }
 
-export default function EpigramDetail({ data, isMore }: EpigramDetailProps) {
+export default function EpigramDetail({
+  data,
+  isMore,
+  refetch,
+}: EpigramDetailProps) {
   const [isDropDown, setIsDropDown] = useState<boolean>(false);
+  const [isLike, setIsLike] = useState<boolean>();
   const { userData } = useUserInfo();
   const router = useRouter();
 
+  // 메뉴 열림 닫힘 토글
   const handleToggle = () => {
     setIsDropDown((prev) => !prev);
   };
 
+  // 에피그램 삭제
   const handleDeleteEpigram = async () => {
     try {
       const res = await deleteEpigram(Number(data?.id));
@@ -33,9 +46,34 @@ export default function EpigramDetail({ data, isMore }: EpigramDetailProps) {
     }
   };
 
+  // 에피그램 수정
   const handleModifyEpigram = () => {
     router.push(`/write/${data?.id}`);
   };
+
+  // 에피그램 좋아요 등록&삭제
+  const handleLike = async (isLiked: boolean) => {
+    try {
+      const res = isLiked
+        ? await deleteEpigramLike(Number(data?.id))
+        : await postEpigramLike(Number(data?.id));
+
+      setIsLike(!isLiked);
+      refetch();
+      return res;
+    } catch (error) {
+      console.log('에피그램 좋아요 API 호출 오류', error);
+      throw new Error(
+        isLiked
+          ? '에피그램 좋아요 삭제 api 호출에 실패했습니다.'
+          : '에피그램 좋아요 등록 api 호출에 실패했습니다.'
+      );
+    }
+  };
+
+  useEffect(() => {
+    setIsLike(data?.isLiked || false);
+  }, []);
   return (
     <div
       className="bg-cover bg-center bg-repeat-x py-10"
@@ -95,7 +133,11 @@ export default function EpigramDetail({ data, isMore }: EpigramDetailProps) {
         <div className="flex items-center justify-center gap-4">
           <button
             type="button"
-            className="flex h-12 items-center justify-center gap-[6px] rounded-[100px] bg-black-600 px-5 text-white"
+            className={clsx(
+              'flex h-12 items-center justify-center gap-[6px] rounded-[100px] px-5 text-white hover:bg-black-600',
+              isLike ? 'bg-black-600' : 'bg-gray-200'
+            )}
+            onClick={() => handleLike(data?.isLiked ?? false)}
           >
             <Image
               src="/icons/like-icon.svg"
