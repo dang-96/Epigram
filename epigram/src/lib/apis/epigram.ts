@@ -113,3 +113,31 @@ export const deleteEpigram = async (id: number) => {
     throw new Error('에피그램 삭제를 실패했습니다.');
   }
 };
+
+// 에피르램 좋아요 등록(post)
+export const postEpigramLike = async (id: number) => {
+  try {
+    const response = await axiosInstance.post(
+      END_POINT.epigram.detail.like(id)
+    );
+
+    return response.status;
+  } catch (error) {
+    console.log('에피그램 좋아요 등록 api 오류', error);
+    throw new Error('에피그램 좋아요 등록 실패');
+  }
+};
+
+// 에피그램 좋아요 삭제(delete)
+export const deleteEpigramLike = async (id: number) => {
+  try {
+    const response = await axiosInstance.delete(
+      END_POINT.epigram.detail.like(id)
+    );
+
+    return response.status;
+  } catch (error) {
+    console.log('에피그램 좋아요 등록 api 오류', error);
+    throw new Error('에피그램 좋아요 등록 실패');
+  }
+};
