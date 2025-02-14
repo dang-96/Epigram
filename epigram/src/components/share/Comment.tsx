@@ -4,9 +4,9 @@ interface CommentProps {
   data: CommentListType;
   userId: number | null;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setCommentId: React.Dispatch<React.SetStateAction<string>>;
+  setCommentId: React.Dispatch<React.SetStateAction<number>>;
   modifySetIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  modifySetCommentId: React.Dispatch<React.SetStateAction<string>>;
+  modifySetCommentId: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export default function Comment({
@@ -44,7 +44,7 @@ export default function Comment({
                 className="border-b-[1px] border-black-600 text-base text-black-600"
                 onClick={() => {
                   modifySetIsOpen(true);
-                  modifySetCommentId(String(data.id));
+                  modifySetCommentId(data.id);
                 }}
               >
                 수정
@@ -54,7 +54,7 @@ export default function Comment({
                 className="border-b-[1px] border-red text-base text-red"
                 onClick={() => {
                   setIsOpen(true);
-                  setCommentId(String(data.id));
+                  setCommentId(data.id);
                 }}
               >
                 삭제

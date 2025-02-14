@@ -24,7 +24,6 @@ export default function CommentDetail({
 }: CommentDetailProps) {
   const { isOpen, setIsOpen, setCommentId, handleDeleteComment } =
     useDeleteComment();
-  console.log(data);
 
   const {
     isOpen: modifyIsOpen,

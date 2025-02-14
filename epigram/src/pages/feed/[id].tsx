@@ -24,7 +24,7 @@ export default function DetailPage() {
     queryKey: ['epigramDetail', commentId, userId],
     queryFn: async () => {
       if (typeof id === 'string') {
-        const res = await fetchEpigramDetail(id);
+        const res = await fetchEpigramDetail(Number(id));
         if (userId === res.writerId) {
           setIsMore(true);
         } else {
@@ -46,7 +46,11 @@ export default function DetailPage() {
     queryKey: ['commentDetail', Number(commentId)],
     queryFn: async () => {
       if (typeof id === 'string') {
-        const res = await fetchCommentDetail({ id: id, limit: 4, cursor: 0 });
+        const res = await fetchCommentDetail({
+          id: Number(id),
+          limit: 4,
+          cursor: 0,
+        });
         return res;
       }
     },
