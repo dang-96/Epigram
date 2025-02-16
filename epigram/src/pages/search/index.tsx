@@ -62,6 +62,11 @@ export default function SearchPage() {
     }
   };
 
+  const handleRecentKeywordClick = (kw: string) => {
+    setInputValue(kw);
+    setKeyword(kw);
+  };
+
   useEffect(() => {
     const savedKeywordList = JSON.parse(
       localStorage.getItem('recentKeyWordList') || '[]'
@@ -119,7 +124,14 @@ export default function SearchPage() {
                   key={index}
                   className="rounded-[22px] bg-background px-[14px] py-3 text-2xl font-normal text-black-300"
                 >
-                  <button type="button">#{recentKeyWord}</button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      handleRecentKeywordClick(recentKeyWord);
+                    }}
+                  >
+                    #{recentKeyWord}
+                  </button>
                 </li>
               );
             })}
