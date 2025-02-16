@@ -21,12 +21,14 @@ export const fetchTodayEpigram = async () => {
 export const fetchNewEpigram = async ({
   limit,
   cursor = 0,
+  keyword = '',
 }: EpigramParamsType) => {
   try {
     const response = await axiosInstance.get(END_POINT.epigram.base, {
       params: {
         limit: limit,
         cursor: cursor,
+        keyword: keyword,
       },
     });
     return response.data;
