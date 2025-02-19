@@ -1,7 +1,6 @@
 import NewEpigram from '@/components/main/NewEpigram';
 import TodayState from '@/components/main/TodayState';
 import Profile from '@/components/myPage/Profile';
-import Image from 'next/image';
 
 export default function MyPage() {
   return (
