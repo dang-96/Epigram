@@ -23,10 +23,9 @@ export default function Comment({
         <div className="flex items-start justify-between">
           <div className="flex items-start">
             <div
-              className="mr-4 h-12 w-12 rounded-full bg-contain bg-center bg-no-repeat"
+              className="mr-4 h-12 w-12 rounded-full bg-white bg-cover bg-center bg-no-repeat"
               style={{
-                backgroundImage:
-                  data.writer.image || 'url(/images/profile-default.png)',
+                backgroundImage: `url(${data.writer.image || '/images/profile-default.png'})`,
               }}
             />
             <span className="mr-2 text-base font-normal text-black-300">

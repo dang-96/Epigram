@@ -26,4 +26,5 @@ export const END_POINT = {
     detail: (id: number) => `/users/${id}/`,
     comment: (id: number) => `/users/${id}/comments/`,
   },
+  image: '/images/upload',
 };

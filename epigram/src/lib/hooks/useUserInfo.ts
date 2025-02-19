@@ -7,6 +7,7 @@ export const useUserInfo = () => {
     isLoading: userDataLoading,
     isError: userDataError,
     error,
+    refetch,
   } = useQuery({
     queryKey: ['userInfo'],
     queryFn: async () => {
@@ -16,5 +17,5 @@ export const useUserInfo = () => {
     },
   });
 
-  return { userData, userDataLoading, userDataError, error };
+  return { userData, userDataLoading, userDataError, error, refetch };
 };
