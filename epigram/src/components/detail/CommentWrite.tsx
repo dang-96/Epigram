@@ -60,14 +60,11 @@ export default function CommentWrite({
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="mb-10 flex items-start gap-4">
         <div className="h-[48px] w-[48px] flex-shrink-0">
-          <Image
-            src={
-              userData?.image ? userData.image : '/images/profile-default.png'
-            }
-            className="h-full w-full rounded-full"
-            width={48}
-            height={48}
-            alt="프로필 이미지"
+          <div
+            className="mr-4 h-12 w-12 rounded-full bg-white bg-cover bg-center bg-no-repeat"
+            style={{
+              backgroundImage: `url(${userData?.image || '/images/profile-default.png'})`,
+            }}
           />
         </div>
         <div className="w-full">
