@@ -23,6 +23,10 @@ export interface UserInfoType {
   image: string | null;
 }
 
+// 유저 정보 변경 타입
+export interface UserInfoChangeType
+  extends Pick<UserInfoType, 'nickname' | 'image'> {}
+
 // 에피그램 태그 타입
 export interface Tag {
   id: number;
