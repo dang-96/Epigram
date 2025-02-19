@@ -1,9 +1,11 @@
 import { useAuth } from '@/lib/context/AuthContext';
+import { useUserInfo } from '@/lib/hooks/useUserInfo';
 import Image from 'next/image';
 import Link from 'next/link';
 
 export default function NavBar() {
-  const { loginState, user } = useAuth();
+  const { loginState } = useAuth();
+  const { userData } = useUserInfo();
 
   return (
     <header className="border-b-[1px] border-[#D7D7D7] px-5">
@@ -40,13 +42,13 @@ export default function NavBar() {
               href="/myPage"
               className="flex items-center gap-2 text-base font-medium text-gray-300"
             >
-              <Image
-                src={user?.image || '/images/profile-default.png'}
-                width={24}
-                height={24}
-                alt="프로필 이미지"
+              <span
+                style={{
+                  backgroundImage: `url(${userData?.image || '/images/profile-default.png'})`,
+                }}
+                className="black h-9 w-9 rounded-full bg-white bg-cover bg-center"
               />
-              {user?.nickname}
+              {userData?.nickname}
             </Link>
           </div>
         </div>
