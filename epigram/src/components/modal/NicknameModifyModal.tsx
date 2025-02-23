@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form';
 import clsx from 'clsx';
 import { UserInfoChangeType } from '@/lib/types/type';
+import { useEffect } from 'react';
 
 interface NicknameModifyModalProps {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -21,6 +22,7 @@ export default function NicknameModifyModal({
     handleSubmit,
     reset,
     formState: { isValid },
+    setFocus,
   } = useForm();
 
   const onSubmit = async (data: any) => {
@@ -37,6 +39,10 @@ export default function NicknameModifyModal({
       console.log('댓글 작성 에러', error);
     }
   };
+
+  useEffect(() => {
+    setFocus('nickname');
+  }, []);
 
   return (
     <div className="flex w-full max-w-[550px] flex-col items-center rounded-3xl bg-white px-[38px] py-10">
