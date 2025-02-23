@@ -2,7 +2,6 @@ import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
 import { fetchNewComment } from '@/lib/apis/comment';
 import { CommentListType, modifyComment } from '@/lib/types/type';
-import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Comment from '../share/Comment';
 import ModalFrame from '../modal/ModalFrame';
@@ -26,7 +25,7 @@ export default function NewCommentList() {
   });
 
   // 댓글 삭제
-  const { isOpen, setIsOpen, commentId, setCommentId, handleDeleteComment } =
+  const { isOpen, setIsOpen, setCommentId, handleDeleteComment } =
     useDeleteComment();
 
   const deleteComment = () => {
