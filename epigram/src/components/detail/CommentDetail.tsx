@@ -1,7 +1,6 @@
 import { CommentListType, CommentType, modifyComment } from '@/lib/types/type';
 import Comment from '../share/Comment';
 import CommentWrite from './CommentWrite';
-import { useState } from 'react';
 import ModalFrame from '../modal/ModalFrame';
 import { useDeleteComment } from '@/lib/hooks/useDeleteComment';
 import CommentModifyModal from '../modal/CommentModifyModal';

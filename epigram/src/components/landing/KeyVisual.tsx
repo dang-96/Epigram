@@ -21,7 +21,7 @@ export default function KeyVisual() {
       </span>
 
       <Link
-        href={loginState ? '/main' : '/'}
+        href={loginState ? '/main' : '/login'}
         className="flex h-16 w-72 items-center justify-center rounded-xl bg-black-500 text-xl font-semibold text-white"
       >
         시작하기
