@@ -9,7 +9,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useModifyNickname } from '@/lib/hooks/useModifyNickname';
 
 export default function Profile() {
-  const { logout, user } = useAuth();
+  const { logout } = useAuth();
   const router = useRouter();
   const { userData, refetch } = useUserInfo();
   const { isOpen, setIsOpen, handleModifyNickname } = useModifyNickname();
@@ -17,13 +17,14 @@ export default function Profile() {
 
   const handleRefetch = () => {
     queryClient.invalidateQueries<any>(['myComment']);
-    refetch();
+    refetch;
   };
 
   const handleLogout = () => {
     logout();
     router.push('/');
   };
+  console.log(userData?.nickname);
 
   const imageUrl = async (imageFile: File) => {
     const formData = new FormData();
@@ -34,7 +35,7 @@ export default function Profile() {
 
       if (res) {
         await patchProfileImage({
-          nickname: user?.nickname,
+          nickname: userData?.nickname,
           image: res.url,
         });
         handleRefetch();
