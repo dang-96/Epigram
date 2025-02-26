@@ -3,6 +3,7 @@ import FixedMenu from '@/components/share/FixedMenu';
 import { fetchNewEpigram } from '@/lib/apis/epigram';
 import { EpigramType } from '@/lib/types/type';
 import { useQuery } from '@tanstack/react-query';
+import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -28,8 +29,13 @@ export default function FeedPage() {
       <h2 className="mx-auto mb-10 w-full max-w-[1200px] text-2xl font-semibold text-black-600">
         피드
       </h2>
-      <div className="mx-auto grid w-full max-w-[1200px] grid-cols-2 gap-x-[30px] gap-y-[40px]">
-        {data.list ? (
+      <div
+        className={clsx(
+          'mx-auto grid w-full max-w-[1200px] gap-x-[30px] gap-y-[40px]',
+          data?.list && data.list.length > 0 && 'grid-cols-2'
+        )}
+      >
+        {data?.list && data.list.length > 0 ? (
           data.list.map((epigram: EpigramType) => {
             return (
               <Link href={`/feed/${epigram.id}`} key={epigram.id}>
@@ -44,7 +50,7 @@ export default function FeedPage() {
               width={144}
               height={144}
               alt="컨텐츠 없는 경우 아이콘"
-            />{' '}
+            />
             <p className="text-center text-xl">
               작성된 에피그램 피드가 없습니다.
             </p>
