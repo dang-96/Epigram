@@ -1,5 +1,5 @@
-import NewEpigram from '@/components/main/NewEpigram';
 import TodayState from '@/components/main/TodayState';
+import ContentAllList from '@/components/myPage/ContentAllList';
 import Profile from '@/components/myPage/Profile';
 
 export default function MyPage() {
@@ -21,13 +21,7 @@ export default function MyPage() {
           </div>
         </div>
       </div>
-      <div className="mx-auto w-full max-w-[640px]">
-        <div className="mb-12">
-          <button type="button">내 에피그램(11)</button>
-          <button type="button">내 댓글(11)</button>
-        </div>
-        <NewEpigram marginBottom={'mb-0'} />
-      </div>
+      <ContentAllList />
     </div>
   );
 }

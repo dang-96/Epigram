@@ -5,18 +5,26 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import ModalFrame from '../modal/ModalFrame';
 import NicknameModifyModal from '../modal/NicknameModifyModal';
+import { useQueryClient } from '@tanstack/react-query';
 import { useModifyNickname } from '@/lib/hooks/useModifyNickname';
 
 export default function Profile() {
-  const { logout, user } = useAuth();
+  const { logout } = useAuth();
   const router = useRouter();
   const { userData, refetch } = useUserInfo();
   const { isOpen, setIsOpen, handleModifyNickname } = useModifyNickname();
+  const queryClient = useQueryClient();
+
+  const handleRefetch = () => {
+    queryClient.invalidateQueries<any>(['myComment']);
+    refetch;
+  };
 
   const handleLogout = () => {
     logout();
     router.push('/');
   };
+  console.log(userData?.nickname);
 
   const imageUrl = async (imageFile: File) => {
     const formData = new FormData();
@@ -26,13 +34,11 @@ export default function Profile() {
       const res = await postImageUrl(formData);
 
       if (res) {
-        const url = await patchProfileImage({
-          nickname: user?.nickname,
+        await patchProfileImage({
+          nickname: userData?.nickname,
           image: res.url,
         });
-
-        console.log(url);
-        refetch();
+        handleRefetch();
       }
     } catch (error) {
       console.log('프로필 이미지 업로드 api 호출 에러', error);
@@ -55,7 +61,7 @@ export default function Profile() {
           setIsOpen={setIsOpen}
           userImage={userData?.image}
           handleModifyNickname={handleModifyNickname}
-          refetch={refetch}
+          refetch={handleRefetch}
         />
       </ModalFrame>
       <div className="mb-24 flex translate-y-[-60px] flex-col items-center justify-center">

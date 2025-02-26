@@ -22,6 +22,7 @@ export const fetchNewEpigram = async ({
   limit,
   cursor = 0,
   keyword = '',
+  writerId = null,
 }: EpigramParamsType) => {
   try {
     const response = await axiosInstance.get(END_POINT.epigram.base, {
@@ -29,6 +30,7 @@ export const fetchNewEpigram = async ({
         limit: limit,
         cursor: cursor,
         keyword: keyword,
+        writerId: writerId,
       },
     });
     return response.data;

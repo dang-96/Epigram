@@ -65,12 +65,18 @@ export interface EpigramDetailType extends EpigramType {
   isLiked: boolean;
 }
 
+export interface EpigramListType {
+  list: EpigramType[];
+  nextCursor: number | null;
+  totalCount: number;
+}
+
 // 최신 에피그램 params
 export interface EpigramParamsType {
   limit: number;
   cursor?: number;
   keyword?: string;
-  writerId?: string;
+  writerId?: number | null;
 }
 
 // 최신 댓글 params

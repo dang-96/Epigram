@@ -102,3 +102,24 @@ export const patchComment = async ({
     throw new Error('댓글 데이터 수정에 실패했습니다.');
   }
 };
+
+// 내가 작성한 댓글(get)
+export const fetchMyCommentList = async ({
+  id,
+  limit,
+  cursor,
+}: CommentDetailParamsType) => {
+  try {
+    const response = await axiosInstance.get(END_POINT.user.comment(id), {
+      params: {
+        limit: limit,
+        cursor: cursor,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.log('내가 작성한 댓글 api 에러', error);
+    throw new Error('내가 작성한 댓글 리스트 가져오기 실패');
+  }
+};

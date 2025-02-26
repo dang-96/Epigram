@@ -25,18 +25,18 @@ export default function Comment({
             <div
               className="mr-4 h-12 w-12 rounded-full bg-white bg-cover bg-center bg-no-repeat"
               style={{
-                backgroundImage: `url(${data.writer.image || '/images/profile-default.png'})`,
+                backgroundImage: `url(${data.writer?.image || '/images/profile-default.png'})`,
               }}
             />
             <span className="mr-2 text-base font-normal text-black-300">
-              {data.writer.nickname}
+              {data.writer?.nickname}
             </span>
             <span className="text-base font-normal text-black-300">
               1시간 전
             </span>
           </div>
 
-          {data.writer.id === userId && (
+          {data.writer?.id === userId && (
             <div className="flex items-start gap-4">
               <button
                 type="button"
