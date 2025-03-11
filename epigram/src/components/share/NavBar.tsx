@@ -1,11 +1,9 @@
-import { useAuth } from '@/lib/context/AuthContext';
 import { useUserInfo } from '@/lib/hooks/useUserInfo';
 import Image from 'next/image';
 import Link from 'next/link';
 
 export default function NavBar() {
-  const { loginState } = useAuth();
-  const { userData } = useUserInfo();
+  const { loginState, userData } = useUserInfo();
 
   return (
     <header className="border-b-[1px] border-[#D7D7D7] px-5">
@@ -13,7 +11,7 @@ export default function NavBar() {
         <div className="mx-auto flex h-[80px] w-full max-w-[1680px] items-center justify-between gap-5">
           <div className="flex items-center gap-8">
             <h1>
-              <Link href={loginState ? '/main' : '/'}>
+              <Link href="/main">
                 <Image
                   src="/images/logo.png"
                   width={131}
@@ -48,7 +46,7 @@ export default function NavBar() {
                 }}
                 className="black h-9 w-9 rounded-full bg-white bg-cover bg-center"
               />
-              {userData?.nickname}
+              {userData?.nickname || '유저'}
             </Link>
           </div>
         </div>
