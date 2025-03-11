@@ -129,3 +129,17 @@ export type PatchComment = Pick<CommentPostType, 'isPrivate' | 'content'> & {
 
 // 댓글 수정 함수 타입
 export type modifyComment = Pick<CommentPostType, 'isPrivate' | 'content'>;
+
+// 월별 감정 조회 타입
+export interface EmotionMonthlyParamsType {
+  userId: number;
+  year: number;
+  month: number;
+}
+
+export interface EmotionMonthlyType {
+  id: number;
+  userId: number;
+  emotion: string;
+  createdAt: string;
+}
