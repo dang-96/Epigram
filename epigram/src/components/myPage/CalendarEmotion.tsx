@@ -15,7 +15,6 @@ export default function CalendarEmotion() {
   const { EMOTION_LIST } = useEmotion();
   const { userData, userDataLoading, userDataError } = useUserInfo();
   const [emotionFilter, setEmotionFilter] = useState<string | null>(null);
-  console.log(emotionFilter);
 
   const {
     data: emotionData,
