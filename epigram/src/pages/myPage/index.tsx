@@ -1,4 +1,5 @@
 import TodayState from '@/components/main/TodayState';
+import CalendarEmotion from '@/components/myPage/CalendarEmotion';
 import ContentAllList from '@/components/myPage/ContentAllList';
 import Profile from '@/components/myPage/Profile';
 
@@ -11,7 +12,7 @@ export default function MyPage() {
 
           <TodayState />
 
-          <div className="mb-40">달력 영역</div>
+          <CalendarEmotion />
 
           <div>
             <h2 className="mb-12 text-2xl font-semibold text-black-600">

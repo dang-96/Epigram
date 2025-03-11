@@ -24,7 +24,6 @@ export default function Profile() {
     logout();
     router.push('/');
   };
-  console.log(userData?.nickname);
 
   const imageUrl = async (imageFile: File) => {
     const formData = new FormData();

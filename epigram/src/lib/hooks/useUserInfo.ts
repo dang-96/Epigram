@@ -1,7 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import { fetchUserInfo } from '../apis/api';
+import { useAuth } from '../context/AuthContext';
 
 export const useUserInfo = () => {
+  const { loginState } = useAuth();
   const {
     data: userData,
     isLoading: userDataLoading,
@@ -15,7 +17,15 @@ export const useUserInfo = () => {
 
       return res;
     },
+    enabled: loginState,
   });
 
-  return { userData, userDataLoading, userDataError, error, refetch };
+  return {
+    loginState,
+    userData,
+    userDataLoading,
+    userDataError,
+    error,
+    refetch,
+  };
 };
