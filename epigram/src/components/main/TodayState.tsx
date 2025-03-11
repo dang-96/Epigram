@@ -1,50 +1,25 @@
-import { postEmotion } from '@/lib/apis/emotion';
+import { fetchEmotion } from '@/lib/apis/emotion';
+import { useEmotion } from '@/lib/hooks/useEmotion';
+import { useUserInfo } from '@/lib/hooks/useUserInfo';
+import { useQuery } from '@tanstack/react-query';
 import clsx from 'clsx';
 import Image from 'next/image';
-import { useState } from 'react';
 
 export default function TodayState() {
-  const EMOTION_LIST = [
-    {
-      id: 'MOVED',
-      text: '감동',
-      image: '/images/face-inspiration.png',
-    },
-    {
-      id: 'HAPPY',
-      text: '기쁨',
-      image: '/images/face-joy.png',
-    },
-    {
-      id: 'WORRIED',
-      text: '고민',
-      image: '/images/face-thinking.png',
-    },
-    {
-      id: 'SAD',
-      text: '슬픔',
-      image: '/images/face-sad.png',
-    },
-    {
-      id: 'ANGRY',
-      text: '분노',
-      image: '/images/face-anger.png',
-    },
-  ];
-  const [status, setStatus] = useState<string>('MOVED');
+  const { EMOTION_LIST, emotion, handleEmotionClick } = useEmotion();
+  const { userData } = useUserInfo();
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ['todayEmotion'],
+    queryFn: async () => {
+      const res = await fetchEmotion(userData.id);
 
-  const handleEmotionClick = async (emotionId: string) => {
-    setStatus(emotionId);
-    try {
-      const response = await postEmotion(emotionId);
+      return res;
+    },
+  });
 
-      if (response.status >= 200 && response.status < 300) {
-        console.log(`오늘의 감정 전송 성공 했습니다.(${emotionId})`);
-      }
-    } catch (error) {
-      console.log('감정 데이터 전송 api 호출 에러', error);
-    }
-  };
+  if (isLoading) return <div>로딩중</div>;
+
+  if (isError) return <div>에러</div>;
 
   return (
     <div className="mx-auto mb-[140px] w-full max-w-[640px]">
@@ -52,33 +27,39 @@ export default function TodayState() {
         오늘의 감정은 어떤가요?
       </h2>
       <ul className="flex items-center justify-between gap-4 px-12">
-        {EMOTION_LIST.map((emotion) => {
+        {EMOTION_LIST.map((emotionValue) => {
+          const emotionSelect = data
+            ? emotionValue.id === data.emotion
+            : emotionValue.id === emotion.id;
           return (
             <li
-              key={emotion.id}
+              key={emotionValue.id}
               className="flex flex-col items-center justify-center"
             >
               <button
                 type="button"
                 onClick={() => {
-                  handleEmotionClick(emotion.id);
+                  handleEmotionClick({
+                    emotionId: emotionValue.id,
+                    emotionText: emotionValue.text,
+                    emotionImage: emotionValue.image,
+                  });
                 }}
               >
                 <span
                   className={clsx(
                     'mb-2 flex h-24 w-24 items-center justify-center rounded-2xl bg-[#EBEEF3]',
-                    emotion.id === status &&
-                      'rounded-2xl border-4 border-[#FBC85B]'
+                    emotionSelect && 'rounded-2xl border-4 border-[#FBC85B]'
                   )}
                 >
                   <Image
-                    src={emotion.image}
+                    src={emotionValue.image}
                     width={48}
                     height={48}
-                    alt={emotion.text}
+                    alt={emotionValue.text}
                   />
                 </span>
-                {emotion.text}
+                {emotionValue.text}
               </button>
             </li>
           );
