@@ -2,6 +2,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 export default function FixedMenu() {
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+
   return (
     <>
       <Link
@@ -12,6 +19,7 @@ export default function FixedMenu() {
       </Link>
       <button
         type="button"
+        onClick={scrollToTop}
         className="fixed bottom-[12%] right-28 flex h-16 w-16 items-center justify-center rounded-full bg-blue-900"
       >
         <Image
