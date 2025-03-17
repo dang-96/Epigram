@@ -8,10 +8,11 @@ import { fetchEmotionMonthly } from '@/lib/apis/emotion';
 import { useUserInfo } from '@/lib/hooks/useUserInfo';
 import { EmotionMonthlyType } from '@/lib/types/type';
 import CalendarFilter from './CalendarFilter';
+import { useEmotionDateStore } from '@/lib/store/useEmotionDateStore';
 
 export default function CalendarEmotion() {
+  const { emotionDate, setEmotionDate } = useEmotionDateStore();
   const [currentDate, setCurrentDate] = useState<any>(null);
-  const [viewDate, setViewDate] = useState<any>(new Date());
   const { EMOTION_LIST } = useEmotion();
   const { userData, userDataLoading, userDataError } = useUserInfo();
   const [emotionFilter, setEmotionFilter] = useState<string | null>(null);
@@ -65,17 +66,17 @@ export default function CalendarEmotion() {
 
   // 달력 이전달 이동
   const handlePreviousMonth = () => {
-    const newDate = new Date(viewDate);
-    newDate.setMonth(viewDate.getMonth() - 1);
-    setViewDate(newDate);
+    const newDate = new Date(emotionDate);
+    newDate.setMonth(emotionDate.getMonth() - 1);
+    setEmotionDate(newDate);
     setCurrentDate(newDate);
   };
 
   // 달력 다음달 이동
   const handleNextMonth = () => {
-    const newDate = new Date(viewDate);
-    newDate.setMonth(viewDate.getMonth() + 1);
-    setViewDate(newDate);
+    const newDate = new Date(emotionDate);
+    newDate.setMonth(emotionDate.getMonth() + 1);
+    setEmotionDate(newDate);
     setCurrentDate(newDate);
   };
 
@@ -159,7 +160,6 @@ export default function CalendarEmotion() {
 
   return (
     <div className="mb-40">
-      <div>달력 영역</div>
       {currentDate && (
         <div className="calendar-custom">
           <div className="absolute right-0 top-0 flex h-[52px] items-center gap-6">
@@ -208,9 +208,9 @@ export default function CalendarEmotion() {
               </span>
             )}
             onActiveStartDateChange={({ activeStartDate }) => {
-              setViewDate(activeStartDate); // 달력의 표시된 월만 변경
+              setEmotionDate(activeStartDate); // 달력의 표시된 월만 변경
             }}
-            activeStartDate={viewDate} // viewDate에 해당하는 월을 달력에 표시
+            activeStartDate={emotionDate} // viewDate에 해당하는 월을 달력에 표시
             tileClassName={tileClassName}
             tileContent={tileContent}
           />
