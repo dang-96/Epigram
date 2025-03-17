@@ -5,11 +5,12 @@ import { fetchEpigramDetail } from '@/lib/apis/epigram';
 import { useUserInfo } from '@/lib/hooks/useUserInfo';
 import { CommentType, EpigramDetailType } from '@/lib/types/type';
 import { useQuery } from '@tanstack/react-query';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 export default function DetailPage() {
-  const { userData } = useUserInfo(); // 유저 정보
+  const { userData, loginState } = useUserInfo(); // 유저 정보
   const [isMore, setIsMore] = useState<boolean>(false); // 에피그램 드롭다운 버튼 display 상태
 
   const router = useRouter();
@@ -61,6 +62,23 @@ export default function DetailPage() {
 
   const isLoading = epigramDetailLoading || commentDetailLoading;
   const isError = epigramDetailError || commentDetailError;
+
+  if (!loginState) {
+    return (
+      <div
+        className="flex w-full flex-col items-center justify-center gap-10 px-5"
+        style={{ height: 'calc(100vh - 80px)' }}
+      >
+        <h2 className="text-3xl">로그인 후 이용해 주세요!</h2>
+        <Link
+          href="/login"
+          className="flex h-16 w-72 items-center justify-center rounded-xl bg-black-500 text-xl font-semibold text-white"
+        >
+          로그인 하러 가기
+        </Link>
+      </div>
+    );
+  }
 
   if (isLoading) {
     return <div>로딩중</div>;
