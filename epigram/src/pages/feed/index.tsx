@@ -2,19 +2,50 @@ import Epigram from '@/components/share/Epigram';
 import FixedMenu from '@/components/share/FixedMenu';
 import { fetchNewEpigram } from '@/lib/apis/epigram';
 import { EpigramType } from '@/lib/types/type';
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 export default function FeedPage() {
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ['newEpigramFeed'],
-    queryFn: async () => {
-      const res = await fetchNewEpigram({ limit: 6, cursor: 0 });
-      return res;
-    },
-  });
+  const { data, fetchNextPage, hasNextPage, isLoading, isError } =
+    useInfiniteQuery({
+      queryKey: ['newEpigramFeed'],
+      queryFn: async ({ pageParam = 0 }) => {
+        const res = await fetchNewEpigram({ limit: 6, cursor: pageParam });
+
+        return res;
+      },
+      getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
+      initialPageParam: 0,
+    });
+  const [scrollLoading, setScrollLoading] = useState<boolean>(false);
+  const totalCount = data?.pages[0].totalCount;
+  const currentCount =
+    data?.pages?.reduce((acc, page) => acc + page?.list.length, 0) ?? 0;
+  const isMoreButton = currentCount >= totalCount ? false : hasNextPage;
+
+  useEffect(() => {
+    if (hasNextPage) {
+      const handleScroll = () => {
+        if (
+          window.innerHeight + document.documentElement.scrollTop ===
+          document.documentElement.offsetHeight
+        ) {
+          if (!scrollLoading) {
+            setScrollLoading(true);
+            fetchNextPage().finally(() => setScrollLoading(false));
+          }
+        }
+      };
+      window.addEventListener('scroll', handleScroll);
+
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+      };
+    }
+  }, [hasNextPage, scrollLoading]);
 
   if (isLoading) {
     return <div>로딩중...</div>;
@@ -25,24 +56,26 @@ export default function FeedPage() {
   }
 
   return (
-    <div className="h-full min-h-screen bg-background py-[120px]">
+    <div className="relative h-full min-h-screen bg-background py-[120px]">
       <h2 className="mx-auto mb-10 w-full max-w-[1200px] text-2xl font-semibold text-black-600">
         피드
       </h2>
       <div
         className={clsx(
           'mx-auto grid w-full max-w-[1200px] gap-x-[30px] gap-y-[40px]',
-          data?.list && data.list.length > 0 && 'grid-cols-2'
+          data?.pages && totalCount > 0 && 'grid-cols-2'
         )}
       >
-        {data?.list && data.list.length > 0 ? (
-          data.list.map((epigram: EpigramType) => {
-            return (
-              <Link href={`/feed/${epigram.id}`} key={epigram.id}>
-                <Epigram data={epigram} height={260} />
-              </Link>
-            );
-          })
+        {data?.pages && totalCount > 0 ? (
+          data?.pages?.flatMap(({ list }) =>
+            list?.map((epigram: EpigramType) => {
+              return (
+                <Link href={`/feed/${epigram.id}`} key={epigram.id}>
+                  <Epigram data={epigram} height={260} />
+                </Link>
+              );
+            })
+          )
         ) : (
           <div className="flex flex-col items-center justify-center gap-2">
             <Image
@@ -57,14 +90,19 @@ export default function FeedPage() {
           </div>
         )}
       </div>
-      {data?.list?.length > 6 && (
-        <div className="mt-[72px] flex justify-center">
-          <Link
-            href="/"
-            className="flex h-[56px] w-full max-w-[238px] items-center justify-center rounded-full border-[1px] border-line-200 text-xl font-medium text-blue-500"
-          >
-            + 에피그램 더보기
-          </Link>
+      {isMoreButton && (
+        <div className="absolute bottom-10 left-[50%] flex translate-x-[-50%] flex-col items-center justify-center gap-1 text-base font-semibold">
+          {/* <span className="text-blue-400">피드 더보기</span> */}
+          {scrollLoading ? (
+            <span className="text-xl text-blue-400">. . .</span>
+          ) : (
+            <Image
+              src="/icons/scroll-icon.svg"
+              width={34}
+              height={34}
+              alt="스크롤 아이콘"
+            />
+          )}
         </div>
       )}
       <FixedMenu />
