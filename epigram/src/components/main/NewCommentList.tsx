@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { fetchNewComment } from '@/lib/apis/comment';
 import { CommentListType, modifyComment } from '@/lib/types/type';
 import Image from 'next/image';
@@ -16,13 +16,21 @@ export default function NewCommentList() {
   const { userData, userDataLoading, userDataError } = useUserInfo();
 
   // 댓글 데이터
-  const { data, isLoading, isError, refetch } = useQuery({
-    queryKey: ['newComment'],
-    queryFn: async () => {
-      const res = await fetchNewComment({ limit: 4, cursor: 0 });
-      return res;
-    },
-  });
+  const { data, fetchNextPage, hasNextPage, isLoading, isError, refetch } =
+    useInfiniteQuery({
+      queryKey: ['newComment'],
+      queryFn: async ({ pageParam = 0 }) => {
+        const res = await fetchNewComment({ limit: 3, cursor: pageParam });
+
+        return res;
+      },
+      getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
+      initialPageParam: 0,
+    });
+  const totalCount = data?.pages[0].totalCount;
+  const currentCount =
+    data?.pages?.reduce((acc, page) => acc + page?.list.length, 0) ?? 0;
+  const isMoreButton = currentCount >= totalCount ? false : hasNextPage;
 
   // 댓글 삭제
   const { isOpen, setIsOpen, setCommentId, handleDeleteComment } =
@@ -77,20 +85,22 @@ export default function NewCommentList() {
         <h2 className="mb-10 text-2xl font-semibold text-black-600">
           최신 댓글
         </h2>
-        {data?.list.length > 0 ? (
-          data?.list.map((comment: CommentListType) => {
-            return (
-              <Comment
-                key={comment.id}
-                data={comment}
-                userId={userData?.id}
-                setIsOpen={setIsOpen}
-                setCommentId={setCommentId}
-                modifySetIsOpen={modifySetIsOpen}
-                modifySetCommentId={modifySetCommentId}
-              />
-            );
-          })
+        {data?.pages?.length ? (
+          data?.pages?.flatMap(({ list }) =>
+            list?.map((comment: CommentListType) => {
+              return (
+                <Comment
+                  key={comment.id}
+                  data={comment}
+                  userId={userData?.id}
+                  setIsOpen={setIsOpen}
+                  setCommentId={setCommentId}
+                  modifySetIsOpen={modifySetIsOpen}
+                  modifySetCommentId={modifySetCommentId}
+                />
+              );
+            })
+          )
         ) : (
           <div className="flex flex-col items-center justify-center gap-2">
             <Image
@@ -102,16 +112,25 @@ export default function NewCommentList() {
             <p className="text-center text-xl">최신 댓글이 없습니다.</p>
           </div>
         )}
-        {data?.list.length > 0 && (
-          <div className="mt-[72px] flex justify-center">
-            <Link
-              href="/"
+
+        <div className="mt-[72px] flex justify-center">
+          {isMoreButton ? (
+            <button
+              type="button"
+              onClick={() => fetchNextPage()}
               className="flex h-[56px] w-full max-w-[238px] items-center justify-center rounded-full border-[1px] border-line-200 text-xl font-medium text-blue-500"
             >
               + 최신 댓글 더보기
+            </button>
+          ) : (
+            <Link
+              href="/feed"
+              className="flex h-[56px] w-full max-w-[238px] items-center justify-center rounded-full border-[1px] border-line-200 text-xl font-medium text-blue-500"
+            >
+              + 댓글 작성된 피드 보기
             </Link>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </>
   );
