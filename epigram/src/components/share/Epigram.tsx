@@ -11,15 +11,19 @@ export default function Epigram({ data, height }: EpigramProps) {
   const router = useRouter();
 
   const navigateToPage = () => {
-    router.push(`/feed/${data?.id}`);
+    if (data?.id) {
+      router.push(`/feed/${data.id}`);
+    }
   };
   return (
     <div className="mx-auto w-full max-w-[640px]">
       <div style={{ marginBottom: height ? '0px' : '56px' }}>
         <div
           className={clsx(
-            'mb-2 flex w-full cursor-pointer flex-col gap-5 rounded-2xl bg-cover bg-center bg-repeat-x p-6 shadow-[0_3px_12px_rgba(0,0,0,0.1)]',
-            data ? 'justify-between' : 'justify-center'
+            'mb-2 flex w-full flex-col gap-5 rounded-2xl bg-cover bg-center bg-repeat-x p-6 shadow-[0_3px_12px_rgba(0,0,0,0.1)]',
+            data
+              ? 'cursor-pointer justify-between'
+              : 'cursor-auto justify-center'
           )}
           style={{
             backgroundImage: 'url(/images/back-line.png)',

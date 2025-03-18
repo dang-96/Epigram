@@ -9,7 +9,7 @@ import Link from 'next/link';
 
 export default function FeedPage() {
   const { data, isLoading, isError } = useQuery({
-    queryKey: ['newEpigram'],
+    queryKey: ['newEpigramFeed'],
     queryFn: async () => {
       const res = await fetchNewEpigram({ limit: 6, cursor: 0 });
       return res;
@@ -57,7 +57,7 @@ export default function FeedPage() {
           </div>
         )}
       </div>
-      {data.list.length > 6 && (
+      {data?.list?.length > 6 && (
         <div className="mt-[72px] flex justify-center">
           <Link
             href="/"
