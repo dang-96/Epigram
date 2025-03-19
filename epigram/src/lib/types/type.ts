@@ -115,6 +115,12 @@ export interface CommentType {
   totalCount: number;
 }
 
+// 댓글 무한 스크롤 타입
+export interface CommentScrollType {
+  pageParams: unknown[];
+  pages: CommentType[];
+}
+
 // 댓글 작성 타입
 export interface CommentPostType {
   epigramId: number;
