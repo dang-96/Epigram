@@ -1,6 +1,7 @@
 import Epigram from '@/components/share/Epigram';
 import FixedMenu from '@/components/share/FixedMenu';
 import { fetchNewEpigram } from '@/lib/apis/epigram';
+import { useInfiniteScroll } from '@/lib/hooks/useInfiniteScroll';
 import { EpigramType } from '@/lib/types/type';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import clsx from 'clsx';
@@ -20,32 +21,13 @@ export default function FeedPage() {
       getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
       initialPageParam: 0,
     });
-  const [scrollLoading, setScrollLoading] = useState<boolean>(false);
-  const totalCount = data?.pages[0].totalCount;
-  const currentCount =
-    data?.pages?.reduce((acc, page) => acc + page?.list.length, 0) ?? 0;
-  const isMoreButton = currentCount >= totalCount ? false : hasNextPage;
 
-  useEffect(() => {
-    if (hasNextPage) {
-      const handleScroll = () => {
-        if (
-          window.innerHeight + document.documentElement.scrollTop ===
-          document.documentElement.offsetHeight
-        ) {
-          if (!scrollLoading) {
-            setScrollLoading(true);
-            fetchNextPage().finally(() => setScrollLoading(false));
-          }
-        }
-      };
-      window.addEventListener('scroll', handleScroll);
-
-      return () => {
-        window.removeEventListener('scroll', handleScroll);
-      };
-    }
-  }, [hasNextPage, scrollLoading]);
+  // 무함 스크롤
+  const { totalCount, isMoreButton, scrollLoading } = useInfiniteScroll({
+    data,
+    fetchNextPage,
+    hasNextPage,
+  });
 
   if (isLoading) {
     return <div>로딩중...</div>;

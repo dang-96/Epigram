@@ -1,4 +1,5 @@
 import { fetchNewEpigram } from '@/lib/apis/epigram';
+import { useInfiniteScroll } from '@/lib/hooks/useInfiniteScroll';
 import { EpigramType } from '@/lib/types/type';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
@@ -32,11 +33,13 @@ export default function SearchPage() {
       initialPageParam: 0,
       enabled: !!keyword,
     });
-  const [scrollLoading, setScrollLoading] = useState<boolean>(false);
-  const totalCount = data?.pages[0].totalCount;
-  const currentCount =
-    data?.pages?.reduce((acc, page) => acc + page?.list.length, 0) ?? 0;
-  const isMoreButton = currentCount >= totalCount ? false : hasNextPage;
+
+  // 무함 스크롤
+  const { totalCount, isMoreButton, scrollLoading } = useInfiniteScroll({
+    data,
+    fetchNextPage,
+    hasNextPage,
+  });
 
   // 최근 검색어 추가
   const handleSaveKeyword = (newKeyword: string) => {
@@ -83,29 +86,6 @@ export default function SearchPage() {
     setIsSearch(false);
     setRecentKeywordList(savedKeywordList);
   }, []);
-
-  // 무한 스크롤
-  useEffect(() => {
-    if (hasNextPage) {
-      const handleScroll = () => {
-        if (
-          window.innerHeight + document.documentElement.scrollTop ===
-          document.documentElement.offsetHeight
-        ) {
-          if (!scrollLoading) {
-            setScrollLoading(true);
-            fetchNextPage().finally(() => setScrollLoading(false));
-          }
-        }
-      };
-
-      window.addEventListener('scroll', handleScroll);
-
-      return () => {
-        window.removeEventListener('scroll', handleScroll);
-      };
-    }
-  }, [hasNextPage, scrollLoading]);
 
   // 이미 검색한 내용 다시 검색했을때 초기화
   useEffect(() => {
