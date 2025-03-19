@@ -166,7 +166,9 @@ export default function ChartEmotion() {
                     height={24}
                     alt="감정 이미지"
                   />{' '}
-                  <span className="w-[50px] text-right">{item.y}%</span>
+                  <span className="w-[50px] text-right">
+                    {item.y.toFixed(1)}%
+                  </span>
                 </li>
               );
             })}
