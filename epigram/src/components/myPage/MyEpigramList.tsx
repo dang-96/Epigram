@@ -1,7 +1,7 @@
 import { EpigramScrollType, EpigramType } from '@/lib/types/type';
 import Image from 'next/image';
 import Epigram from '../share/Epigram';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 
 interface MyEpigramListProps {
