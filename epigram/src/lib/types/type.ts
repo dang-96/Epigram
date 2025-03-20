@@ -71,6 +71,12 @@ export interface EpigramListType {
   totalCount: number;
 }
 
+// 에피그램 더보기 타입
+export interface EpigramScrollType {
+  pageParams: unknown[];
+  pages: EpigramListType[];
+}
+
 // 최신 에피그램 params
 export interface EpigramParamsType {
   limit: number;
