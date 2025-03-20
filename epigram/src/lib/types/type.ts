@@ -71,6 +71,12 @@ export interface EpigramListType {
   totalCount: number;
 }
 
+// 에피그램 더보기 타입
+export interface EpigramScrollType {
+  pageParams: unknown[];
+  pages: EpigramListType[];
+}
+
 // 최신 에피그램 params
 export interface EpigramParamsType {
   limit: number;
@@ -113,6 +119,12 @@ export interface CommentType {
   list: CommentListType[];
   nextCursor: number | null;
   totalCount: number;
+}
+
+// 댓글 무한 스크롤 타입
+export interface CommentScrollType {
+  pageParams: unknown[];
+  pages: CommentType[];
 }
 
 // 댓글 작성 타입

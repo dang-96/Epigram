@@ -1,32 +1,44 @@
 import { fetchNewEpigram } from '@/lib/apis/epigram';
+import { useInfiniteScroll } from '@/lib/hooks/useInfiniteScroll';
 import { EpigramType } from '@/lib/types/type';
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 export default function SearchPage() {
+  const queryClient = useQueryClient();
   const [keyword, setKeyword] = useState<string>(''); // 최종 검색어
   const [inputValue, setInputValue] = useState<string>(''); // input 검색어
   const [recentKeywordList, setRecentKeywordList] = useState<string[]>([]); // 최근 검색어 리스트
   const [isSearch, setIsSearch] = useState<boolean>(); // 검색 여부
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ['searchEpigram', keyword],
-    queryFn: async () => {
-      const res = await fetchNewEpigram({
-        limit: 4,
-        cursor: 0,
-        keyword: keyword,
-      });
+  const { data, fetchNextPage, hasNextPage, isLoading, isError } =
+    useInfiniteQuery({
+      queryKey: ['searchEpigram', keyword],
+      queryFn: async ({ pageParam = 0 }) => {
+        const res = await fetchNewEpigram({
+          limit: 4,
+          cursor: pageParam,
+          keyword: keyword,
+        });
 
-      if (res.list.length > 0) {
-        return res;
-      } else {
-        setIsSearch(true);
-        return res;
-      }
-    },
-    enabled: !!keyword,
+        if (res.list.length > 0) {
+          return res;
+        } else {
+          setIsSearch(true);
+          return res;
+        }
+      },
+      getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
+      initialPageParam: 0,
+      enabled: !!keyword,
+    });
+
+  // 무함 스크롤
+  const { totalCount, isMoreButton, scrollLoading } = useInfiniteScroll({
+    data,
+    fetchNextPage,
+    hasNextPage,
   });
 
   // 최근 검색어 추가
@@ -75,6 +87,11 @@ export default function SearchPage() {
     setRecentKeywordList(savedKeywordList);
   }, []);
 
+  // 이미 검색한 내용 다시 검색했을때 초기화
+  useEffect(() => {
+    queryClient.resetQueries<any>(['searchEpigram']);
+  }, [keyword]);
+
   if (isLoading) {
     return <div>로딩중</div>;
   }
@@ -83,7 +100,7 @@ export default function SearchPage() {
     return <div>에러</div>;
   }
   return (
-    <div className="mx-auto my-[46px] w-full max-w-[640px]">
+    <div className="relative mx-auto my-[46px] w-full max-w-[640px]">
       <form onSubmit={handleSubmit}>
         <div className="mb-10 flex items-center justify-between border-b-4 border-b-black-800 pb-[22px]">
           <input
@@ -138,38 +155,39 @@ export default function SearchPage() {
           </ul>
         </>
       )}
-
-      {data?.list.length > 0
-        ? data.list.map((epigram: EpigramType) => {
-            return (
-              <div
-                key={epigram.id}
-                className="border-b-[1px] border-b-gray-100 p-6"
-              >
-                <Link
-                  href={`/feed/${epigram.id}`}
-                  className="font-point text-xl font-medium text-black-600 hover:font-semibold"
+      {totalCount > 0
+        ? data?.pages?.flatMap(({ list }) =>
+            list?.map((epigram: EpigramType) => {
+              return (
+                <div
+                  key={epigram.id}
+                  className="border-b-[1px] border-b-gray-100 p-6"
                 >
-                  {epigram.content}
-                </Link>
-                <span className="mt-6 block text-xl font-medium text-blue-400">
-                  - {epigram.author} -
-                </span>
-                <ul className="flex flex-wrap items-center justify-end gap-3">
-                  {epigram.tags?.map((tag) => {
-                    return (
-                      <li
-                        key={tag.id}
-                        className="text-xl font-normal text-blue-400"
-                      >
-                        #{tag.name}
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
-            );
-          })
+                  <Link
+                    href={`/feed/${epigram.id}`}
+                    className="font-point text-xl font-medium text-black-600 hover:font-semibold"
+                  >
+                    {epigram.content}
+                  </Link>
+                  <span className="mt-6 block text-xl font-medium text-blue-400">
+                    - {epigram.author} -
+                  </span>
+                  <ul className="flex flex-wrap items-center justify-end gap-3">
+                    {epigram.tags?.map((tag) => {
+                      return (
+                        <li
+                          key={tag.id}
+                          className="text-xl font-normal text-blue-400"
+                        >
+                          #{tag.name}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              );
+            })
+          )
         : isSearch && (
             <div className="flex flex-col items-center justify-center gap-2">
               <Image
@@ -183,6 +201,22 @@ export default function SearchPage() {
               </h3>
             </div>
           )}
+
+      {isMoreButton && (
+        <div className="absolute bottom-10 left-[50%] flex translate-x-[-50%] flex-col items-center justify-center gap-1 text-base font-semibold">
+          {/* <span className="text-blue-400">피드 더보기</span> */}
+          {scrollLoading ? (
+            <span className="text-xl text-blue-400">. . .</span>
+          ) : (
+            <Image
+              src="/icons/scroll-icon.svg"
+              width={34}
+              height={34}
+              alt="스크롤 아이콘"
+            />
+          )}
+        </div>
+      )}
     </div>
   );
 }

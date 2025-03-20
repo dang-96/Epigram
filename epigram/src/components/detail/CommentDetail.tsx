@@ -1,4 +1,8 @@
-import { CommentListType, CommentType, modifyComment } from '@/lib/types/type';
+import {
+  CommentListType,
+  CommentScrollType,
+  modifyComment,
+} from '@/lib/types/type';
 import Comment from '../share/Comment';
 import CommentWrite from './CommentWrite';
 import ModalFrame from '../modal/ModalFrame';
@@ -7,11 +11,17 @@ import CommentModifyModal from '../modal/CommentModifyModal';
 import { useModifyComment } from '@/lib/hooks/useModifyComment';
 import CommentDeleteModal from '../modal/CommentDeleteModal';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
+import { fetchCommentDetail } from '@/lib/apis/comment';
+import { useInfiniteScroll } from '@/lib/hooks/useInfiniteScroll';
 
 interface CommentDetailProps {
-  data: CommentType | undefined;
+  data: CommentScrollType | undefined;
   userId: number | null;
   epigramId: number;
+  fetchNextPage: () => any;
+  hasNextPage: boolean;
   refetch: () => void;
 }
 
@@ -19,8 +29,15 @@ export default function CommentDetail({
   data,
   userId,
   epigramId,
+  fetchNextPage,
+  hasNextPage,
   refetch,
 }: CommentDetailProps) {
+  const { totalCount, isMoreButton, scrollLoading } = useInfiniteScroll({
+    data,
+    hasNextPage,
+    fetchNextPage,
+  });
   const { isOpen, setIsOpen, setCommentId, handleDeleteComment } =
     useDeleteComment();
 
@@ -67,9 +84,7 @@ export default function CommentDetail({
           style={{ backgroundImage: 'url(/images/line-top.png)' }}
         />
         <div className="mx-auto w-full max-w-[640px]">
-          <h3 className="mb-6 text-xl font-semibold">
-            댓글 ({data?.totalCount})
-          </h3>
+          <h3 className="mb-6 text-xl font-semibold">댓글 ({totalCount})</h3>
           {/* 댓글 작성 */}
           <CommentWrite
             epigramId={Number(epigramId)}
@@ -77,20 +92,22 @@ export default function CommentDetail({
           />
 
           {/* 댓글 리스트 */}
-          {data?.list && data.list.length > 0 ? (
-            data.list.map((comment: CommentListType) => {
-              return (
-                <Comment
-                  key={comment.id}
-                  data={comment}
-                  userId={userId}
-                  setIsOpen={setIsOpen}
-                  setCommentId={setCommentId}
-                  modifySetIsOpen={modifySetIsOpen}
-                  modifySetCommentId={modifySetCommentId}
-                />
-              );
-            })
+          {data?.pages && Number(totalCount) > 0 ? (
+            data.pages?.flatMap(({ list }) =>
+              list?.map((comment: CommentListType) => {
+                return (
+                  <Comment
+                    key={comment.id}
+                    data={comment}
+                    userId={userId}
+                    setIsOpen={setIsOpen}
+                    setCommentId={setCommentId}
+                    modifySetIsOpen={modifySetIsOpen}
+                    modifySetCommentId={modifySetCommentId}
+                  />
+                );
+              })
+            )
           ) : (
             <div className="my-40 flex flex-col items-center justify-center gap-6">
               <Image
@@ -107,6 +124,21 @@ export default function CommentDetail({
             </div>
           )}
         </div>
+        {isMoreButton && (
+          <div className="absolute bottom-10 left-[50%] flex translate-x-[-50%] flex-col items-center justify-center gap-1 text-base font-semibold">
+            {/* <span className="text-blue-400">피드 더보기</span> */}
+            {scrollLoading ? (
+              <span className="text-xl text-blue-400">. . .</span>
+            ) : (
+              <Image
+                src="/icons/scroll-icon.svg"
+                width={34}
+                height={34}
+                alt="스크롤 아이콘"
+              />
+            )}
+          </div>
+        )}
       </div>
     </>
   );

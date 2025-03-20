@@ -1,7 +1,34 @@
+import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 export default function FixedMenu() {
+  const [showTopButton, setShowTopButton] = useState<boolean>(false);
+
+  const handleScroll = () => {
+    if (window.scrollY > 100) {
+      setShowTopButton(true);
+    } else {
+      setShowTopButton(false);
+    }
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
     <>
       <Link
@@ -10,9 +37,17 @@ export default function FixedMenu() {
       >
         + 에피그램 만들기
       </Link>
+
       <button
         type="button"
-        className="fixed bottom-[12%] right-28 flex h-16 w-16 items-center justify-center rounded-full bg-blue-900"
+        onClick={scrollToTop}
+        className={clsx(
+          'fixed bottom-[12%] right-28 flex h-16 w-16 items-center justify-center rounded-full bg-blue-900 transition-opacity duration-500 ease-in-out',
+          {
+            'pointer-events-auto opacity-100': showTopButton,
+            'pointer-events-none opacity-0': !showTopButton,
+          }
+        )}
       >
         <Image
           src="/icons/top-arrow-icon.svg"

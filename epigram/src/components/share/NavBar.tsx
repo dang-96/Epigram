@@ -52,7 +52,7 @@ export default function NavBar() {
         </div>
       ) : (
         <div className="mx-auto flex h-[80px] w-full max-w-[1680px] items-center justify-between">
-          <Link href="/search">
+          <Link href="/search" className="w-28">
             <Image
               src="/icons/search-icon.svg"
               width={36}
