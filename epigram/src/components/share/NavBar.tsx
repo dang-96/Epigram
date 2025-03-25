@@ -1,9 +1,9 @@
-import { useUserInfo } from '@/lib/hooks/useUserInfo';
+import { useAuth } from '@/lib/context/AuthContext';
 import Image from 'next/image';
 import Link from 'next/link';
 
 export default function NavBar() {
-  const { loginState, userData } = useUserInfo();
+  const { loginState, user } = useAuth();
 
   return (
     <header className="border-b-[1px] border-[#D7D7D7] px-5">
@@ -42,11 +42,11 @@ export default function NavBar() {
             >
               <span
                 style={{
-                  backgroundImage: `url(${userData?.image || '/images/profile-default.png'})`,
+                  backgroundImage: `url(${user?.image || '/images/profile-default.png'})`,
                 }}
                 className="black h-9 w-9 rounded-full bg-white bg-cover bg-center"
               />
-              {userData?.nickname || '유저'}
+              {user?.nickname || '유저'}
             </Link>
           </div>
         </div>
