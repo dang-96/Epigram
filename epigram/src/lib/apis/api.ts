@@ -80,3 +80,17 @@ export const patchProfileImage = async ({
     throw new Error('프로필 이미집 변경에 실패했습니다.');
   }
 };
+
+// 리프레시 토큰으로 엑세스 토큰 갱신
+export const postRefreshToken = async (refreshToken: string) => {
+  try {
+    const response = await axiosInstance.post(END_POINT.auth.refresh, {
+      refreshToken: refreshToken,
+    });
+
+    return response.data;
+  } catch (error) {
+    console.log('리프레리 토큰으로 엑세스 토큰 갱신 api 에러', error);
+    throw new Error('리프레시 토큰으로 엑세스 토큰 갱신에 실패했습니다.');
+  }
+};
