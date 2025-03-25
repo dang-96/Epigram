@@ -9,6 +9,7 @@ import { useUserInfo } from '@/lib/hooks/useUserInfo';
 import { EmotionMonthlyType } from '@/lib/types/type';
 import CalendarFilter from './CalendarFilter';
 import { useEmotionDateStore } from '@/lib/store/useEmotionDateStore';
+import Loading from '../share/Loading';
 
 export default function CalendarEmotion() {
   const { emotionDate, setEmotionDate } = useEmotionDateStore();
@@ -154,7 +155,8 @@ export default function CalendarEmotion() {
     setCurrentDate(new Date());
   }, []);
 
-  if (emotionLoading && userDataLoading) return <div>로딩중</div>;
+  if (emotionLoading && userDataLoading)
+    return <Loading height={640} width={640} />;
 
   if (emotionError && userDataError) return <div>에러</div>;
 

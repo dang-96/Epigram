@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { VictoryPie } from 'victory';
+import Loading from '../share/Loading';
 
 export default function ChartEmotion() {
   const DEFAULT_DATA = [
@@ -65,6 +66,8 @@ export default function ChartEmotion() {
   const SORT_ARRAY = [...chartData].sort((a, b) => b.y - a.y); // 내림차순 정렬
   const hasData = SORT_ARRAY.some((item) => item.y > 0);
   const LABEL_COLOR = ['#48BB98', '#FBC85B', '#C7D1E0', '#E3E9F1', '#EFF3F8']; // 차트 색상
+  const chartLoading = !isClient && isLoading;
+  const chartError = !isClient && isError;
 
   // 월별 각 감정 횟수 구하고 객체로 변환
   const emotionCounts = data?.reduce((acc: any, emotion: any) => {
@@ -111,70 +114,75 @@ export default function ChartEmotion() {
     }
   }, [data]);
 
-  if (!isClient && isLoading) return <div>로딩중</div>;
-
-  if (!isClient && isError) return <div>에러</div>;
+  if (chartError) return <div>에러</div>;
 
   return (
     <div>
       <h2 className="mb-10 text-2xl font-semibold text-black-600">감정 차트</h2>
-      <div className="flex min-h-[230px] items-center justify-center gap-28">
-        {/* 차트 영역 */}
-        <div className="relative max-h-[230px] w-full max-w-[230px]">
-          <VictoryPie
-            data={SORT_ARRAY} // 차트 데이터
-            innerRadius={100} // 도넛 효과
-            padding={0} // 차트의 패딩
-            colorScale={LABEL_COLOR.map((item) => item)} // 색상 지정 (순위에 따른 색상 지정)
-            labels={[]} // 차트의 label 값 지우기
-            padAngle={data?.length === 1 ? 0 : 1} // 데이터 간의 간격
-            cornerRadius={({ datum }) => datum.radius}
-            width={hasData ? 230 : 0} // 데이터가 있으면 차트 크기 설정, 없으면 0
-            height={hasData ? 230 : 0} // 데이터가 있으면 차트 크기 설정, 없으면 0
-          />
-          <div className="absolute left-[50%] top-[50%] flex translate-x-[-50%] translate-y-[-50%] flex-col items-center gap-2">
-            <Image
-              src={SORT_ARRAY[0].image}
-              width={40}
-              height={40}
-              alt="감정 이미지"
+      {chartLoading ? (
+        <Loading height={230} width={640} />
+      ) : (
+        <div className="flex min-h-[230px] items-center justify-center gap-28">
+          {/* 차트 영역 */}
+          <div className="relative max-h-[230px] w-full max-w-[230px]">
+            <VictoryPie
+              data={SORT_ARRAY} // 차트 데이터
+              innerRadius={100} // 도넛 효과
+              padding={0} // 차트의 패딩
+              colorScale={LABEL_COLOR.map((item) => item)} // 색상 지정 (순위에 따른 색상 지정)
+              labels={[]} // 차트의 label 값 지우기
+              padAngle={data?.length === 1 ? 0 : 1} // 데이터 간의 간격
+              cornerRadius={({ datum }) => datum.radius}
+              width={hasData ? 230 : 0} // 데이터가 있으면 차트 크기 설정, 없으면 0
+              height={hasData ? 230 : 0} // 데이터가 있으면 차트 크기 설정, 없으면 0
             />
-            <span className="text-lg font-semibold">{SORT_ARRAY[0].text}</span>
+            <div className="absolute left-[50%] top-[50%] flex translate-x-[-50%] translate-y-[-50%] flex-col items-center gap-2">
+              <Image
+                src={SORT_ARRAY[0].image}
+                width={40}
+                height={40}
+                alt="감정 이미지"
+              />
+              <span className="text-lg font-semibold">
+                {SORT_ARRAY[0].text}
+              </span>
+            </div>
+          </div>
+
+          {/* 라벨 영역 */}
+          <div>
+            <ul className="w-[125px]">
+              {SORT_ARRAY.map((item, index) => {
+                const indexLast =
+                  SORT_ARRAY.length !== index + 1 && 'mb-[14px]';
+                const indexFirst =
+                  index === 0 ? 'text-black-600' : 'text-gray-200';
+
+                return (
+                  <li
+                    key={index}
+                    className={`flex items-center justify-between gap-4 ${indexLast} text-xl font-semibold ${indexFirst}`}
+                  >
+                    <span
+                      className="block h-4 w-4 rounded-sm"
+                      style={{ backgroundColor: LABEL_COLOR[index] }}
+                    />
+                    <Image
+                      src={item.image}
+                      width={24}
+                      height={24}
+                      alt="감정 이미지"
+                    />{' '}
+                    <span className="w-[50px] text-right">
+                      {item.y.toFixed(1)}%
+                    </span>
+                  </li>
+                );
+              })}
+            </ul>
           </div>
         </div>
-
-        {/* 라벨 영역 */}
-        <div>
-          <ul className="w-[125px]">
-            {SORT_ARRAY.map((item, index) => {
-              const indexLast = SORT_ARRAY.length !== index + 1 && 'mb-[14px]';
-              const indexFirst =
-                index === 0 ? 'text-black-600' : 'text-gray-200';
-
-              return (
-                <li
-                  key={index}
-                  className={`flex items-center justify-between gap-4 ${indexLast} text-xl font-semibold ${indexFirst}`}
-                >
-                  <span
-                    className="block h-4 w-4 rounded-sm"
-                    style={{ backgroundColor: LABEL_COLOR[index] }}
-                  />
-                  <Image
-                    src={item.image}
-                    width={24}
-                    height={24}
-                    alt="감정 이미지"
-                  />{' '}
-                  <span className="w-[50px] text-right">
-                    {item.y.toFixed(1)}%
-                  </span>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      </div>
+      )}
     </div>
   );
 }

@@ -13,6 +13,7 @@ import CommentModifyModal from '../modal/CommentModifyModal';
 import CommentDeleteModal from '../modal/CommentDeleteModal';
 import MyEpigramList from './MyEpigramList';
 import MyCommentList from './MyCommentList';
+import Loading from '../share/Loading';
 
 export default function ContentAllList() {
   const queryClient = useQueryClient();
@@ -110,7 +111,7 @@ export default function ContentAllList() {
   };
 
   if (epigramLoading && commentIsLoading) {
-    return <div>로딩중...</div>;
+    return <Loading height={620} width={640} />;
   }
 
   if (epigramError && commentIsError) {
