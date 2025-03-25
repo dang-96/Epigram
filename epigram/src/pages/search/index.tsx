@@ -1,3 +1,4 @@
+import Loading from '@/components/share/Loading';
 import { fetchNewEpigram } from '@/lib/apis/epigram';
 import { useInfiniteScroll } from '@/lib/hooks/useInfiniteScroll';
 import { EpigramType } from '@/lib/types/type';
@@ -92,17 +93,16 @@ export default function SearchPage() {
     queryClient.resetQueries<any>(['searchEpigram']);
   }, [keyword]);
 
-  if (isLoading) {
-    return <div>로딩중</div>;
-  }
-
   if (isError) {
     return <div>에러</div>;
   }
   return (
-    <div className="relative mx-auto my-[46px] w-full max-w-[640px]">
+    <div
+      className="relative mx-auto my-[46px] w-full max-w-[640px]"
+      style={{ height: 'calc(100vh - 80px)' }}
+    >
       <form onSubmit={handleSubmit}>
-        <div className="mb-10 flex items-center justify-between border-b-4 border-b-black-800 pb-[22px]">
+        <div className="mb-9 flex items-center justify-between border-b-4 border-b-black-800 pb-[22px]">
           <input
             type="text"
             className="h-8 w-full text-2xl font-normal focus-visible:outline-none"
@@ -123,7 +123,7 @@ export default function SearchPage() {
 
       {recentKeywordList.length > 0 && (
         <>
-          <div className="mb-10 flex items-center justify-between">
+          <div className="mb-9 flex items-center justify-between">
             <h2 className="text-2xl font-medium">최근 검색어</h2>
             <button
               type="button"
@@ -155,67 +155,73 @@ export default function SearchPage() {
           </ul>
         </>
       )}
-      {totalCount > 0
-        ? data?.pages?.flatMap(({ list }) =>
-            list?.map((epigram: EpigramType) => {
-              return (
-                <div
-                  key={epigram.id}
-                  className="border-b-[1px] border-b-gray-100 p-6"
-                >
-                  <Link
-                    href={`/feed/${epigram.id}`}
-                    className="font-point text-xl font-medium text-black-600 hover:font-semibold"
-                  >
-                    {epigram.content}
-                  </Link>
-                  <span className="mt-6 block text-xl font-medium text-blue-400">
-                    - {epigram.author} -
-                  </span>
-                  <ul className="flex flex-wrap items-center justify-end gap-3">
-                    {epigram.tags?.map((tag) => {
-                      return (
-                        <li
-                          key={tag.id}
-                          className="text-xl font-normal text-blue-400"
-                        >
-                          #{tag.name}
-                        </li>
-                      );
-                    })}
-                  </ul>
+      {isLoading ? (
+        <Loading height={390} width={640} />
+      ) : (
+        <>
+          {totalCount > 0
+            ? data?.pages?.flatMap(({ list }) =>
+                list?.map((epigram: EpigramType) => {
+                  return (
+                    <div
+                      key={epigram.id}
+                      className="border-b-[1px] border-b-gray-100 p-6"
+                    >
+                      <Link
+                        href={`/feed/${epigram.id}`}
+                        className="font-point text-xl font-medium text-black-600 hover:font-semibold"
+                      >
+                        {epigram.content}
+                      </Link>
+                      <span className="mt-6 block text-xl font-medium text-blue-400">
+                        - {epigram.author} -
+                      </span>
+                      <ul className="flex flex-wrap items-center justify-end gap-3">
+                        {epigram.tags?.map((tag) => {
+                          return (
+                            <li
+                              key={tag.id}
+                              className="text-xl font-normal text-blue-400"
+                            >
+                              #{tag.name}
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </div>
+                  );
+                })
+              )
+            : isSearch && (
+                <div className="flex flex-col items-center justify-center gap-2">
+                  <Image
+                    src="/images/not-content.png"
+                    width={144}
+                    height={144}
+                    alt="검색어 없는경우 아이콘"
+                  />
+                  <h3 className="text-xl font-normal">
+                    검색된 에피그램이 없습니다.
+                  </h3>
                 </div>
-              );
-            })
-          )
-        : isSearch && (
-            <div className="flex flex-col items-center justify-center gap-2">
-              <Image
-                src="/images/not-content.png"
-                width={144}
-                height={144}
-                alt="검색어 없는경우 아이콘"
-              />
-              <h3 className="text-xl font-normal">
-                검색된 에피그램이 없습니다.
-              </h3>
+              )}
+
+          {isMoreButton && (
+            <div className="absolute bottom-12 left-[50%] flex translate-x-[-50%] flex-col items-center justify-center gap-1 text-base font-semibold">
+              {/* <span className="text-blue-400">피드 더보기</span> */}
+              {scrollLoading ? (
+                <span className="text-xl text-blue-400">. . .</span>
+              ) : (
+                <Image
+                  src="/icons/scroll-icon.svg"
+                  width={34}
+                  height={34}
+                  alt="스크롤 아이콘"
+                />
+              )}
             </div>
           )}
-
-      {isMoreButton && (
-        <div className="absolute bottom-10 left-[50%] flex translate-x-[-50%] flex-col items-center justify-center gap-1 text-base font-semibold">
-          {/* <span className="text-blue-400">피드 더보기</span> */}
-          {scrollLoading ? (
-            <span className="text-xl text-blue-400">. . .</span>
-          ) : (
-            <Image
-              src="/icons/scroll-icon.svg"
-              width={34}
-              height={34}
-              alt="스크롤 아이콘"
-            />
-          )}
-        </div>
+        </>
       )}
     </div>
   );
