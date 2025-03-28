@@ -21,8 +21,8 @@ export default function Profile() {
   };
 
   const handleLogout = () => {
-    logout();
     router.push('/');
+    logout();
   };
 
   const imageUrl = async (imageFile: File) => {

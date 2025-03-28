@@ -5,10 +5,10 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 export default function FixedMenu() {
+  const APPLY_PATH = ['/main', '/feed'];
   const router = useRouter();
   const [showTopButton, setShowTopButton] = useState<boolean>(false);
   const [buttonHover, setButtonHover] = useState<boolean>(false);
-  const APPLY_PATH = ['/main', '/feed'];
 
   const writeButtonShow = APPLY_PATH.includes(router.pathname);
 
@@ -28,6 +28,18 @@ export default function FixedMenu() {
   };
 
   useEffect(() => {
+    const handleRouterChange = () => {
+      setButtonHover(false);
+    };
+
+    router.events.on('routeChangeStart', handleRouterChange);
+
+    return () => {
+      router.events.off('routeChangeStart', handleRouterChange);
+    };
+  }, [router]);
+
+  useEffect(() => {
     window.addEventListener('scroll', handleScroll);
 
     return () => {
@@ -40,7 +52,10 @@ export default function FixedMenu() {
       {writeButtonShow && (
         <Link
           href="/write"
-          className="fixed bottom-[13%] right-5 z-50 flex h-16 w-16 items-center justify-center rounded-full bg-blue-900 text-xl font-semibold text-blue-100 shadow-[4px_4px_4px_rgba(172,172,172,0.3)] transition-all hover:w-48 hover:bg-blue-700"
+          className={clsx(
+            'fixed bottom-[13%] right-5 z-50 flex h-16 items-center justify-center rounded-full text-xl font-semibold text-blue-100 shadow-[4px_4px_4px_rgba(172,172,172,0.3)] transition-all ',
+            buttonHover ? 'w-48 bg-blue-700' : 'w-16 bg-blue-900'
+          )}
           onMouseEnter={() => {
             setButtonHover(true);
           }}
