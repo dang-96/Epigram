@@ -1,27 +1,43 @@
 import { useAuth } from '@/lib/context/AuthContext';
 import Image from 'next/image';
 import Link from 'next/link';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import { useEffect } from 'react';
 
 export default function KeyVisual() {
   const { loginState } = useAuth();
 
+  useEffect(() => {
+    AOS.init({
+      once: true,
+    });
+  }, []);
   return (
     <div
       className="relative flex h-[calc(100vh-80px)] w-full flex-col items-center justify-center gap-10 bg-cover bg-center bg-repeat-x text-center"
       style={{ backgroundImage: 'url(/images/back-line.png)' }}
     >
-      <div>
+      <div data-aos="zoom-out-up" data-aos-duration="1500">
         <h2 className="font-point text-[40px] font-medium leading-relaxed">
           나만 갖고 있기엔 <br /> 아까운 글이 있지 않나요?
         </h2>
       </div>
 
-      <span className="font-point text-xl">
+      <span
+        className="font-point text-xl"
+        data-aos="zoom-out-up"
+        data-aos-duration="1500"
+        data-aos-delay="200"
+      >
         다른 사람들과 감정을 공유해 보세요.
       </span>
 
       <Link
         href={loginState ? '/main' : '/login'}
+        data-aos="zoom-out-up"
+        data-aos-duration="1500"
+        data-aos-delay="300"
         className="flex h-16 w-72 items-center justify-center rounded-xl bg-black-500 text-xl font-semibold text-white"
       >
         시작하기

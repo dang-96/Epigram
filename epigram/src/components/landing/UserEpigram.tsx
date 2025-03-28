@@ -21,7 +21,11 @@ export default function UserEpigram() {
   ];
   return (
     <div className="relative w-full bg-background pb-16 pt-64 text-center">
-      <h3 className="mb-[100px] text-3xl font-bold leading-normal">
+      <h3
+        className="mb-[100px] text-3xl font-bold leading-normal"
+        data-aos="zoom-out-up"
+        data-aos-duration="1500"
+      >
         사용자들이 직접
         <br />
         인용한 에피그램들
@@ -34,6 +38,9 @@ export default function UserEpigram() {
               className={clsx(
                 USERS_EPIGRAM_LIST.length === index + 1 ? 'mb-10' : 'mb-14'
               )}
+              data-aos="zoom-out-up"
+              data-aos-duration="1500"
+              data-aos-delay={'400' + (index + 1) * 100}
             >
               <div
                 className="mb-2 w-full rounded-2xl bg-cover bg-center bg-repeat-x p-6 shadow-[0_3px_12px_rgba(0,0,0,0.1)]"
