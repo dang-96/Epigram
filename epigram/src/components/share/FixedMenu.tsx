@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 export default function FixedMenu() {
   const router = useRouter();
   const [showTopButton, setShowTopButton] = useState<boolean>(false);
+  const [buttonHover, setButtonHover] = useState<boolean>(false);
   const APPLY_PATH = ['/main', '/feed'];
 
   const writeButtonShow = APPLY_PATH.includes(router.pathname);
@@ -39,9 +40,24 @@ export default function FixedMenu() {
       {writeButtonShow && (
         <Link
           href="/write"
-          className="fixed bottom-[20%] right-28 z-50 flex h-16 w-full max-w-48 items-center justify-center rounded-full bg-blue-900 text-xl font-semibold text-blue-100 shadow-[4px_4px_4px_rgba(172,172,172,0.3)]"
+          className="fixed bottom-[13%] right-5 z-50 flex h-16 w-16 items-center justify-center rounded-full bg-blue-900 text-xl font-semibold text-blue-100 shadow-[4px_4px_4px_rgba(172,172,172,0.3)] transition-all hover:w-48 hover:bg-blue-700"
+          onMouseEnter={() => {
+            setButtonHover(true);
+          }}
+          onMouseLeave={() => {
+            setButtonHover(false);
+          }}
         >
-          + 에피그램 만들기
+          {buttonHover ? (
+            <span className="whitespace-nowrap">+ 에피그램 만들기</span>
+          ) : (
+            <Image
+              src="icons/pen-icon.svg"
+              width={30}
+              height={30}
+              alt="팬 아이콘"
+            />
+          )}
         </Link>
       )}
 
@@ -49,7 +65,7 @@ export default function FixedMenu() {
         type="button"
         onClick={scrollToTop}
         className={clsx(
-          'fixed bottom-[12%] right-28 z-50 flex h-16 w-16 items-center justify-center rounded-full bg-blue-900 transition-opacity duration-500  ease-in-out',
+          'fixed bottom-[5%] right-5 z-50 flex h-16 w-16 items-center justify-center rounded-full bg-blue-900 transition-all duration-500  ease-in-out hover:bg-blue-700',
           {
             'pointer-events-auto opacity-100': showTopButton,
             'pointer-events-none opacity-0': !showTopButton,
