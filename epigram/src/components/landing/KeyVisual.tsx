@@ -31,6 +31,7 @@ export default function KeyVisual() {
         <span className="text-blue-400">더 알아보기</span>
         <Image
           src="/icons/scroll-icon.svg"
+          className="animate-bounce"
           width={24}
           height={24}
           alt="스크롤 아이콘"
