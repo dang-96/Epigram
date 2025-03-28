@@ -10,6 +10,7 @@ import CommentModifyModal from '../modal/CommentModifyModal';
 import { useModifyComment } from '@/lib/hooks/useModifyComment';
 import { useUserInfo } from '@/lib/hooks/useUserInfo';
 import CommentDeleteModal from '../modal/CommentDeleteModal';
+import Loading from '../share/Loading';
 
 export default function NewCommentList() {
   // 유저 데이터
@@ -31,6 +32,8 @@ export default function NewCommentList() {
   const currentCount =
     data?.pages?.reduce((acc, page) => acc + page?.list.length, 0) ?? 0;
   const isMoreButton = currentCount >= totalCount ? false : hasNextPage;
+  const newCommentLoading = isLoading || userDataLoading;
+  const newCommentError = isError || userDataError;
 
   // 댓글 삭제
   const { isOpen, setIsOpen, setCommentId, handleDeleteComment } =
@@ -56,11 +59,7 @@ export default function NewCommentList() {
     });
   };
 
-  if (isLoading || userDataLoading) {
-    return <div>로딩중...</div>;
-  }
-
-  if (isError || userDataError) {
+  if (newCommentError) {
     return <div>에러...</div>;
   }
 
@@ -85,52 +84,58 @@ export default function NewCommentList() {
         <h2 className="mb-10 text-2xl font-semibold text-black-600">
           최신 댓글
         </h2>
-        {data?.pages?.length ? (
-          data?.pages?.flatMap(({ list }) =>
-            list?.map((comment: CommentListType) => {
-              return (
-                <Comment
-                  key={comment.id}
-                  data={comment}
-                  userId={userData?.id}
-                  setIsOpen={setIsOpen}
-                  setCommentId={setCommentId}
-                  modifySetIsOpen={modifySetIsOpen}
-                  modifySetCommentId={modifySetCommentId}
-                />
-              );
-            })
-          )
+        {newCommentLoading ? (
+          <Loading height={570} width={640} />
         ) : (
-          <div className="flex flex-col items-center justify-center gap-2">
-            <Image
-              src="/images/not-content.png"
-              width={144}
-              height={144}
-              alt="컨텐츠 없는 경우 아이콘"
-            />
-            <p className="text-center text-xl">최신 댓글이 없습니다.</p>
-          </div>
-        )}
+          <>
+            {data?.pages?.length ? (
+              data?.pages?.flatMap(({ list }) =>
+                list?.map((comment: CommentListType) => {
+                  return (
+                    <Comment
+                      key={comment.id}
+                      data={comment}
+                      userId={userData?.id}
+                      setIsOpen={setIsOpen}
+                      setCommentId={setCommentId}
+                      modifySetIsOpen={modifySetIsOpen}
+                      modifySetCommentId={modifySetCommentId}
+                    />
+                  );
+                })
+              )
+            ) : (
+              <div className="flex flex-col items-center justify-center gap-2">
+                <Image
+                  src="/images/not-content.png"
+                  width={144}
+                  height={144}
+                  alt="컨텐츠 없는 경우 아이콘"
+                />
+                <p className="text-center text-xl">최신 댓글이 없습니다.</p>
+              </div>
+            )}
 
-        <div className="mt-[72px] flex justify-center">
-          {isMoreButton ? (
-            <button
-              type="button"
-              onClick={() => fetchNextPage()}
-              className="flex h-[56px] w-full max-w-[238px] items-center justify-center rounded-full border-[1px] border-line-200 text-xl font-medium text-blue-500"
-            >
-              + 최신 댓글 더보기
-            </button>
-          ) : (
-            <Link
-              href="/feed"
-              className="flex h-[56px] w-full max-w-[238px] items-center justify-center rounded-full border-[1px] border-line-200 text-xl font-medium text-blue-500"
-            >
-              + 댓글 작성된 피드 보기
-            </Link>
-          )}
-        </div>
+            <div className="mt-[72px] flex justify-center">
+              {isMoreButton ? (
+                <button
+                  type="button"
+                  onClick={() => fetchNextPage()}
+                  className="flex h-[56px] w-full max-w-[238px] items-center justify-center rounded-full border-[1px] border-line-200 text-xl font-medium text-blue-500"
+                >
+                  + 최신 댓글 더보기
+                </button>
+              ) : (
+                <Link
+                  href="/feed"
+                  className="flex h-[56px] w-full max-w-[238px] items-center justify-center rounded-full border-[1px] border-line-200 text-xl font-medium text-blue-500"
+                >
+                  + 댓글 작성된 피드 보기
+                </Link>
+              )}
+            </div>
+          </>
+        )}
       </div>
     </>
   );

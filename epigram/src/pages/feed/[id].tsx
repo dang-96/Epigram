@@ -1,5 +1,7 @@
 import CommentDetail from '@/components/detail/CommentDetail';
 import EpigramDetail from '@/components/detail/EpigramDetail';
+import Loading from '@/components/share/Loading';
+import LoginMessage from '@/components/share/LoginMessage';
 import { fetchCommentDetail } from '@/lib/apis/comment';
 import { fetchEpigramDetail } from '@/lib/apis/epigram';
 import { useUserInfo } from '@/lib/hooks/useUserInfo';
@@ -79,24 +81,7 @@ export default function DetailPage() {
   }, []);
 
   if (!loginState) {
-    return (
-      <div
-        className="flex w-full flex-col items-center justify-center gap-10 px-5"
-        style={{ height: 'calc(100vh - 80px)' }}
-      >
-        <h2 className="text-3xl">로그인 후 이용해 주세요!</h2>
-        <Link
-          href="/login"
-          className="flex h-16 w-72 items-center justify-center rounded-xl bg-black-500 text-xl font-semibold text-white"
-        >
-          로그인 하러 가기
-        </Link>
-      </div>
-    );
-  }
-
-  if (isLoading) {
-    return <div>로딩중</div>;
+    return <LoginMessage />;
   }
 
   if (isError) {
@@ -104,20 +89,26 @@ export default function DetailPage() {
   }
 
   return (
-    <div>
-      <EpigramDetail
-        data={epigramDetailData}
-        isMore={isMore}
-        refetch={epigramDetailRefetch}
-      />
-      <CommentDetail
-        data={commentDetailData}
-        userId={userData?.id}
-        epigramId={Number(commentId)}
-        fetchNextPage={fetchNextPage}
-        hasNextPage={hasNextPage}
-        refetch={refetch}
-      />
+    <div className="w-full">
+      {isLoading ? (
+        <Loading width={'100%'} height={'100vh'} />
+      ) : (
+        <>
+          <EpigramDetail
+            data={epigramDetailData}
+            isMore={isMore}
+            refetch={epigramDetailRefetch}
+          />
+          <CommentDetail
+            data={commentDetailData}
+            userId={userData?.id}
+            epigramId={Number(commentId)}
+            fetchNextPage={fetchNextPage}
+            hasNextPage={hasNextPage}
+            refetch={refetch}
+          />
+        </>
+      )}
     </div>
   );
 }

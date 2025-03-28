@@ -17,7 +17,8 @@ export const useUserInfo = () => {
 
       return res;
     },
-    enabled: loginState,
+    // enabled: loginState,
+    // retry: false,
   });
 
   return {

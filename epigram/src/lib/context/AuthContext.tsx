@@ -8,16 +8,17 @@ import {
 import { UserInfoType } from '../types/type';
 
 type AuthContextType = {
-  loginState: boolean;
+  loginState: boolean | null;
   user: UserInfoType | null;
   login: (data: any) => void;
   logout: () => void;
+  setLoginState: React.Dispatch<React.SetStateAction<boolean | null>>;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [loginState, setLoginState] = useState<boolean>(false);
+  const [loginState, setLoginState] = useState<boolean | null>(false);
   const [user, setUser] = useState<UserInfoType | null>(null);
 
   const login = (data: any) => {
@@ -26,6 +27,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     localStorage.setItem('userInfo', JSON.stringify(data.user));
     localStorage.setItem('accessToken', data.accessToken);
+    localStorage.setItem('refreshToken', data.refreshToken);
   };
 
   const logout = () => {
@@ -34,20 +36,24 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     localStorage.removeItem('userInfo');
     localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
   };
 
   useEffect(() => {
     const storageUserInfo = localStorage.getItem('userInfo');
     const storageAccessToken = localStorage.getItem('accessToken');
+    const storageRefreshToken = localStorage.getItem('refreshToken');
 
-    if (storageUserInfo && storageAccessToken) {
+    if (storageUserInfo && storageAccessToken && storageRefreshToken) {
       setLoginState(true);
       setUser(JSON.parse(storageUserInfo));
     }
   }, []);
 
   return (
-    <AuthContext.Provider value={{ loginState, user, login, logout }}>
+    <AuthContext.Provider
+      value={{ loginState, user, login, logout, setLoginState }}
+    >
       {children}
     </AuthContext.Provider>
   );

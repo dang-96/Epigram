@@ -47,7 +47,7 @@ export default function CalendarFilter({
             <ul className="flex items-center justify-center gap-3 p-4">
               {EMOTION_LIST.map((emotion) => {
                 return (
-                  <li className="w-full">
+                  <li key={emotion.id} className="w-full">
                     <button
                       type="button"
                       className={clsx(
