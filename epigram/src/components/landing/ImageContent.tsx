@@ -16,8 +16,16 @@ export default function ImageContent() {
         <div
           className={imageClass}
           style={{ backgroundImage: 'url(/images/landing01.png)' }}
+          data-aos="fade-right"
+          data-aos-duration="1500"
         />
-        <div className="text-left">
+        <div
+          className="text-left"
+          data-aos="fade-left"
+          data-aos-duration="1500"
+          data-aos-anchor-placement="top-bottom"
+          data-aos-delay="500"
+        >
           <h3 className={bigText}>
             명언이나 글귀,
             <br />
@@ -31,7 +39,13 @@ export default function ImageContent() {
       </div>
 
       <div className={contentWrap}>
-        <div className="text-right">
+        <div
+          className="text-right"
+          data-aos="fade-right"
+          data-aos-duration="1500"
+          data-aos-anchor-placement="top-bottom"
+          data-aos-delay="500"
+        >
           <h3 className={bigText}>
             감정 상태에 따라,
             <br />
@@ -42,6 +56,8 @@ export default function ImageContent() {
         <div
           className={imageClass}
           style={{ backgroundImage: 'url(/images/landing02.png)' }}
+          data-aos="fade-left"
+          data-aos-duration="1500"
         />
       </div>
 
@@ -49,8 +65,16 @@ export default function ImageContent() {
         <div
           className={imageClass}
           style={{ backgroundImage: 'url(/images/landing03.png)' }}
+          data-aos="fade-right"
+          data-aos-duration="1500"
         />
-        <div className="text-left">
+        <div
+          className="text-left"
+          data-aos="fade-left"
+          data-aos-duration="1500"
+          data-aos-anchor-placement="top-bottom"
+          data-aos-delay="500"
+        >
           <h3 className={bigText}>
             내가 요즘 어떤 감정 상태인지
             <br />

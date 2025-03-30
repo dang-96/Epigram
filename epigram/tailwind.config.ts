@@ -52,6 +52,7 @@ export default {
       animation: {
         modalFadeIn: 'modalFadeIn 0.5s forwards',
         modalFadeOut: 'modalFadeOut 0.5s forwards',
+        bounce: 'bounce 1.5s linear infinite',
       },
       keyframes: {
         modalFadeIn: {
@@ -61,6 +62,10 @@ export default {
         modalFadeOut: {
           '0%': { opacity: '1' },
           '100%': { opacity: '0' },
+        },
+        bounce: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(15px)' },
         },
       },
     },
