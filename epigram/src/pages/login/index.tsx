@@ -5,10 +5,9 @@ import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-// Todo - 로그인 페이지 컴포넌트 나누기
 // Todo - 로그인 상태 토스트 메시지로 띄우기
 export default function LoginPage() {
   const [passwordView, setPasswordView] = useState<boolean>(false);
@@ -41,8 +40,10 @@ export default function LoginPage() {
     },
   ];
 
-  const INPUT_CLASS =
-    'h-full w-full rounded-xl border-[1px] border-blue-300 bg-background p-4 text-xl text-black-950 placeholder:text-blue-400 focus:border-blue-300 focus:bg-blue-200 focus-visible:outline-none';
+  const INPUT_CLASS = clsx(
+    'h-11 w-full rounded-xl border-[1px] border-blue-300 bg-background px-4 text-base text-black-950 placeholder:text-blue-400 focus:border-blue-300 focus:bg-blue-200 focus-visible:outline-none',
+    'xl:h-16 xl:text-xl'
+  );
 
   const {
     register,
@@ -93,8 +94,14 @@ export default function LoginPage() {
   // 로그인이 되어있는 상태로 접근시 메인 페이지로 리다이렉트
 
   return (
-    <div className="flex h-[calc(100vh-80px)] w-full flex-col items-center justify-center bg-background">
-      <h2 className="mb-14">
+    <div
+      className={clsx(
+        'flex h-[calc(100vh-52px)] w-full flex-col items-center justify-center bg-background px-[10px]',
+        'sm:h-[calc(100vh-60px)]',
+        'xl:h-[calc(100vh-80px)] xl:px-5'
+      )}
+    >
+      <h2 className={clsx('mb-[50px]', 'xl:mb-[60px]')}>
         <Image
           src="/images/logo.png"
           width={172}
@@ -109,9 +116,15 @@ export default function LoginPage() {
             return (
               <div
                 key={input.id}
-                className="relative mb-10 block w-full max-w-[640px]"
+                className={clsx(
+                  'relative mb-7 block w-full max-w-[640px]',
+                  'xl:mb-10'
+                )}
               >
-                <label className="mb-5 block" htmlFor={input.id}>
+                <label
+                  className={clsx('mb-2 block', 'xl:mb-5')}
+                  htmlFor={input.id}
+                >
                   {input.label}
                 </label>
                 <input
@@ -127,7 +140,10 @@ export default function LoginPage() {
                 {input.id === 'password' ? (
                   <button
                     type="button"
-                    className="absolute right-4 top-[63.5px]"
+                    className={clsx(
+                      'absolute right-4 top-[43.5px]',
+                      'xl:top-[63.5px]'
+                    )}
                     onClick={() => {
                       setPasswordView(!passwordView);
                     }}
@@ -147,7 +163,12 @@ export default function LoginPage() {
                   ''
                 )}
                 {errors[input.id] && (
-                  <p className="absolute bottom-[-22px] left-0 text-sm text-red">
+                  <p
+                    className={clsx(
+                      'absolute bottom-[-20px] left-0 text-xs text-red',
+                      'xl:bottom-[-22px] xl:text-sm'
+                    )}
+                  >
                     {String(errors[input.id]?.message) ||
                       '오류가 발생했습니다.'}
                   </p>
@@ -157,7 +178,10 @@ export default function LoginPage() {
           })}
           <button
             type="submit"
-            className="mt-6 h-[64px] w-full max-w-[640px] rounded-xl bg-black-500 text-xl font-semibold text-white disabled:bg-blue-300 disabled:font-normal"
+            className={clsx(
+              'mt-4 h-[44px] w-full max-w-[640px] rounded-xl bg-black-500 text-base font-semibold text-white disabled:bg-blue-300 disabled:font-normal',
+              'xl:mt-6 xl:h-[64px] xl:text-xl'
+            )}
             disabled={!isValid}
           >
             로그인
@@ -165,15 +189,27 @@ export default function LoginPage() {
         </div>
       </form>
       <div className="mb-14 mt-3 flex w-full max-w-[640px] items-center justify-end gap-2">
-        <p className="text-xl font-medium text-blue-400">회원이 아니신가요?</p>
+        <p
+          className={clsx(
+            'text-sm font-medium text-blue-400',
+            'sm:text-base',
+            'xl:text-xl'
+          )}
+        >
+          회원이 아니신가요?
+        </p>
         <Link
           href="/signup"
-          className="text-xl font-medium text-black-500 underline"
+          className={clsx(
+            'text-sm font-medium text-black-500 underline',
+            'sm:text-base',
+            'xl:text-xl'
+          )}
         >
           가입하기
         </Link>
       </div>
-      <div className="login-line relative mb-10 w-full max-w-[640px] text-center">
+      {/* <div className="login-line relative mb-10 w-full max-w-[640px] text-center">
         <span className="relative z-[2] bg-background px-6 text-xl text-[#ABB8CE]">
           SNS 계정으로 로그인하기
         </span>
@@ -201,7 +237,7 @@ export default function LoginPage() {
             alt="카카오 아이콘"
           />
         </button>
-      </div>
+      </div> */}
     </div>
   );
 }

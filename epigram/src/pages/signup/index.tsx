@@ -6,7 +6,6 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-// Todo - 회원가입 페이지 컴포넌트 나누기
 // Todo - 회원가입 상태 토스트 메시지로 띄우기
 export default function Signup() {
   const [passwordView, setPasswordView] = useState<boolean>(false);
@@ -64,8 +63,10 @@ export default function Signup() {
     },
   ];
 
-  const INPUT_CLASS =
-    'h-16 w-full rounded-xl border-[1px] border-blue-300 bg-background p-4 text-xl text-black-950 placeholder:text-blue-400 focus:border-blue-300 focus:bg-blue-200 focus-visible:outline-none';
+  const INPUT_CLASS = clsx(
+    'h-11 w-full rounded-xl border-[1px] border-blue-300 bg-background p-4 text-base text-black-950 placeholder:text-blue-400 focus:border-blue-300 focus:bg-blue-200 focus-visible:outline-none',
+    'xl:h-16 xl:text-xl'
+  );
 
   const {
     register,
@@ -107,7 +108,12 @@ export default function Signup() {
   useLoggedInReDirect();
 
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center bg-background pb-44 pt-20">
+    <div
+      className={clsx(
+        'flex h-full w-full flex-col items-center justify-center bg-background px-[10px] pb-44 pt-20',
+        'xl:px-5'
+      )}
+    >
       <h2 className="mb-20">
         <Image
           src="/images/logo.png"
@@ -136,9 +142,15 @@ export default function Signup() {
             return (
               <div
                 key={input.id}
-                className="relative mb-10 block w-full max-w-[640px]"
+                className={clsx(
+                  'relative mb-7 block w-full max-w-[640px]',
+                  'xl:mb-10'
+                )}
               >
-                <label className="mb-5 block" htmlFor={input.id}>
+                <label
+                  className={clsx('mb-2 block', 'xl:mb-5')}
+                  htmlFor={input.id}
+                >
                   {input.label}
                 </label>
                 <input
@@ -154,7 +166,10 @@ export default function Signup() {
                 {input.id === 'password' || input.id === 'passwordCheck' ? (
                   <button
                     type="button"
-                    className="absolute right-4 top-[63.5px]"
+                    className={clsx(
+                      'absolute right-4 top-[43.5px]',
+                      'xl:top-[63.5px]'
+                    )}
                     onClick={() => {
                       if (input.id === 'password') {
                         setPasswordView(!passwordView);
@@ -174,7 +189,12 @@ export default function Signup() {
                   ''
                 )}
                 {errors[input.id] && (
-                  <p className="absolute bottom-[-22px] left-0 text-sm text-red">
+                  <p
+                    className={clsx(
+                      'absolute bottom-[-20px] left-0 text-xs text-red',
+                      'xl:bottom-[-22px] xl:text-sm'
+                    )}
+                  >
                     {String(errors[input.id]?.message) ||
                       '오류가 발생했습니다.'}
                   </p>
@@ -184,14 +204,17 @@ export default function Signup() {
           })}
           <button
             type="submit"
-            className="mt-6 h-[64px] w-full max-w-[640px] rounded-xl bg-black-500 text-xl text-white disabled:bg-blue-300"
+            className={clsx(
+              'mt-4 h-[44px] w-full max-w-[640px] rounded-xl bg-black-500 text-base text-white disabled:bg-blue-300',
+              'xl:mt-6 xl:h-[64px] xl:text-xl'
+            )}
             disabled={!isValid}
           >
             가입하기
           </button>
         </div>
       </form>
-      <div className="login-line relative mb-10 mt-[60px] w-full max-w-[640px] text-center">
+      {/* <div className="login-line relative mb-10 mt-[60px] w-full max-w-[640px] text-center">
         <span className="relative z-[2] bg-background px-6 text-xl text-[#ABB8CE]">
           SNS 계정으로 간편 가입하기
         </span>
@@ -219,7 +242,7 @@ export default function Signup() {
             alt="카카오 아이콘"
           />
         </button>
-      </div>
+      </div> */}
     </div>
   );
 }
