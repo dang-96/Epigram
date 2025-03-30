@@ -21,13 +21,14 @@ export default function Epigram({ data, height }: EpigramProps) {
         <div
           className={clsx(
             'mb-2 flex w-full flex-col gap-5 rounded-2xl bg-cover bg-center bg-repeat-x p-6 shadow-[0_3px_12px_rgba(0,0,0,0.1)]',
+            height && 'h-auto sm:h-[260px]',
             data
               ? 'cursor-pointer justify-between'
               : 'cursor-auto justify-center'
           )}
           style={{
             backgroundImage: 'url(/images/back-line.png)',
-            height: height && `${height}px`,
+            // height: height && `${height}px`,
           }}
           onClick={navigateToPage}
         >

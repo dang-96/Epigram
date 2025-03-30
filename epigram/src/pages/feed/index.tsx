@@ -34,8 +34,18 @@ export default function FeedPage() {
   }
 
   return (
-    <div className="relative h-full min-h-screen bg-background py-[120px]">
-      <h2 className="mx-auto mb-10 w-full max-w-[1200px] text-2xl font-semibold text-black-600">
+    <div
+      className={clsx(
+        'relative h-full min-h-screen bg-background px-[10px] py-8',
+        'xl:px-5 xl:py-[120px]'
+      )}
+    >
+      <h2
+        className={clsx(
+          'mx-auto mb-6 w-full max-w-[1200px] text-base font-semibold text-black-600',
+          'xl:mb-10 xl:text-xl'
+        )}
+      >
         피드
       </h2>
       {isLoading ? (
@@ -44,8 +54,9 @@ export default function FeedPage() {
         <>
           <div
             className={clsx(
-              'mx-auto grid w-full max-w-[1200px] gap-x-[30px] gap-y-[40px]',
-              data?.pages && totalCount > 0 && 'grid-cols-2'
+              'mx-auto grid w-full max-w-[1200px] gap-x-0 gap-y-[16px]',
+              'sm:gap-x-[30px] sm:gap-y-[40px]',
+              data?.pages && totalCount > 0 && 'grid-cols-1 sm:grid-cols-2'
             )}
           >
             {data?.pages && totalCount > 0 ? (
