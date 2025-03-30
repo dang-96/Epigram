@@ -5,6 +5,7 @@ import FixedMenu from '@/components/share/FixedMenu';
 import NewEpigramList from '@/components/main/NewEpigramList';
 import LoginMessage from '@/components/share/LoginMessage';
 import { useAuth } from '@/lib/context/AuthContext';
+import clsx from 'clsx';
 
 export default function MainPage() {
   const { loginState } = useAuth();
@@ -14,7 +15,12 @@ export default function MainPage() {
   }
 
   return (
-    <div className="h-full bg-background py-[120px]">
+    <div
+      className={clsx(
+        'h-full bg-background px-[10px] py-8',
+        'xl:px-5 xl:py-[120px]'
+      )}
+    >
       <TodayEpigram />
       <TodayState />
       <NewEpigramList />

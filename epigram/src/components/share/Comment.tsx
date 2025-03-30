@@ -1,4 +1,5 @@
 import { CommentListType } from '@/lib/types/type';
+import clsx from 'clsx';
 import { useEffect, useState } from 'react';
 
 interface CommentProps {
@@ -48,7 +49,13 @@ export default function Comment({
 
   return (
     <>
-      <div className="w-full max-w-[640px] border-t-[1px] border-line-200 px-6 py-[35px]">
+      <div
+        className={clsx(
+          'w-full max-w-[640px] border-t-[1px] border-line-200 px-6 py-[16px]',
+          'sm:py-6',
+          'xl:py-[35px]'
+        )}
+      >
         <div className="flex items-start justify-between">
           <div className="flex items-start">
             <div
@@ -57,11 +64,23 @@ export default function Comment({
                 backgroundImage: `url(${data.writer?.image || '/images/profile-default.png'})`,
               }}
             />
-            <span className="mr-2 text-base font-normal text-black-300">
+            <span
+              className={clsx(
+                'mr-2 text-xs font-normal text-black-300',
+                'sm:text-sm',
+                'xl:text-base'
+              )}
+            >
               {data.writer?.nickname}
             </span>
-            <span className="text-base font-normal text-black-300">
-              {day} {/* Todo - 시간 데이터 연동 */}
+            <span
+              className={clsx(
+                'text-xs font-normal text-black-300',
+                'sm:text-sm',
+                'xl:text-base'
+              )}
+            >
+              {day}
             </span>
           </div>
 
@@ -69,7 +88,11 @@ export default function Comment({
             <div className="flex items-start gap-4">
               <button
                 type="button"
-                className="border-b-[1px] border-black-600 text-base text-black-600"
+                className={clsx(
+                  'border-b-[1px] border-black-600 text-xs text-black-600',
+                  'sm:text-sm',
+                  'xl:text-base'
+                )}
                 onClick={() => {
                   modifySetIsOpen(true);
                   modifySetCommentId(data.id);
@@ -79,7 +102,11 @@ export default function Comment({
               </button>
               <button
                 type="button"
-                className="border-b-[1px] border-red text-base text-red"
+                className={clsx(
+                  'border-b-[1px] border-red text-xs text-red',
+                  'sm:text-sm',
+                  'xl:text-base'
+                )}
                 onClick={() => {
                   setIsOpen(true);
                   setCommentId(data.id);
@@ -90,7 +117,15 @@ export default function Comment({
             </div>
           )}
         </div>
-        <p className="pl-16 text-xl font-normal">{data.content}</p>
+        <p
+          className={clsx(
+            'mt-[-15px] pl-16 text-sm font-normal',
+            'sm:mt-[-10px] sm:text-base',
+            'xl:mt-[-5px] xl:text-xl'
+          )}
+        >
+          {data.content}
+        </p>
       </div>
     </>
   );
