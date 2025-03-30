@@ -20,9 +20,18 @@ export default function UserEpigram() {
     },
   ];
   return (
-    <div className="relative w-full bg-background pb-16 pt-64 text-center">
+    <div
+      className={clsx(
+        'relative w-full bg-background px-[10px] pb-16 pt-[90px] text-center',
+        'sm:pt-[191px]',
+        'xl:px-5 xl:pt-64'
+      )}
+    >
       <h3
-        className="mb-[100px] text-3xl font-bold leading-normal"
+        className={clsx(
+          'mb-[40px] text-2xl font-bold leading-normal',
+          'xl:mb-[100px] xl:text-3xl'
+        )}
         data-aos="zoom-out-up"
         data-aos-duration="1500"
       >
@@ -36,7 +45,9 @@ export default function UserEpigram() {
             <div
               key={index}
               className={clsx(
-                USERS_EPIGRAM_LIST.length === index + 1 ? 'mb-10' : 'mb-14'
+                USERS_EPIGRAM_LIST.length === index + 1
+                  ? 'mb-4 sm:mb-[20px] xl:mb-10'
+                  : 'mb-4 sm:mb-[20px] xl:mb-14'
               )}
               data-aos="zoom-out-up"
               data-aos-duration="1500"
@@ -46,10 +57,22 @@ export default function UserEpigram() {
                 className="mb-2 w-full rounded-2xl bg-cover bg-center bg-repeat-x p-6 shadow-[0_3px_12px_rgba(0,0,0,0.1)]"
                 style={{ backgroundImage: 'url(/images/back-line.png)' }}
               >
-                <p className="mb-5 text-left font-point text-xl font-medium text-black-600">
+                <p
+                  className={clsx(
+                    'mb-5 text-left font-point text-sm font-medium text-black-600',
+                    'sm:text-base',
+                    'xl:text-xl'
+                  )}
+                >
                   {epigram.text}
                 </p>
-                <span className="block text-right text-xl text-blue-400">
+                <span
+                  className={clsx(
+                    'block text-right text-sm text-blue-400',
+                    'sm:text-base',
+                    'xl:text-xl'
+                  )}
+                >
                   - {epigram.author} -
                 </span>
               </div>
@@ -58,7 +81,11 @@ export default function UserEpigram() {
                   return (
                     <li
                       key={index}
-                      className="text-xl font-medium text-blue-400"
+                      className={clsx(
+                        'text-sm font-medium text-blue-400',
+                        'sm:text-base',
+                        'xl:text-xl'
+                      )}
                     >
                       #{tag}
                     </li>
