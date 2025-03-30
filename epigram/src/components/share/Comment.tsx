@@ -1,4 +1,5 @@
 import { CommentListType } from '@/lib/types/type';
+import { useEffect, useState } from 'react';
 
 interface CommentProps {
   data: CommentListType;
@@ -17,6 +18,34 @@ export default function Comment({
   modifySetIsOpen,
   modifySetCommentId,
 }: CommentProps) {
+  const [day, setDay] = useState<string>('');
+
+  useEffect(() => {
+    const todayDate = new Date();
+    const commentDate = new Date(data.createdAt);
+
+    const millisecondDifference = todayDate.getTime() - commentDate.getTime();
+    const secondDifference = Math.floor(millisecondDifference / 1000);
+
+    const years = Math.floor(secondDifference / (60 * 60 * 24 * 365));
+    const months = Math.floor(secondDifference / (60 * 60 * 24 * 30));
+    const days = Math.floor(secondDifference / (60 * 60 * 24));
+    const hours = Math.floor(secondDifference / (60 * 60));
+    const minutes = Math.floor(secondDifference / 60);
+
+    if (years > 0) {
+      setDay(years + '년 전');
+    } else if (months > 0) {
+      setDay(months + '개월 전');
+    } else if (days > 0) {
+      setDay(days + '일 전');
+    } else if (hours > 0) {
+      setDay(hours + '시간 전');
+    } else if (minutes > 0) {
+      setDay(minutes + '분 전');
+    }
+  }, []);
+
   return (
     <>
       <div className="w-full max-w-[640px] border-t-[1px] border-line-200 px-6 py-[35px]">
@@ -32,7 +61,7 @@ export default function Comment({
               {data.writer?.nickname}
             </span>
             <span className="text-base font-normal text-black-300">
-              1시간 전
+              {day} {/* Todo - 시간 데이터 연동 */}
             </span>
           </div>
 
