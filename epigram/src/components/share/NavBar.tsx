@@ -18,7 +18,7 @@ export default function NavBar() {
             'xl:h-[80px]'
           )}
         >
-          <div className="flex items-center gap-8">
+          <div className={clsx('flex items-center gap-6', 'xl:gap-8')}>
             <h1>
               <Link href="/main">
                 <Image
@@ -33,7 +33,7 @@ export default function NavBar() {
                 />
               </Link>
             </h1>
-            <div className="flex items-center gap-6">
+            <div className={clsx('flex items-center gap-4', 'xl:gap-6')}>
               <Link
                 href="/feed"
                 className={clsx(

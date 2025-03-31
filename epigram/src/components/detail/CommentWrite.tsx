@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { postComment } from '@/lib/apis/comment';
 import Switch from './Switch';
 import { useUserInfo } from '@/lib/hooks/useUserInfo';
+import clsx from 'clsx';
 
 interface CommentWriteProps {
   epigramId: number;
@@ -61,7 +62,7 @@ export default function CommentWrite({
       <div className="mb-10 flex items-start gap-4">
         <div className="h-[48px] w-[48px] flex-shrink-0">
           <div
-            className="mr-4 h-12 w-12 rounded-full bg-white bg-cover bg-center bg-no-repeat"
+            className="mr-4 h-12 w-12 rounded-full bg-white bg-cover bg-center"
             style={{
               backgroundImage: `url(${userData?.image || '/images/profile-default.png'})`,
             }}
@@ -70,16 +71,27 @@ export default function CommentWrite({
         <div className="w-full">
           <textarea
             placeholder="100자 이내로 입력해주세요."
-            className="h-[104px] w-full resize-none rounded-lg border-[1px] border-line-200 bg-background px-4 py-3 focus-visible:outline-black-600"
+            className={clsx(
+              'h-[104px] w-full resize-none rounded-lg border-[1px] border-line-200 bg-background px-4 py-3 text-sm focus-visible:outline-black-600',
+              'sm:text-base'
+            )}
             maxLength={100}
             {...register('comment', { required: '내용을 입력해주세요.' })}
           ></textarea>
 
-          <div className="mt-4 flex items-center justify-between">
+          <div
+            className={clsx(
+              'mt-2 flex items-center justify-between',
+              'sm:mt-4'
+            )}
+          >
             <Switch isOn={isOn} toggleSwitch={toggleSwitch} /> {/* 토글 버튼 */}
             <button
               type="submit"
-              className="h-11 w-[60px] rounded-lg bg-black-500 text-base font-semibold text-white disabled:bg-gray-400"
+              className={clsx(
+                'h-8 w-[60px] rounded-lg bg-black-500 text-sm font-semibold text-white disabled:bg-gray-400',
+                'xl:h-11 xl:text-base'
+              )}
               disabled={!isValid}
             >
               작성

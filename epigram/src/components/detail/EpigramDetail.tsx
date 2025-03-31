@@ -76,12 +76,20 @@ export default function EpigramDetail({
   }, []);
   return (
     <div
-      className="bg-cover bg-center bg-repeat-x py-10"
+      className={clsx(
+        'bg-cover bg-center bg-repeat-x px-[10px] py-10',
+        'xl:px-5'
+      )}
       style={{ backgroundImage: 'url(/images/back-line.png)' }}
     >
       <div className="mx-auto w-full max-w-[640px]">
         <div className="relative mb-8 flex items-center justify-between">
-          <ul className="flex items-center gap-4 text-xl font-normal text-blue-400">
+          <ul
+            className={clsx(
+              'flex items-center gap-4 text-base font-normal text-blue-400',
+              'xl:text-xl'
+            )}
+          >
             {data?.tags?.map((tag: Tag) => {
               return <li key={tag.id}>#{tag.name}</li>;
             })}
@@ -90,6 +98,7 @@ export default function EpigramDetail({
             <button type="button" onClick={handleToggle}>
               <Image
                 src="/icons/more-icon.svg"
+                className={clsx('h-6 w-6', 'xl:h-9 xl:w-9')}
                 width={36}
                 height={36}
                 alt="더보기 버튼"
@@ -124,23 +133,39 @@ export default function EpigramDetail({
             ''
           )}
         </div>
-        <h2 className="mb-8 text-[32px] font-medium text-black-700">
+        <h2
+          className={clsx(
+            'mb-8 text-2xl font-medium text-black-700',
+            'xl:text-[32px]'
+          )}
+        >
           {data?.content}
         </h2>
-        <span className="mb-9 block text-right text-2xl font-medium text-blue-400">
+        <span
+          className={clsx(
+            'mb-9 block text-right text-base font-medium text-blue-400',
+            'sm:text-xl',
+            'xl:text-2xl'
+          )}
+        >
           - {data?.author} -
         </span>
-        <div className="flex items-center justify-center gap-4">
+        <div
+          className={clsx('flex items-center justify-center gap-2', 'xl:gap-4')}
+        >
           <button
             type="button"
             className={clsx(
-              'flex h-12 items-center justify-center gap-[6px] rounded-[100px] px-5 text-white hover:bg-black-600',
+              'flex h-9 items-center justify-center gap-[6px] rounded-[100px] px-5 text-sm text-white hover:bg-black-600',
+              'sm:text-base',
+              'xl:h-12 xl:text-xl',
               isLike ? 'bg-black-600' : 'bg-gray-200'
             )}
             onClick={() => handleLike(data?.isLiked ?? false)}
           >
             <Image
               src="/icons/like-icon.svg"
+              className={clsx('h-[16px] w-[18px]', 'xl:h-[21px] xl:w-[23px]')}
               width={23}
               height={21}
               alt="좋아요 아이콘"
@@ -149,11 +174,16 @@ export default function EpigramDetail({
           </button>
           <Link
             href={data?.referenceUrl || '/'}
-            className="flex h-12 items-center justify-center gap-[6px] rounded-[100px] bg-line-100 px-5 text-gray-300"
+            className={clsx(
+              'flex h-9 items-center justify-center gap-[6px] rounded-[100px] bg-line-100 px-5 text-gray-300',
+              ' sm:text-base',
+              'xl:h-12 xl:text-xl'
+            )}
           >
             왕도로 가는길
             <Image
               src="/icons/share-icon.svg"
+              className={clsx('h-4 w-4', 'xl:h-[21px] xl:w-[21px]')}
               width={21}
               height={21}
               alt="공유 아이콘"
