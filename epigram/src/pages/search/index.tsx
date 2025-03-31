@@ -3,6 +3,7 @@ import { fetchNewEpigram } from '@/lib/apis/epigram';
 import { useInfiniteScroll } from '@/lib/hooks/useInfiniteScroll';
 import { EpigramType } from '@/lib/types/type';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
+import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -98,14 +99,27 @@ export default function SearchPage() {
   }
   return (
     <div
-      className="relative mx-auto my-[46px] w-full max-w-[640px]"
-      style={{ height: 'calc(100vh - 80px)' }}
+      className={clsx(
+        'relative mx-auto my-[46px] h-[calc(100vh-52px)] w-full max-w-[640px] px-[10px]',
+        'sm:h-[calc(100vh-60px)]',
+        'xl:h-[calc(100vh-80px)] xl:px-5'
+      )}
     >
       <form onSubmit={handleSubmit}>
-        <div className="mb-9 flex items-center justify-between border-b-4 border-b-black-800 pb-[22px]">
+        <div
+          className={clsx(
+            'mb-6 flex items-center justify-between border-b-4 border-b-black-800 pb-[14px]',
+            'sm:mb-8',
+            'xl:mb-10 xl:pb-[22px]'
+          )}
+        >
           <input
             type="text"
-            className="h-8 w-full text-2xl font-normal focus-visible:outline-none"
+            className={clsx(
+              'h-8 w-full text-base font-normal focus-visible:outline-none',
+              'sm:text-xl',
+              'xl:text-2xl'
+            )}
             placeholder="검색어를 입력해주세요."
             value={inputValue}
             onChange={(e) => setInputValue(e.currentTarget.value)}
@@ -113,6 +127,7 @@ export default function SearchPage() {
           <button type="submit">
             <Image
               src="/icons/search-icon.svg"
+              className={clsx('h-6 w-6', 'sm:h-9 sm:w-9')}
               width={36}
               height={36}
               alt="검색 아이콘"
@@ -123,26 +138,51 @@ export default function SearchPage() {
 
       {recentKeywordList.length > 0 && (
         <>
-          <div className="mb-9 flex items-center justify-between">
-            <h2 className="text-2xl font-medium">최근 검색어</h2>
+          <div
+            className={clsx(
+              'mb-4 flex items-center justify-between',
+              'sm:mb-6',
+              'xl:mb-9'
+            )}
+          >
+            <h2
+              className={clsx(
+                'text-base font-medium',
+                'sm:text-xl',
+                'xl:text-2xl'
+              )}
+            >
+              최근 검색어
+            </h2>
             <button
               type="button"
-              className="text-base font-semibold text-red"
+              className={clsx('text-sm font-semibold text-red', 'xl:text-base')}
               onClick={handleRemoveSavedKeyword}
             >
               모두 지우기
             </button>
           </div>
 
-          <ul className="mb-10 flex flex-wrap items-center gap-4">
+          <ul
+            className={clsx(
+              'mb-6 flex flex-wrap items-center gap-2',
+              'sm:mb-8 sm:gap-4',
+              'xl:mb-10'
+            )}
+          >
             {recentKeywordList.map((recentKeyWord, index) => {
               return (
                 <li
                   key={index}
-                  className="rounded-[22px] bg-background px-[14px] py-3 text-2xl font-normal text-black-300"
+                  className={clsx(
+                    'h-[42px] rounded-[18px] bg-background px-[14px] text-base font-normal text-black-300',
+                    'sm:h-12 sm:rounded-[20px] sm:text-xl',
+                    'xl:h-14 xl:rounded-[22px] xl:text-2xl'
+                  )}
                 >
                   <button
                     type="button"
+                    className="h-full"
                     onClick={() => {
                       handleRecentKeywordClick(recentKeyWord);
                     }}
@@ -158,30 +198,51 @@ export default function SearchPage() {
       {isLoading ? (
         <Loading height={390} width={640} />
       ) : (
-        <>
+        <div className="h-full">
           {totalCount > 0
             ? data?.pages?.flatMap(({ list }) =>
                 list?.map((epigram: EpigramType) => {
                   return (
                     <div
                       key={epigram.id}
-                      className="border-b-[1px] border-b-gray-100 p-6"
+                      className={clsx(
+                        'border-b-[1px] border-b-gray-100 px-6 py-4',
+                        'xl:py-6'
+                      )}
                     >
                       <Link
                         href={`/feed/${epigram.id}`}
-                        className="font-point text-xl font-medium text-black-600 hover:font-semibold"
+                        className={clsx(
+                          'font-point text-base font-medium text-black-600 hover:font-semibold',
+                          'xl:text-xl'
+                        )}
                       >
                         {epigram.content}
                       </Link>
-                      <span className="mt-6 block text-xl font-medium text-blue-400">
+                      <span
+                        className={clsx(
+                          'mt-1 block text-base font-medium text-blue-400',
+                          'sm:mt-2',
+                          'xl:mt-6 xl:text-xl'
+                        )}
+                      >
                         - {epigram.author} -
                       </span>
-                      <ul className="flex flex-wrap items-center justify-end gap-3">
+                      <ul
+                        className={clsx(
+                          'mt-1 flex flex-wrap items-center justify-end gap-3',
+                          'sm:mt-2`',
+                          'xl:mt-4'
+                        )}
+                      >
                         {epigram.tags?.map((tag) => {
                           return (
                             <li
                               key={tag.id}
-                              className="text-xl font-normal text-blue-400"
+                              className={clsx(
+                                'text-base font-normal text-blue-400',
+                                'xl:text-xl'
+                              )}
                             >
                               #{tag.name}
                             </li>
@@ -221,7 +282,7 @@ export default function SearchPage() {
               )}
             </div>
           )}
-        </>
+        </div>
       )}
     </div>
   );
