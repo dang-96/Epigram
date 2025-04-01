@@ -25,8 +25,8 @@ export default function Custom404() {
       <Link
         href={loginState ? '/main' : '/'}
         className={clsx(
-          'flex h-12 w-full items-center justify-center rounded-xl bg-black-500 text-base font-semibold text-white',
-          'xl:h-16 xl:w-72 xl:text-xl'
+          'flex h-12 w-full max-w-72 items-center justify-center rounded-xl bg-black-500 text-base font-semibold text-white',
+          'xl:h-16 xl:text-xl'
         )}
       >
         홈으로 돌아가기
