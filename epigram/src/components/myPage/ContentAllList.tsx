@@ -24,12 +24,18 @@ export default function ContentAllList() {
   const [myPageTab, setMyPageTab] = useState<string>(EPIGRAM);
   const { userData } = useUserInfo();
 
-  const { isOpen, setIsOpen, handleDeleteComment } = useDeleteComment();
+  const {
+    isOpen: deleteIsOpen,
+    setIsOpen: deleteSetIsOpen,
+    handleDeleteComment,
+    setCommentId: deleteSetCommentId,
+  } = useDeleteComment();
 
   const {
     isOpen: modifyIsOpen,
     setIsOpen: modifySetIsOpen,
     handleModifyComment,
+    setCommentId: modifySetCommentId,
   } = useModifyComment();
 
   // 마이페이지 에피그램 리스트 데이터
@@ -128,9 +134,9 @@ export default function ContentAllList() {
       </ModalFrame>
 
       {/* 댓글 삭제 모달 */}
-      <ModalFrame isOpen={isOpen} setIsOpen={setIsOpen}>
+      <ModalFrame isOpen={deleteIsOpen} setIsOpen={deleteSetIsOpen}>
         <CommentDeleteModal
-          setIsOpen={setIsOpen}
+          setIsOpen={deleteSetIsOpen}
           deleteComment={deleteComment}
         />
       </ModalFrame>
@@ -182,6 +188,10 @@ export default function ContentAllList() {
               commentData={commentData}
               fetchNextPage={commentFetchNextPage}
               hasNextPage={commentHasNextPage}
+              deleteSetIsOpen={deleteSetIsOpen}
+              deleteSetCommentId={deleteSetCommentId}
+              modifySetIsOpen={modifySetIsOpen}
+              modifySetCommentId={modifySetCommentId}
             />
           ))
           .otherwise(() => '')}
