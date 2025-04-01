@@ -4,6 +4,7 @@ import { fetchTodayEpigram } from '@/lib/apis/epigram';
 import { useLoadingStore } from '@/lib/store/useLoadingStore';
 import { useEffect } from 'react';
 import Loading from '../share/Loading';
+import clsx from 'clsx';
 
 export default function TodayEpigram() {
   const { setAllLoading } = useLoadingStore();
@@ -21,17 +22,20 @@ export default function TodayEpigram() {
     }
   }, [isLoading]);
 
-  // if (isLoading) {
-  //   return <div>로딩중</div>;
-  // }
-
   if (isError) {
     return <div>에러</div>;
   }
 
   return (
-    <div className="mx-auto mb-[140px] w-full max-w-[640px]">
-      <h2 className="mb-10 text-2xl font-semibold text-black-600">
+    <div
+      className={clsx('mx-auto mb-14 w-full max-w-[640px]', 'xl:mb-[140px]')}
+    >
+      <h2
+        className={clsx(
+          'mb-6 text-base font-semibold text-black-600',
+          'xl:mb-10 xl:text-2xl'
+        )}
+      >
         오늘의 에피그램
       </h2>
       {isLoading ? (

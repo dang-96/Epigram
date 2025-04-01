@@ -10,6 +10,7 @@ import { EmotionMonthlyType } from '@/lib/types/type';
 import CalendarFilter from './CalendarFilter';
 import { useEmotionDateStore } from '@/lib/store/useEmotionDateStore';
 import Loading from '../share/Loading';
+import clsx from 'clsx';
 
 export default function CalendarEmotion() {
   const { emotionDate, setEmotionDate } = useEmotionDateStore();
@@ -140,6 +141,7 @@ export default function CalendarEmotion() {
         <div className="emotionImage">
           <Image
             src={matchEmotionImage}
+            className={clsx('h-6 w-6', 'xl:h-9 xl:w-9')}
             width={36}
             height={36}
             alt="감정 아이콘"
@@ -164,10 +166,18 @@ export default function CalendarEmotion() {
     <div className="mb-40">
       {currentDate && (
         <div className="calendar-custom">
-          <div className="absolute right-0 top-0 flex h-[52px] items-center gap-6">
+          <div
+            className={clsx(
+              'absolute right-0 top-0 flex h-[30px] items-center gap-4',
+              'xl:h-[52px] xl:gap-6'
+            )}
+          >
             <button
               type="button"
-              className="flex h-9 w-9 items-center justify-center"
+              className={clsx(
+                'flex h-[30px] w-[30px] items-center justify-center',
+                'xl:h-9 xl:w-9'
+              )}
               onClick={handlePreviousMonth}
             >
               <Image
@@ -180,7 +190,10 @@ export default function CalendarEmotion() {
             </button>
             <button
               type="button"
-              className="flex h-9 w-9 items-center justify-center"
+              className={clsx(
+                'flex h-[30px] w-[30px] items-center justify-center',
+                'xl:h-9 xl:w-9'
+              )}
               onClick={handleNextMonth}
             >
               <Image
@@ -205,7 +218,12 @@ export default function CalendarEmotion() {
             nextLabel={null}
             prevLabel={null}
             navigationLabel={({ label }) => (
-              <span className="text-2xl font-semibold text-black-600">
+              <span
+                className={clsx(
+                  'text-base font-semibold text-black-600',
+                  'xl:text-2xl'
+                )}
+              >
                 {label}
               </span>
             )}

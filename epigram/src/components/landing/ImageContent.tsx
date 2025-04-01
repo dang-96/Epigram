@@ -1,12 +1,31 @@
+import clsx from 'clsx';
+
 export default function ImageContent() {
-  const contentWrap =
-    'mx-auto flex w-full max-w-[1200px] items-end justify-between py-[180px]';
-  const imageClass =
-    'h-[388px] w-[744px] rounded-2xl border-[1px] border-[#D2D9E3] bg-blue-200 bg-center bg-cover bg-no-repeat';
-  const bigText = 'mb-10 text-[32px] font-bold leading-normal';
-  const smallText = 'text-2xl font-medium leading-normal text-blue-600';
+  const contentWrap = clsx(
+    'mx-auto flex w-full max-w-[1200px] flex-col items-center  gap-10 px-[10px] py-[98px]',
+    'sm:py-[110px]',
+    'xl:flex-row xl:items-end xl:justify-between xl:px-5 xl:py-[180px]'
+  );
+  const imageClass = clsx(
+    'h-[210px] w-full max-w-[744px] rounded-2xl border-[1px] border-[#D2D9E3] bg-blue-200 bg-cover bg-center bg-no-repeat',
+    'sm:h-[388px]'
+  );
+  const bigText = clsx(
+    'mb-[16px] text-[24px] font-bold leading-normal',
+    'sm:mb-[20px]',
+    'xl:mb-10 xl:text-[32px]'
+  );
+  const smallText = clsx(
+    'text-base font-medium leading-normal text-blue-600',
+    'xl:text-2xl'
+  );
   return (
-    <div className="relative bg-background pb-[30px] pt-[60px]">
+    <div
+      className={clsx(
+        'relative bg-background pt-[30px]',
+        'xl:pb-[30px] xl:pt-[60px]'
+      )}
+    >
       <div
         className="absolute left-0 top-0 z-10 h-[15px] w-full bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: 'url(/images/line-top.png)' }}
@@ -20,13 +39,13 @@ export default function ImageContent() {
           data-aos-duration="1500"
         />
         <div
-          className="text-left"
+          className={clsx('w-full text-left ', 'sm:max-w-[744px]', 'xl:w-auto')}
           data-aos="fade-left"
           data-aos-duration="1500"
           data-aos-anchor-placement="top-bottom"
           data-aos-delay="500"
         >
-          <h3 className={bigText}>
+          <h3 className={clsx(bigText, 'xl-text')}>
             명언이나 글귀,
             <br />
             토막 상식들을 공유해 보세요.
@@ -40,7 +59,11 @@ export default function ImageContent() {
 
       <div className={contentWrap}>
         <div
-          className="text-right"
+          className={clsx(
+            'order-2 w-full text-right',
+            'sm:max-w-[744px]',
+            'xl:order-1 xl:w-auto'
+          )}
           data-aos="fade-right"
           data-aos-duration="1500"
           data-aos-anchor-placement="top-bottom"
@@ -54,7 +77,7 @@ export default function ImageContent() {
           <p className={smallText}>태그를 통해 글을 모아 볼 수 있어요.</p>
         </div>
         <div
-          className={imageClass}
+          className={clsx(imageClass, 'order-1', 'xl:order-2')}
           style={{ backgroundImage: 'url(/images/landing02.png)' }}
           data-aos="fade-left"
           data-aos-duration="1500"
@@ -69,7 +92,7 @@ export default function ImageContent() {
           data-aos-duration="1500"
         />
         <div
-          className="text-left"
+          className={clsx('w-full text-left ', 'sm:max-w-[744px]', 'xl:w-auto')}
           data-aos="fade-left"
           data-aos-duration="1500"
           data-aos-anchor-placement="top-bottom"

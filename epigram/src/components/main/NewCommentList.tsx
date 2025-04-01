@@ -11,6 +11,7 @@ import { useModifyComment } from '@/lib/hooks/useModifyComment';
 import { useUserInfo } from '@/lib/hooks/useUserInfo';
 import CommentDeleteModal from '../modal/CommentDeleteModal';
 import Loading from '../share/Loading';
+import clsx from 'clsx';
 
 export default function NewCommentList() {
   // 유저 데이터
@@ -80,8 +81,15 @@ export default function NewCommentList() {
           deleteComment={deleteComment}
         />
       </ModalFrame>
-      <div className="mx-auto w-full max-w-[640px]">
-        <h2 className="mb-10 text-2xl font-semibold text-black-600">
+      <div
+        className={clsx('mx-auto mb-14 w-full max-w-[640px]', 'xl:mb-[140px]')}
+      >
+        <h2
+          className={clsx(
+            'mb-6 text-base font-semibold text-black-600',
+            'xl:mb-10 xl:text-2xl'
+          )}
+        >
           최신 댓글
         </h2>
         {newCommentLoading ? (
@@ -116,19 +124,25 @@ export default function NewCommentList() {
               </div>
             )}
 
-            <div className="mt-[72px] flex justify-center">
+            <div className={clsx('mt-10 flex justify-center', 'xl:mt-[72px]')}>
               {isMoreButton ? (
                 <button
                   type="button"
                   onClick={() => fetchNextPage()}
-                  className="flex h-[56px] w-full max-w-[238px] items-center justify-center rounded-full border-[1px] border-line-200 text-xl font-medium text-blue-500"
+                  className={clsx(
+                    'flex h-12 w-full max-w-[153px] items-center justify-center rounded-full border-[1px] border-line-200 text-sm font-medium text-blue-500',
+                    'xl:h-14 xl:max-w-[238px] xl:text-xl'
+                  )}
                 >
                   + 최신 댓글 더보기
                 </button>
               ) : (
                 <Link
                   href="/feed"
-                  className="flex h-[56px] w-full max-w-[238px] items-center justify-center rounded-full border-[1px] border-line-200 text-xl font-medium text-blue-500"
+                  className={clsx(
+                    'flex h-[56px] w-full max-w-[173px] items-center justify-center rounded-full border-[1px] border-line-200 text-sm font-medium text-blue-500',
+                    'xl:h-14 xl:max-w-[238px] xl:text-xl'
+                  )}
                 >
                   + 댓글 작성된 피드 보기
                 </Link>

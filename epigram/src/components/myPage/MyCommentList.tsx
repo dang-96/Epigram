@@ -1,29 +1,32 @@
 import { CommentListType, CommentScrollType } from '@/lib/types/type';
 import Image from 'next/image';
 import Comment from '../share/Comment';
-import { useDeleteComment } from '@/lib/hooks/useDeleteComment';
-import { useModifyComment } from '@/lib/hooks/useModifyComment';
 import { useUserInfo } from '@/lib/hooks/useUserInfo';
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
+import clsx from 'clsx';
 
 interface MyCommentList {
   commentData: CommentScrollType | undefined;
   fetchNextPage: () => any;
   hasNextPage: boolean;
+  deleteSetIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  deleteSetCommentId: React.Dispatch<React.SetStateAction<number>>;
+  modifySetIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  modifySetCommentId: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export default function MyCommentList({
   commentData,
   hasNextPage,
   fetchNextPage,
+  deleteSetIsOpen,
+  deleteSetCommentId,
+  modifySetIsOpen,
+  modifySetCommentId,
 }: MyCommentList) {
   const queryClient = useQueryClient();
   const { userData } = useUserInfo();
-  const { setIsOpen, setCommentId } = useDeleteComment();
-
-  const { setIsOpen: modifySetIsOpen, setCommentId: modifySetCommentId } =
-    useModifyComment();
   const [isCollapse, setIsCollapse] = useState<boolean>(false); // 더보기 버튼이 클릭이 되어야지만 그 후에 접기 버튼이 보이도록 상태 설정
   const [maxCount, setMaxCount] = useState<boolean>(false);
 
@@ -58,8 +61,8 @@ export default function MyCommentList({
                   key={comment.id}
                   data={comment}
                   userId={userData?.id}
-                  setIsOpen={setIsOpen}
-                  setCommentId={setCommentId}
+                  setIsOpen={deleteSetIsOpen}
+                  setCommentId={deleteSetCommentId}
                   modifySetIsOpen={modifySetIsOpen}
                   modifySetCommentId={modifySetCommentId}
                 />
@@ -71,7 +74,10 @@ export default function MyCommentList({
               <button
                 type="button"
                 onClick={moreClick}
-                className="flex h-[56px] w-full max-w-[238px] items-center justify-center rounded-full border-[1px] border-line-200 text-xl font-medium text-blue-500"
+                className={clsx(
+                  'flex h-12 w-full max-w-[153px] items-center justify-center rounded-full border-[1px] border-line-200 text-sm font-medium text-blue-500',
+                  'xl:h-14 xl:max-w-[238px] xl:text-xl'
+                )}
               >
                 + 댓글 더보기
               </button>
@@ -80,7 +86,10 @@ export default function MyCommentList({
               <button
                 type="button"
                 onClick={collapseClick}
-                className="flex h-[56px] w-full max-w-[238px] items-center justify-center rounded-full border-[1px] border-line-200 text-xl font-medium text-blue-500"
+                className={clsx(
+                  'flex h-12 w-full max-w-[153px] items-center justify-center rounded-full border-[1px] border-line-200 text-sm font-medium text-blue-500',
+                  'xl:h-14 xl:max-w-[238px] xl:text-xl'
+                )}
               >
                 - 댓글 접기
               </button>
@@ -88,14 +97,27 @@ export default function MyCommentList({
           </div>
         </>
       ) : (
-        <div className="my-40 flex flex-col items-center justify-center gap-6">
+        <div
+          className={clsx(
+            'my-10 flex flex-col items-center justify-center gap-2',
+            'sm:my-20 sm:gap-4',
+            'xl:my-40 xl:gap-6'
+          )}
+        >
           <Image
             src="/images/not-content.png"
+            className={clsx('h-28 w-28', 'xl:h-36 xl:w-36')}
             width={144}
             height={144}
             alt="댓글이 없는경우 아이콘"
           />
-          <p className="text-center text-xl font-normal leading-[1.5] text-black-600">
+          <p
+            className={clsx(
+              'text-center text-sm font-normal leading-[1.5] text-black-600',
+              'sm:text-base',
+              'xl:text-xl'
+            )}
+          >
             아직 댓글이 없어요!
             <br />
             댓글을 달고 다른 사람들과 교류해보세요.

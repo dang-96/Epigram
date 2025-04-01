@@ -11,10 +11,8 @@ import CommentModifyModal from '../modal/CommentModifyModal';
 import { useModifyComment } from '@/lib/hooks/useModifyComment';
 import CommentDeleteModal from '../modal/CommentDeleteModal';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
-import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
-import { fetchCommentDetail } from '@/lib/apis/comment';
 import { useInfiniteScroll } from '@/lib/hooks/useInfiniteScroll';
+import clsx from 'clsx';
 
 interface CommentDetailProps {
   data: CommentScrollType | undefined;
@@ -78,13 +76,26 @@ export default function CommentDetail({
         />
       </ModalFrame>
 
-      <div className="relative h-full bg-background py-12">
+      <div
+        className={clsx(
+          'relative h-full bg-background px-[10px] py-10',
+          'xl:px-5 xl:py-12'
+        )}
+      >
         <div
-          className="absolute left-0 top-0 h-[15px] w-full bg-cover bg-center bg-repeat-x"
+          className="absolute left-0 top-0 h-[15px] w-full bg-center"
           style={{ backgroundImage: 'url(/images/line-top.png)' }}
         />
         <div className="mx-auto w-full max-w-[640px]">
-          <h3 className="mb-6 text-xl font-semibold">댓글 ({totalCount})</h3>
+          <h3
+            className={clsx(
+              'mb-4 text-base font-semibold',
+              'sm:mb-6',
+              'xl:text-xl'
+            )}
+          >
+            댓글 ({totalCount})
+          </h3>
           {/* 댓글 작성 */}
           <CommentWrite
             epigramId={Number(epigramId)}
@@ -109,14 +120,27 @@ export default function CommentDetail({
               })
             )
           ) : (
-            <div className="my-40 flex flex-col items-center justify-center gap-6">
+            <div
+              className={clsx(
+                'my-10 flex flex-col items-center justify-center gap-2',
+                'sm:my-20 sm:gap-4',
+                'xl:my-40 xl:gap-6'
+              )}
+            >
               <Image
                 src="/images/not-content.png"
+                className={clsx('h-28 w-28', 'xl:h-36 xl:w-36')}
                 width={144}
                 height={144}
                 alt="댓글이 없는경우 아이콘"
               />
-              <p className="text-center text-xl font-normal leading-[1.5] text-black-600">
+              <p
+                className={clsx(
+                  'text-center text-sm font-normal leading-[1.5] text-black-600',
+                  'sm:text-base',
+                  'xl:text-xl'
+                )}
+              >
                 아직 댓글이 없어요!
                 <br />
                 댓글을 달고 다른 사람들과 교류해보세요.

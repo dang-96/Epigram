@@ -29,14 +29,26 @@ export default function TodayState() {
   if (isError) return <div>에러</div>;
 
   return (
-    <div className="mx-auto mb-[140px] w-full max-w-[640px]">
-      <h2 className="mb-10 text-2xl font-semibold text-black-600">
+    <div
+      className={clsx('mx-auto mb-14 w-full max-w-[640px]', 'xl:mb-[140px]')}
+    >
+      <h2
+        className={clsx(
+          'mb-6 text-base font-semibold text-black-600',
+          'xl:mb-10 xl:text-2xl'
+        )}
+      >
         오늘의 감정은 어떤가요?
       </h2>
       {isLoading ? (
         <Loading height={128} width={640} />
       ) : (
-        <ul className="flex items-center justify-between gap-4 px-12">
+        <ul
+          className={clsx(
+            'flex items-center justify-between gap-2 px-0',
+            'sm:gap-4 sm:px-12'
+          )}
+        >
           {EMOTION_LIST.map((emotionValue) => {
             const emotionSelect = data
               ? emotionValue.id === data.emotion
@@ -58,18 +70,25 @@ export default function TodayState() {
                 >
                   <span
                     className={clsx(
-                      'mb-2 flex h-24 w-24 items-center justify-center rounded-2xl bg-[#EBEEF3]',
+                      'mb-2 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#EBEEF3]',
+                      'sm:h-24 sm:w-24',
+                      // 'xl:h-24 xl:w-24',
                       emotionSelect && 'rounded-2xl border-4 border-[#FBC85B]'
                     )}
                   >
                     <Image
                       src={emotionValue.image}
+                      className={clsx('h-8 w-8', 'sm:h-12 sm:w-12')}
                       width={48}
                       height={48}
                       alt={emotionValue.text}
                     />
                   </span>
-                  {emotionValue.text}
+                  <span
+                    className={clsx('text-sm text-gray-400', 'xl:text-base')}
+                  >
+                    {emotionValue.text}
+                  </span>
                 </button>
               </li>
             );

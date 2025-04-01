@@ -47,11 +47,16 @@ export default function NewEpigramList({ marginBottom }: NewEpigramProps) {
   return (
     <div
       className={clsx(
-        marginBottom ? marginBottom : 'mb-[140px]',
+        marginBottom ? marginBottom : 'mb-14 xl:mb-[140px]',
         'mx-auto w-full max-w-[640px]'
       )}
     >
-      <h2 className="mb-10 text-2xl font-semibold text-black-600">
+      <h2
+        className={clsx(
+          'mb-6 text-base font-semibold text-black-600',
+          'xl:mb-10 xl:text-2xl'
+        )}
+      >
         최신 에피그램
       </h2>
       {isLoading ? (
@@ -69,14 +74,20 @@ export default function NewEpigramList({ marginBottom }: NewEpigramProps) {
               <button
                 type="button"
                 onClick={() => fetchNextPage()}
-                className="flex h-[56px] w-full max-w-[238px] items-center justify-center rounded-full border-[1px] border-line-200 text-xl font-medium text-blue-500"
+                className={clsx(
+                  'flex h-12 w-full max-w-[153px] items-center justify-center rounded-full border-[1px] border-line-200 text-sm font-medium text-blue-500',
+                  'xl:h-14 xl:max-w-[238px] xl:text-xl'
+                )}
               >
                 + 에피그램 더보기
               </button>
             ) : (
               <Link
                 href="/feed"
-                className="flex h-[56px] w-full max-w-[238px] items-center justify-center rounded-full border-[1px] border-line-200 text-xl font-medium text-blue-500"
+                className={clsx(
+                  'flex h-12 w-full max-w-[153px] items-center justify-center rounded-full border-[1px] border-line-200 text-sm font-medium text-blue-500',
+                  'xl:h-14 xl:max-w-[238px] xl:text-xl'
+                )}
               >
                 + 전체 에피그램 보기
               </Link>

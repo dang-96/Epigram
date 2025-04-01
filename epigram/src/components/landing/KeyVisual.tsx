@@ -4,6 +4,7 @@ import Link from 'next/link';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useEffect } from 'react';
+import clsx from 'clsx';
 
 export default function KeyVisual() {
   const { loginState } = useAuth();
@@ -15,17 +16,31 @@ export default function KeyVisual() {
   }, []);
   return (
     <div
-      className="relative flex h-[calc(100vh-80px)] w-full flex-col items-center justify-center gap-10 bg-cover bg-center bg-repeat-x text-center"
+      className={clsx(
+        'relative flex h-[calc(100vh-52px)] w-full flex-col items-center justify-center bg-cover bg-center bg-repeat-x px-[10px] text-center',
+        'sm:h-[calc(100vh-60px)] sm:px-5',
+        'xl:h-[calc(100vh-80px)]'
+      )}
       style={{ backgroundImage: 'url(/images/back-line.png)' }}
     >
       <div data-aos="zoom-out-up" data-aos-duration="1500">
-        <h2 className="font-point text-[40px] font-medium leading-relaxed">
+        <h2
+          className={clsx(
+            'font-point text-2xl font-medium leading-relaxed',
+            'sm:text-[32px]',
+            'xl:text-[40px]'
+          )}
+        >
           나만 갖고 있기엔 <br /> 아까운 글이 있지 않나요?
         </h2>
       </div>
 
       <span
-        className="font-point text-xl"
+        className={clsx(
+          'mb-6 mt-2 font-point text-sm',
+          'sm:mb-8 sm:mt-6 sm:text-xl',
+          'xl:mb-12 xl:mt-10'
+        )}
         data-aos="zoom-out-up"
         data-aos-duration="1500"
         data-aos-delay="200"
@@ -38,13 +53,18 @@ export default function KeyVisual() {
         data-aos="zoom-out-up"
         data-aos-duration="1500"
         data-aos-delay="300"
-        className="flex h-16 w-72 items-center justify-center rounded-xl bg-black-500 text-xl font-semibold text-white"
+        className={clsx(
+          'flex h-12 w-28 items-center justify-center rounded-xl bg-black-500 text-base font-semibold text-white',
+          'xl:h-16 xl:w-72 xl:text-xl'
+        )}
       >
         시작하기
       </Link>
 
       <div className="absolute bottom-14 left-[50%] flex translate-x-[-50%] flex-col items-center justify-center gap-1 text-base font-semibold">
-        <span className="text-blue-400">더 알아보기</span>
+        <span className={clsx('text-sm text-blue-400', 'sm:text-base')}>
+          더 알아보기
+        </span>
         <Image
           src="/icons/scroll-icon.svg"
           className="animate-bounce"

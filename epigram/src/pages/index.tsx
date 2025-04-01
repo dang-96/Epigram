@@ -5,7 +5,7 @@ import UserEpigram from '@/components/landing/UserEpigram';
 
 export default function Landing() {
   return (
-    <div>
+    <div className="overflow-hidden">
       <KeyVisual />
       <ImageContent />
       <UserEpigram />

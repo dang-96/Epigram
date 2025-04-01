@@ -16,11 +16,17 @@ export default function CalendarFilter({
   const { EMOTION_LIST } = useEmotion();
   return (
     <>
-      <div className="absolute right-[120px] top-0 h-[52px] w-36">
+      <div
+        className={clsx(
+          'absolute right-[90px] top-0 h-[30px] w-24',
+          'xl:right-[120px] xl:h-[52px] xl:w-36'
+        )}
+      >
         <button
           type="button"
           className={clsx(
-            'flex h-full w-full items-center justify-center gap-2 rounded-[14px] bg-background text-xl font-semibold ',
+            'flex h-full w-full items-center justify-center gap-2 rounded-lg bg-background text-sm font-semibold ',
+            'xl:rounded-[14px] xl:text-xl',
             isToggle
               ? 'border-2 border-black-600 text-black-600'
               : 'text-gray-200'
