@@ -6,8 +6,11 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { VictoryPie } from 'victory';
 import Loading from '../share/Loading';
+import clsx from 'clsx';
 
 export default function ChartEmotion() {
+  const PC_SIZE = 230;
+  const MB_SIZE = 176;
   const DEFAULT_DATA = [
     {
       x: 'MOVED',
@@ -61,6 +64,7 @@ export default function ChartEmotion() {
       return emotionOnly;
     },
   });
+  const [chartSize, setChartSize] = useState(230);
   const [isClient, setIsClient] = useState(false);
   const [chartData, setChartData] = useState(DEFAULT_DATA);
   const SORT_ARRAY = [...chartData].sort((a, b) => b.y - a.y); // 내림차순 정렬
@@ -114,36 +118,67 @@ export default function ChartEmotion() {
     }
   }, [data]);
 
+  // 브라우저 사이즈에따라 차트 사이즈 변경
+  useEffect(() => {
+    const handleResize = () => {
+      setChartSize(window.innerWidth >= 1280 ? PC_SIZE : MB_SIZE);
+    };
+
+    handleResize(); // 초기 실행
+    window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   if (chartError) return <div>에러</div>;
 
   return (
     <div>
-      <h2 className="mb-10 text-2xl font-semibold text-black-600">감정 차트</h2>
+      <h2
+        className={clsx(
+          'mb-4 text-base font-semibold text-black-600',
+          'xl:mb-10 xl:text-2xl'
+        )}
+      >
+        감정 차트
+      </h2>
       {chartLoading ? (
         <Loading height={230} width={640} />
       ) : (
-        <div className="flex min-h-[230px] items-center justify-center gap-28">
+        <div
+          className={clsx(
+            'flex min-h-[176px] items-center justify-center gap-8 rounded-lg border-[1px] border-blue-200 p-[22px]',
+            'sm:gap-[76px]',
+            'xl:min-h-[230px] xl:gap-28 xl:p-6'
+          )}
+        >
           {/* 차트 영역 */}
-          <div className="relative max-h-[230px] w-full max-w-[230px]">
+          <div
+            className={clsx(
+              'relative max-h-[176px] w-full max-w-[176px]',
+              'xl:max-h-[230px] xl:max-w-[230px]'
+            )}
+          >
             <VictoryPie
               data={SORT_ARRAY} // 차트 데이터
-              innerRadius={100} // 도넛 효과
+              innerRadius={80} // 도넛 효과
               padding={0} // 차트의 패딩
               colorScale={LABEL_COLOR.map((item) => item)} // 색상 지정 (순위에 따른 색상 지정)
               labels={[]} // 차트의 label 값 지우기
               padAngle={data?.length === 1 ? 0 : 1} // 데이터 간의 간격
               cornerRadius={({ datum }) => datum.radius}
-              width={hasData ? 230 : 0} // 데이터가 있으면 차트 크기 설정, 없으면 0
-              height={hasData ? 230 : 0} // 데이터가 있으면 차트 크기 설정, 없으면 0
+              width={hasData ? 176 : 0} // 데이터가 있으면 차트 크기 설정, 없으면 0
+              height={hasData ? 176 : 0} // 데이터가 있으면 차트 크기 설정, 없으면 0
             />
             <div className="absolute left-[50%] top-[50%] flex translate-x-[-50%] translate-y-[-50%] flex-col items-center gap-2">
               <Image
                 src={SORT_ARRAY[0].image}
+                className={clsx('h-7 w-7', 'xl:h-10 xl:w-10')}
                 width={40}
                 height={40}
                 alt="감정 이미지"
               />
-              <span className="text-lg font-semibold">
+              <span className={clsx('text-base font-semibold', 'xl:text-lg')}>
                 {SORT_ARRAY[0].text}
               </span>
             </div>
@@ -151,24 +186,32 @@ export default function ChartEmotion() {
 
           {/* 라벨 영역 */}
           <div>
-            <ul className="w-[125px]">
+            <ul className={clsx('w-28', 'xl:w-[125px]')}>
               {SORT_ARRAY.map((item, index) => {
                 const indexLast =
-                  SORT_ARRAY.length !== index + 1 && 'mb-[14px]';
+                  SORT_ARRAY.length !== index + 1 && 'mb-2 xl:mb-[14px]';
                 const indexFirst =
                   index === 0 ? 'text-black-600' : 'text-gray-200';
 
                 return (
                   <li
                     key={index}
-                    className={`flex items-center justify-between gap-4 ${indexLast} text-xl font-semibold ${indexFirst}`}
+                    className={clsx(
+                      `flex items-center justify-between gap-1 ${indexLast} text-sm font-semibold ${indexFirst}`,
+                      'sm:gap-2 sm:text-base',
+                      'xl:gap-4 xl:text-xl'
+                    )}
                   >
                     <span
-                      className="block h-4 w-4 rounded-sm"
+                      className={clsx(
+                        'block h-3 w-3 rounded-sm',
+                        'xl:h-4 xl:w-4'
+                      )}
                       style={{ backgroundColor: LABEL_COLOR[index] }}
                     />
                     <Image
                       src={item.image}
+                      className={clsx('h-5 w-5', 'xl:h-6 xl:w-6')}
                       width={24}
                       height={24}
                       alt="감정 이미지"

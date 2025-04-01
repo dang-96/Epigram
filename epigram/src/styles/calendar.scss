@@ -1,0 +1,138 @@
+.calendar-custom {
+  width: 100%;
+  position: relative;
+
+  .react-calendar {
+    width: 100%;
+    border: none;
+
+    &__navigation {
+      height: 30px;
+      margin-bottom: 22px; // 기본값 (모바일)
+
+      @media (min-width: 640px) {
+        // sm: 640px 이상
+        margin-bottom: 24px;
+      }
+
+      @media (min-width: 1280px) {
+        // xl: 1280px 이상
+        height: 52px;
+        margin-bottom: 48px;
+      }
+
+      &__label {
+        flex-grow: 0 !important;
+        width: 120px;
+        text-align: left;
+
+        @media (min-width: 1280px) {
+          // xl: 1280px 이상
+          width: 140px;
+          text-align: center;
+        }
+      }
+    }
+
+    .react-calendar__month-view {
+      &__weekdays {
+        border-top: 1px solid #eceff4;
+        border-bottom: 1px solid #eceff4;
+
+        &__weekday {
+          display: flex;
+          height: 54px;
+          justify-content: center;
+          align-items: center;
+          font-size: 16px;
+          font-weight: 600;
+          color: #c4c4c4;
+
+          @media (min-width: 1280px) {
+            // xl: 1280px 이상
+            font-size: 24px;
+            height: 91px;
+          }
+
+          abbr {
+            text-decoration: none;
+          }
+        }
+      }
+
+      &__days {
+        .react-calendar__tile {
+          display: flex;
+          height: 54px;
+          justify-content: center;
+          align-items: center;
+          font-size: 16px;
+          font-weight: 600;
+          border-bottom: 1px solid #eceff4;
+          color: #c4c4c4;
+
+          @media (min-width: 1280px) {
+            // xl: 1280px 이상
+            font-size: 24px;
+            height: 91px;
+          }
+
+          &.emotion {
+            flex-direction: column;
+            gap: 2px;
+            font-size: 12px;
+
+            @media (min-width: 1280px) {
+              // xl: 1280px 이상
+              font-size: 16px;
+              gap: 12px;
+            }
+          }
+
+          &--now {
+            color: #ff6577;
+            border: 3px solid #ff6577;
+            border-radius: 3px;
+            background-color: white;
+
+            @media (min-width: 1280px) {
+              // xl: 1280px 이상
+              border-radius: 3px;
+            }
+          }
+
+          &--active {
+            background-color: #f5f7fa;
+          }
+
+          // .react-calendar__tile--now.react-calendar__tile--active 스타일
+          &--now.react-calendar__tile--active {
+            background-color: white;
+          }
+        }
+      }
+    }
+
+    .react-calendar__year-view {
+      .react-calendar__year-view__months {
+        .react-calendar__tile {
+          &--now {
+            color: #ff6577;
+            border: 6px solid #ff6577;
+            border-radius: 3px;
+            background-color: white;
+          }
+
+          &--hasActive {
+            background-color: #f5f7fa;
+          }
+
+          // .react-calendar__tile--now.react-calendar__tile--hasActive 스타일
+          &--now.react-calendar__tile--hasActive {
+            background-color: white;
+          }
+        }
+      }
+    }
+  }
+}

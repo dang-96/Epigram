@@ -16,7 +16,11 @@ export default function NicknameModifyModal({
   handleModifyNickname,
   refetch,
 }: NicknameModifyModalProps) {
-  const BUTTON_STYLE = 'h-[58px] w-[180px] rounded-xl text-xl';
+  const BUTTON_STYLE = clsx(
+    'h-11 w-full rounded-lg text-base',
+    'sm:w-[180px] sm:rounded-xl',
+    'xl:h-[58px] xl:text-xl'
+  );
   const {
     register,
     handleSubmit,
@@ -45,14 +49,22 @@ export default function NicknameModifyModal({
   }, []);
 
   return (
-    <div className="flex w-full max-w-[550px] flex-col items-center rounded-3xl bg-white px-[38px] py-10">
+    <div
+      className={clsx(
+        'flex w-[90%] max-w-[550px] flex-col items-center rounded-2xl bg-white px-6 py-6',
+        'xl:w-full xl:rounded-3xl xl:px-[38px] xl:py-10'
+      )}
+    >
       <form onSubmit={handleSubmit(onSubmit)} className="w-full">
-        <div className="mb-10 flex items-start gap-4">
+        <div className={clsx('mb-6 flex items-start gap-4', 'xl:mb-10')}>
           <div className="w-full">
             <input
               type="text"
               placeholder="변경할 닉네임을 입력하세요."
-              className="h-[50px] w-full resize-none rounded-lg border-[1px] border-line-200 bg-background px-4 py-3 focus-visible:outline-black-600"
+              className={clsx(
+                'h-11 w-full resize-none rounded-lg border-[1px] border-line-200 bg-background px-3 py-2 text-sm focus-visible:outline-black-600',
+                'xl:h-[50px] xl:px-4 xl:py-3 xl:text-base'
+              )}
               {...register('nickname', { required: '내용을 입력해주세요.' })}
             ></input>
           </div>

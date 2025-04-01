@@ -1,4 +1,4 @@
-import '@/styles/globals.css';
+import '@/styles/globals.scss';
 import type { AppProps } from 'next/app';
 import NavBar from '@/components/share/NavBar';
 import { AuthProvider } from '@/lib/context/AuthContext';

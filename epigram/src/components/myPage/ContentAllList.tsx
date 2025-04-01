@@ -134,12 +134,22 @@ export default function ContentAllList() {
           deleteComment={deleteComment}
         />
       </ModalFrame>
-      <div className="mx-auto w-full max-w-[640px]">
-        <div className="mb-12 flex items-center gap-6">
+      <div
+        className={clsx('mx-auto w-full max-w-[640px] px-[10px]', 'xl:px-5')}
+      >
+        <div
+          className={clsx(
+            'mb-6 flex items-center gap-4',
+            'sm:mb-8',
+            'xl:mb-12 xl:gap-6'
+          )}
+        >
           <button
             type="button"
             className={clsx(
-              'text-2xl',
+              'text-base',
+              'sm:text-xl',
+              'xl:text-2xl',
               myPageTab === EPIGRAM && 'font-semibold'
             )}
             onClick={ep}
@@ -149,7 +159,9 @@ export default function ContentAllList() {
           <button
             type="button"
             className={clsx(
-              'text-2xl',
+              'text-base',
+              'sm:text-xl',
+              'xl:text-2xl',
               myPageTab === COMMENT && 'font-semibold'
             )}
             onClick={co}

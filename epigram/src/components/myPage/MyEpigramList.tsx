@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Epigram from '../share/Epigram';
 import { useEffect, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
+import clsx from 'clsx';
 
 interface MyEpigramListProps {
   epigramData: EpigramScrollType | undefined;
@@ -53,7 +54,10 @@ export default function MyEpigramList({
               <button
                 type="button"
                 onClick={moreClick}
-                className="flex h-[56px] w-full max-w-[238px] items-center justify-center rounded-full border-[1px] border-line-200 text-xl font-medium text-blue-500"
+                className={clsx(
+                  'flex h-12 w-full max-w-[153px] items-center justify-center rounded-full border-[1px] border-line-200 text-sm font-medium text-blue-500',
+                  'xl:h-14 xl:max-w-[238px] xl:text-xl'
+                )}
               >
                 + 에피그램 더보기
               </button>
@@ -62,7 +66,10 @@ export default function MyEpigramList({
               <button
                 type="button"
                 onClick={collapseClick}
-                className="flex h-[56px] w-full max-w-[238px] items-center justify-center rounded-full border-[1px] border-line-200 text-xl font-medium text-blue-500"
+                className={clsx(
+                  'flex h-12 w-full max-w-[153px] items-center justify-center rounded-full border-[1px] border-line-200 text-sm font-medium text-blue-500',
+                  'xl:h-14 xl:max-w-[238px] xl:text-xl'
+                )}
               >
                 - 에피그램 접기
               </button>

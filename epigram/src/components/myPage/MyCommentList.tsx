@@ -6,6 +6,7 @@ import { useModifyComment } from '@/lib/hooks/useModifyComment';
 import { useUserInfo } from '@/lib/hooks/useUserInfo';
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
+import clsx from 'clsx';
 
 interface MyCommentList {
   commentData: CommentScrollType | undefined;
@@ -71,7 +72,10 @@ export default function MyCommentList({
               <button
                 type="button"
                 onClick={moreClick}
-                className="flex h-[56px] w-full max-w-[238px] items-center justify-center rounded-full border-[1px] border-line-200 text-xl font-medium text-blue-500"
+                className={clsx(
+                  'flex h-12 w-full max-w-[153px] items-center justify-center rounded-full border-[1px] border-line-200 text-sm font-medium text-blue-500',
+                  'xl:h-14 xl:max-w-[238px] xl:text-xl'
+                )}
               >
                 + 댓글 더보기
               </button>
@@ -80,7 +84,10 @@ export default function MyCommentList({
               <button
                 type="button"
                 onClick={collapseClick}
-                className="flex h-[56px] w-full max-w-[238px] items-center justify-center rounded-full border-[1px] border-line-200 text-xl font-medium text-blue-500"
+                className={clsx(
+                  'flex h-12 w-full max-w-[153px] items-center justify-center rounded-full border-[1px] border-line-200 text-sm font-medium text-blue-500',
+                  'xl:h-14 xl:max-w-[238px] xl:text-xl'
+                )}
               >
                 - 댓글 접기
               </button>
