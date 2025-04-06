@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 export default function NavBar() {
   const { loginState, user } = useAuth();
   const [isNav, setIsNav] = useState<boolean>(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
 
   useEffect(() => {
     const checkIsMobile = () => {
