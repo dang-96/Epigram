@@ -90,7 +90,7 @@ export default function DetailPage() {
   }
 
   return (
-    <div className="w-full">
+    <div className="w-full bg-background">
       {isLoading ? (
         <Loading width={'100%'} height={'100vh'} />
       ) : (

@@ -8,8 +8,11 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 export default function FeedPage() {
+  const GRID = '/icons/filter-grid-icon.svg';
+  const LIST = '/icons/filter-list-icon.svg';
   const { data, fetchNextPage, hasNextPage, isLoading, isError } =
     useInfiniteQuery({
       queryKey: ['newEpigramFeed'],
@@ -21,6 +24,18 @@ export default function FeedPage() {
       getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
       initialPageParam: 0,
     });
+  const [isMobile, setIsMobile] = useState<boolean | null>(null);
+  const [feedType, setFeedType] = useState<'list' | 'grid'>('list');
+
+  // 피드 반응형&필터별 상태 지정
+  const feedStyle = (() => {
+    if (isMobile) {
+      return feedType === 'list'
+        ? 'grid-cols-1 gap-y-[16px]'
+        : 'grid-cols-2 gap-x-[16px] gap-y-[20px]';
+    }
+    return 'grid-cols-2 sm:gap-x-[30px] sm:gap-y-[40px]';
+  })();
 
   // 무함 스크롤
   const { totalCount, isMoreButton, scrollLoading } = useInfiniteScroll({
@@ -28,6 +43,23 @@ export default function FeedPage() {
     fetchNextPage,
     hasNextPage,
   });
+
+  // 필터 변경 기능
+  const feedTypeToggle = () => {
+    setFeedType((prev) => (prev === 'list' ? 'grid' : 'list'));
+  };
+
+  // 브라우저 사이즈에 따라 pc, mo 상태 지정
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth <= 640);
+    };
+    checkIsMobile();
+    window.addEventListener('resize', checkIsMobile);
+    return () => window.removeEventListener('resize', checkIsMobile);
+  }, []);
+
+  if (isMobile === null) return null;
 
   if (isError) {
     return <div>에러...</div>;
@@ -40,24 +72,37 @@ export default function FeedPage() {
         'xl:px-5 xl:py-[120px]'
       )}
     >
-      <h2
+      <div
         className={clsx(
-          'mx-auto mb-6 w-full max-w-[1200px] text-base font-semibold text-black-600',
-          'xl:mb-10 xl:text-xl'
+          'mb-6 flex w-full max-w-[1200px] items-center justify-between',
+          'xl:mb-10'
         )}
       >
-        피드
-      </h2>
+        <h2
+          className={clsx(
+            'text-base font-semibold text-black-600',
+            'xl:text-xl'
+          )}
+        >
+          피드
+        </h2>
+        {isMobile && (
+          <button type="button" onClick={feedTypeToggle}>
+            <Image
+              src={feedType === 'list' ? LIST : GRID}
+              width={24}
+              height={24}
+              alt="필터 아이콘"
+            />
+          </button>
+        )}
+      </div>
       {isLoading ? (
         <Loading height={880} width={640} />
       ) : (
         <>
           <div
-            className={clsx(
-              'mx-auto grid w-full max-w-[1200px] gap-x-0 gap-y-[16px]',
-              'sm:gap-x-[30px] sm:gap-y-[40px]',
-              data?.pages && totalCount > 0 && 'grid-cols-1 sm:grid-cols-2'
-            )}
+            className={clsx('mx-auto grid w-full max-w-[1200px]', feedStyle)}
           >
             {data?.pages && totalCount > 0 ? (
               data?.pages?.flatMap(({ list }) =>

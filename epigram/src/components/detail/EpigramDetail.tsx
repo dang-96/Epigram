@@ -114,15 +114,32 @@ export default function EpigramDetail({
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.3 }}
-                  className="absolute right-0 top-[52px] overflow-hidden rounded-2xl border-[1px] border-blue-300 bg-background text-xl font-normal"
+                  className={clsx(
+                    'absolute right-0 top-[34px] overflow-hidden rounded-xl border-[1px] border-blue-300 bg-background text-xl font-normal',
+                    'xl:top-[52px] xl:rounded-2xl'
+                  )}
                 >
-                  <li className="px-8 py-3">
-                    <button type="button" onClick={handleModifyEpigram}>
+                  <li>
+                    <button
+                      type="button"
+                      className={clsx(
+                        'px-6 py-2 text-sm hover:bg-blue-200',
+                        'xl:px-8 xl:py-3 xl:text-base'
+                      )}
+                      onClick={handleModifyEpigram}
+                    >
                       수정하기
                     </button>
                   </li>
-                  <li className="px-8 py-3">
-                    <button type="button" onClick={handleDeleteEpigram}>
+                  <li>
+                    <button
+                      type="button"
+                      className={clsx(
+                        'px-6 py-2 text-sm hover:bg-blue-200',
+                        'xl:px-8 xl:py-3 xl:text-base'
+                      )}
+                      onClick={handleDeleteEpigram}
+                    >
                       삭제하기
                     </button>
                   </li>

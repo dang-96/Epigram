@@ -21,14 +21,13 @@ export default function Epigram({ data, height }: EpigramProps) {
         <div
           className={clsx(
             'mb-2 flex w-full flex-col gap-5 rounded-2xl bg-cover bg-center bg-repeat-x p-6 shadow-[0_3px_12px_rgba(0,0,0,0.1)]',
-            height && 'h-auto sm:h-[260px]',
+            height && 'h-[150px] sm:h-[260px]',
             data
               ? 'cursor-pointer justify-between'
               : 'cursor-auto justify-center'
           )}
           style={{
             backgroundImage: 'url(/images/back-line.png)',
-            // height: height && `${height}px`,
           }}
           onClick={navigateToPage}
         >
@@ -36,8 +35,8 @@ export default function Epigram({ data, height }: EpigramProps) {
             <>
               <p
                 className={clsx(
-                  'text-left font-point text-sm font-medium text-black-600',
-                  'sm:text-base',
+                  'line-clamp-3 text-left font-point text-sm font-medium text-black-600',
+                  'sm:line-clamp-5 sm:text-base',
                   'xl:text-xl'
                 )}
               >
@@ -68,7 +67,7 @@ export default function Epigram({ data, height }: EpigramProps) {
           )}
         </div>
         {data && (
-          <ul className="flex items-center justify-end gap-4">
+          <ul className="flex flex-wrap items-center justify-end gap-4">
             {data?.tags?.map((tag) => {
               return (
                 <li

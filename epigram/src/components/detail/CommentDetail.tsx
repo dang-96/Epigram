@@ -76,12 +76,7 @@ export default function CommentDetail({
         />
       </ModalFrame>
 
-      <div
-        className={clsx(
-          'relative h-full bg-background px-[10px] py-10',
-          'xl:px-5 xl:py-12'
-        )}
-      >
+      <div className={clsx('relative px-[10px] py-10', 'xl:px-5 xl:py-12')}>
         <div
           className="absolute left-0 top-0 h-[15px] w-full bg-center"
           style={{ backgroundImage: 'url(/images/line-top.png)' }}
