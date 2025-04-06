@@ -269,7 +269,7 @@ export default function Write() {
             <div className="relative mb-5">
               <input
                 type="text"
-                className={clsx(inputTextClass, 'pr-[100px]')}
+                className={clsx(inputTextClass, 'pr-[84px]', 'xl:pr-[100px]')}
                 placeholder="입력하여 태그 작성 (최대 10자)"
                 value={inputTag}
                 onChange={(e) => {
