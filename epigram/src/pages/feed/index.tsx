@@ -74,7 +74,7 @@ export default function FeedPage() {
     >
       <div
         className={clsx(
-          'mb-6 flex w-full max-w-[1200px] items-center justify-between',
+          'mx-auto mb-6 flex w-full max-w-[1200px] items-center justify-between',
           'xl:mb-10'
         )}
       >
