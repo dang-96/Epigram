@@ -33,6 +33,7 @@ export default function Comment({
     const days = Math.floor(secondDifference / (60 * 60 * 24));
     const hours = Math.floor(secondDifference / (60 * 60));
     const minutes = Math.floor(secondDifference / 60);
+    const seconds = secondDifference;
 
     if (years > 0) {
       setDay(years + '년 전');
@@ -44,6 +45,10 @@ export default function Comment({
       setDay(hours + '시간 전');
     } else if (minutes > 0) {
       setDay(minutes + '분 전');
+    } else if (seconds > 0) {
+      setDay(seconds + '초 전');
+    } else {
+      setDay('방금 전'); // 바로 댓글을 작성하여 0초일 경우
     }
   }, []);
 

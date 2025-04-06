@@ -105,12 +105,14 @@ export default function NavBar() {
 
                       <Link
                         href="/feed"
+                        onClick={() => setIsNav(false)}
                         className="w-full border-t-[1px] border-line-100 py-6 pl-5 text-base font-semibold text-black-600 hover:bg-background"
                       >
                         피드
                       </Link>
                       <Link
                         href="/search"
+                        onClick={() => setIsNav(false)}
                         className="w-full py-6 pl-5 text-base font-semibold text-black-600 hover:bg-background"
                       >
                         검색
