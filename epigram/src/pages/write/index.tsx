@@ -116,7 +116,7 @@ export default function Write() {
   }, [isRadio, setValue]);
 
   if (userDataLoading) {
-    return <Loading height={160} width={640} />;
+    return <Loading height={'100vh'} width={'100%'} />;
   }
 
   if (userDataError) {
