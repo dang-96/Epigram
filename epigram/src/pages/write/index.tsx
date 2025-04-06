@@ -1,3 +1,4 @@
+import Loading from '@/components/share/Loading';
 import { postEpigram } from '@/lib/apis/epigram';
 import { useUserInfo } from '@/lib/hooks/useUserInfo';
 import clsx from 'clsx';
@@ -6,12 +7,20 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 export default function Write() {
-  const subTitleClass = 'mb-7 text-xl font-semibold';
-  const contentMb = 'relative mb-14';
-  const inputTextClass =
-    'h-16 w-full rounded-xl border-[1px] border-blue-300 p-4 text-xl font-normal placeholder:text-blue-400 disabled:border-gray-100 disabled:bg-gray-50 disabled:text-gray-300 disabled:placeholder:text-gray-300';
-  const customInputRadio =
-    'flex h-6 w-6 appearance-none items-center justify-center rounded-full border-2 border-blue-300 checked:border-blue-500 checked:before:block checked:before:h-3 checked:before:w-3 checked:before:rounded-full checked:before:bg-blue-800';
+  const subTitleClass = clsx(
+    'mb-2 text-sm font-semibold',
+    'sm:text-base',
+    'xl:mb-7 xl:text-xl'
+  );
+  const contentMb = clsx('relative mb-10', 'xl:mb-14');
+  const inputTextClass = clsx(
+    'h-11 w-full rounded-lg border-[1px] border-blue-300 px-4 py-2 text-base font-normal placeholder:text-blue-400 disabled:border-gray-100 disabled:bg-gray-50 disabled:text-gray-300 disabled:placeholder:text-gray-300',
+    'xl:h-16 xl:rounded-xl xl:py-4 xl:text-xl'
+  );
+  const customInputRadio = clsx(
+    'flex h-5 w-5 appearance-none items-center justify-center rounded-full border-[1px] border-blue-300 checked:border-blue-500 checked:before:block checked:before:h-[10px] checked:before:w-[10px] checked:before:rounded-full checked:before:bg-blue-800',
+    'xl:h-6 xl:w-6 xl:border-2 xl:checked:before:h-3 xl:checked:before:w-3'
+  );
   const radioList = [
     {
       id: 'manual',
@@ -84,7 +93,10 @@ export default function Write() {
   useEffect(() => {
     switch (isRadio) {
       case 'manual':
-        setValue('author', '정훈', { shouldValidate: true, shouldDirty: true });
+        setValue('author', '', {
+          shouldValidate: true,
+          shouldDirty: true,
+        });
         break;
       case 'unknown':
         setValue('author', '익명', {
@@ -104,7 +116,7 @@ export default function Write() {
   }, [isRadio, setValue]);
 
   if (userDataLoading) {
-    return <div>로딩중</div>;
+    return <Loading height={160} width={640} />;
   }
 
   if (userDataError) {
@@ -112,9 +124,17 @@ export default function Write() {
   }
 
   return (
-    <div className="py-14">
+    <div className={clsx('px-[10px] py-6', 'sm:py-8', 'xl:px-5 xl:py-14')}>
       <div className="mx-auto w-full max-w-[640px]">
-        <h2 className="mb-10 text-2xl font-semibold">에피그램 만들기</h2>
+        <h2
+          className={clsx(
+            'mb-6 text-base font-semibold',
+            'sm:mb-8 sm:text-xl',
+            'xl:mb-10 xl:text-2xl'
+          )}
+        >
+          에피그램 만들기
+        </h2>
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className={contentMb}>
@@ -125,7 +145,8 @@ export default function Write() {
             <textarea
               id="feedContent"
               className={clsx(
-                'h-36 w-full resize-none rounded-xl border-[1px] border-blue-300 px-4 py-[10px] text-xl font-normal placeholder:text-blue-400',
+                'h-32 w-full resize-none rounded-lg border-[1px] border-blue-300 px-4 py-[10px] text-base font-normal placeholder:text-blue-400',
+                'xl:h-36 xl:rounded-xl xl:text-xl',
                 errors.content && 'border-red focus:border-red'
               )}
               placeholder="500자 이내로 입력해주세요."
@@ -133,7 +154,12 @@ export default function Write() {
               {...register('content', { required: '내용을 입력해주세요.' })}
             ></textarea>
             {errors.content && (
-              <p className="absolute bottom-[-22px] left-0 text-base text-red">
+              <p
+                className={clsx(
+                  'absolute bottom-[-22px] left-0 text-sm text-red',
+                  'xl:text-base'
+                )}
+              >
                 {String(errors.content?.message) || '오류가 발생했습니다.'}
               </p>
             )}
@@ -145,7 +171,12 @@ export default function Write() {
                 저자 <span className="text-sm text-red">*</span>
               </label>
             </h3>
-            <div className="mb-4 flex items-center justify-start gap-6">
+            <div
+              className={clsx(
+                'mb-3 flex items-center justify-start gap-6',
+                'xl:mb-4'
+              )}
+            >
               {radioList.map((radio) => {
                 return (
                   <div
@@ -164,7 +195,10 @@ export default function Write() {
                     />
                     <label
                       htmlFor={radio.id}
-                      className="text-xl font-medium text-black-600"
+                      className={clsx(
+                        'text-base font-medium text-black-600',
+                        'xl:text-xl'
+                      )}
                     >
                       {radio.text}
                     </label>
@@ -185,7 +219,12 @@ export default function Write() {
               {...register('author', { required: '저자를 입력해주세요.' })}
             />
             {errors.author && (
-              <p className="absolute bottom-[-28px] left-0 text-base text-red">
+              <p
+                className={clsx(
+                  'absolute bottom-[-28px] left-0 text-sm text-red',
+                  'xl:text-base'
+                )}
+              >
                 {String(errors.author?.message) || '오류가 발생했습니다.'}
               </p>
             )}
@@ -214,7 +253,12 @@ export default function Write() {
               })}
             />
             {errors.referenceUrl && (
-              <p className="absolute bottom-[-28px] left-0 text-base text-red">
+              <p
+                className={clsx(
+                  'absolute bottom-[-28px] left-0 text-sm text-red',
+                  'xl:text-base'
+                )}
+              >
                 {String(errors.referenceUrl?.message) || '오류가 발생했습니다.'}
               </p>
             )}
@@ -225,7 +269,7 @@ export default function Write() {
             <div className="relative mb-5">
               <input
                 type="text"
-                className={clsx(inputTextClass, 'pr-[100px]')}
+                className={clsx(inputTextClass, 'pr-[84px]', 'xl:pr-[100px]')}
                 placeholder="입력하여 태그 작성 (최대 10자)"
                 value={inputTag}
                 onChange={(e) => {
@@ -234,19 +278,25 @@ export default function Write() {
               />
               <button
                 type="button"
-                className="absolute right-4 top-[50%] h-12 min-w-20 translate-y-[-50%] rounded-xl bg-black-500 font-semibold text-white disabled:bg-[#CBD3E1]"
+                className={clsx(
+                  'absolute right-4 top-[50%] h-8 min-w-16 translate-y-[-50%] rounded-lg bg-black-500 text-sm font-semibold text-white disabled:bg-[#CBD3E1]',
+                  'xl:h-12 xl:min-w-20 xl:rounded-xl xl:text-base'
+                )}
                 onClick={handleAddTag}
               >
                 추가
               </button>
             </div>
             {tagList.length > 0 && (
-              <ul className="flex flex-wrap gap-4">
+              <ul className={clsx('flex flex-wrap gap-3', 'xl:gap-4')}>
                 {tagList.map((tag, index) => {
                   return (
                     <li
                       key={tag}
-                      className="relative flex h-14 items-center justify-center rounded-xl bg-background px-3 text-xl font-normal text-black-300"
+                      className={clsx(
+                        'relative flex h-12 items-center justify-center rounded-xl bg-background px-3 text-base font-normal text-black-300',
+                        'xl:h-14 xl:text-xl'
+                      )}
                     >
                       {tag}
                       <button
@@ -269,7 +319,8 @@ export default function Write() {
             <button
               type="submit"
               className={clsx(
-                'h-16 w-full rounded-xl bg-black-500 text-xl font-semibold text-white disabled:bg-[#CBD3E1]'
+                'h-12 w-full rounded-xl bg-black-500 text-base font-semibold text-white disabled:bg-[#CBD3E1]',
+                'xl:h-16 xl:text-xl'
               )}
               disabled={!isValid}
             >
