@@ -4,6 +4,7 @@ export default function Document() {
   return (
     <Html lang="ko">
       <Head>
+        <title>Epigram</title>
         {/* 기본 메타태그 */}
         <meta
           name="description"
