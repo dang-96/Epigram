@@ -49,7 +49,7 @@ export const useEmotion = () => {
     setEmotion({ id: emotionId, text: emotionText, image: emotionImage });
     try {
       await postEmotion(emotionId);
-      queryClient.invalidateQueries<any>(['emotion']);
+      queryClient.invalidateQueries<any>({ queryKey: ['emotion'] });
     } catch (error) {
       console.log('감정 데이터 전송 api 호출 에러', error);
     }

@@ -107,12 +107,12 @@ export default function ContentAllList() {
   };
 
   const ep = () => {
-    queryClient.resetQueries<any>('myComment');
+    queryClient.resetQueries<any>({ queryKey: ['myComment'] });
     handleTab(EPIGRAM);
   };
 
   const co = () => {
-    queryClient.resetQueries<any>('myEpigram');
+    queryClient.resetQueries<any>({ queryKey: ['myEpigram'] });
     handleTab(COMMENT);
   };
 

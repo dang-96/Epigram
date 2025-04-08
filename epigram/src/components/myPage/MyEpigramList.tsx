@@ -28,7 +28,7 @@ export default function MyEpigramList({
 
   // 접기 기능
   const collapseClick = () => {
-    queryClient.resetQueries<any>(['myEpigram']);
+    queryClient.resetQueries<any>({ queryKey: ['myEpigram'] });
     setIsCollapse(false);
   };
 

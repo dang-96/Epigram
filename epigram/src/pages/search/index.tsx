@@ -91,7 +91,7 @@ export default function SearchPage() {
 
   // 이미 검색한 내용 다시 검색했을때 초기화
   useEffect(() => {
-    queryClient.resetQueries<any>(['searchEpigram']);
+    queryClient.resetQueries<any>({ queryKey: ['searchEpigram'] });
   }, [keyword]);
 
   if (isError) {

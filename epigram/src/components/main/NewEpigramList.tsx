@@ -38,7 +38,7 @@ export default function NewEpigramList({ marginBottom }: NewEpigramProps) {
   }, []);
 
   useEffect(() => {
-    queryClient.resetQueries<any>(['newEpigram']);
+    queryClient.resetQueries<any>({ queryKey: ['newEpigram'] });
   }, []);
 
   if (isError) {

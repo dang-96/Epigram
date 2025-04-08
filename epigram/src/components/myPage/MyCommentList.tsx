@@ -38,7 +38,7 @@ export default function MyCommentList({
 
   // 접기 기능
   const collapseClick = () => {
-    queryClient.resetQueries<any>(['myComment']);
+    queryClient.resetQueries<any>({ queryKey: ['myComment'] });
     setIsCollapse(false);
   };
 

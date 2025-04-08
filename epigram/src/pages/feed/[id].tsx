@@ -78,7 +78,7 @@ export default function DetailPage() {
 
   // 페이지 이동후 다시 들어왔을때 더보기로 보여진 댓글 컨텐츠 초기화
   useEffect(() => {
-    queryClient.resetQueries<any>(['commentDetail']);
+    queryClient.resetQueries<any>({ queryKey: ['commentDetail'] });
   }, []);
 
   if (!loginState) {
