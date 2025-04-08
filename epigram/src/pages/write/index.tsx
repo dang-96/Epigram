@@ -94,7 +94,7 @@ export default function Write() {
     switch (isRadio) {
       case 'manual':
         setValue('author', '', {
-          shouldValidate: true,
+          shouldValidate: false,
           shouldDirty: true,
         });
         break;
