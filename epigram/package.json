@@ -9,16 +9,31 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.64.2",
+    "aos": "^2.3.4",
+    "axios": "^1.7.9",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.0.6",
+    "next": "15.1.0",
     "react": "^19.0.0",
+    "react-calendar": "^5.1.0",
     "react-dom": "^19.0.0",
-    "next": "15.1.0"
+    "react-hook-form": "^7.54.2",
+    "react-loading-skeleton": "^3.5.0",
+    "react-spinners": "^0.15.0",
+    "sass": "^1.86.0",
+    "ts-pattern": "^5.6.2",
+    "victory": "^37.3.6",
+    "zustand": "^5.0.3"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@types/aos": "^3.0.7",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "postcss": "^8",
-    "tailwindcss": "^3.4.1"
+    "prettier-plugin-tailwindcss": "^0.6.9",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
   }
 }
