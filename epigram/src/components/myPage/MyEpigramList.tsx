@@ -28,14 +28,15 @@ export default function MyEpigramList({
 
   // 접기 기능
   const collapseClick = () => {
-    queryClient.resetQueries<any>({ queryKey: ['myEpigram'] });
     setIsCollapse(false);
+    setMaxCount(false);
+    queryClient.resetQueries({ queryKey: ['myEpigram'] });
   };
 
   // 토달 개수랑 내용이 같거나 많아지면 접기 버튼 노출
   useEffect(() => {
     if (epigramData) {
-      if (epigramData?.pages.length * 3 >= epigramData?.pages[0].totalCount) {
+      if (epigramData?.pages.length * 3 > epigramData?.pages[0].totalCount) {
         setMaxCount(true);
       }
     }

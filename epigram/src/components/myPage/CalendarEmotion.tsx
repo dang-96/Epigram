@@ -24,7 +24,7 @@ export default function CalendarEmotion() {
     isLoading: emotionLoading,
     isError: emotionError,
   } = useQuery({
-    queryKey: ['emotion', currentDate],
+    queryKey: ['todayEmotion', currentDate],
     queryFn: async () => {
       const monthsToFetch = [
         {

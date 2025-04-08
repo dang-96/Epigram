@@ -38,8 +38,9 @@ export default function MyCommentList({
 
   // 접기 기능
   const collapseClick = () => {
-    queryClient.resetQueries<any>({ queryKey: ['myComment'] });
     setIsCollapse(false);
+    setMaxCount(false);
+    queryClient.resetQueries<any>({ queryKey: ['myComment'] });
   };
 
   // 토달 개수랑 내용이 같거나 많아지면 접기 버튼 노출

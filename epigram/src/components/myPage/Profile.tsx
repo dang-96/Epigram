@@ -17,7 +17,9 @@ export default function Profile() {
   const queryClient = useQueryClient();
 
   const handleRefetch = () => {
-    queryClient.invalidateQueries<any>({ queryKey: ['myComment'] });
+    queryClient.invalidateQueries({
+      queryKey: ['myComment'],
+    });
     refetch;
   };
 

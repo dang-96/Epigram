@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { postEmotion } from '../apis/emotion';
 import { useQueryClient } from '@tanstack/react-query';
 import { useEmotionStore } from '../store/useEmotionStore';
@@ -49,7 +48,8 @@ export const useEmotion = () => {
     setEmotion({ id: emotionId, text: emotionText, image: emotionImage });
     try {
       await postEmotion(emotionId);
-      queryClient.invalidateQueries<any>({ queryKey: ['emotion'] });
+      // 배열로 전달
+      queryClient.invalidateQueries({ queryKey: ['todayEmotion'] });
     } catch (error) {
       console.log('감정 데이터 전송 api 호출 에러', error);
     }

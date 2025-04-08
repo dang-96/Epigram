@@ -51,7 +51,7 @@ export default function ChartEmotion() {
   const { emotionDate } = useEmotionDateStore();
   const { userData } = useUserInfo();
   const { data, isLoading, isError } = useQuery({
-    queryKey: ['monthlyData', emotionDate],
+    queryKey: ['todayEmotion', emotionDate],
     queryFn: async () => {
       const res = await fetchEmotionMonthly({
         userId: userData.id,
