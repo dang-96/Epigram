@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 // Todo - 로그인 상태 토스트 메시지로 띄우기
@@ -49,9 +49,11 @@ export default function LoginPage() {
     register,
     handleSubmit,
     setError,
+    setValue,
+    trigger,
     formState: { errors, isValid },
   } = useForm({
-    mode: 'onBlur',
+    mode: 'onChange',
     shouldFocusError: true, // 에러가 발생한 input에 포커스 적용
   });
 
@@ -90,6 +92,14 @@ export default function LoginPage() {
   };
 
   useLoggedInReDirect();
+
+  useEffect(() => {
+    // 컴포넌트가 렌더링된 후 초기 값 설정
+    setValue('email', 'test0225@email.com');
+    setValue('password', 'test1234!');
+
+    trigger();
+  }, [setValue]);
 
   // 로그인이 되어있는 상태로 접근시 메인 페이지로 리다이렉트
 
