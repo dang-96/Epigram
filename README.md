@@ -1,24 +1,12 @@
 <br/><br/><br/>
 
-<div align='center' ><img src='./readmeSource/img/logo@3x.png' alt="로고"/>
+<img width="729" alt="스크린샷 2025-04-08 오후 5 35 57" src="https://github.com/user-attachments/assets/c256a579-c017-4135-9d1b-4ac66c82cdbb" />
 
 감정상태에 따른 명언과 글귀들을 열람하고 공유하는 서비스 [Epigram에서 감정에따른 명언과 글귀를 공유해보세요](https://epigram-share.vercel.app/) 
 
 </div>
 
-<br/><br/><br/>
-
-## 개발 기간
-
-- 2024.08.29 ~ 2024.09.19 ( 2주 )
-  <br/>
-
-## 팀원
-
-| <a href='https://github.com/L1m3Kun'><img src="https://avatars.githubusercontent.com/u/113879996?v=4" width="150" height="150"/></a> | <a href='https://github.com/me92years'><img src="https://avatars.githubusercontent.com/u/92077507?v=4" width="150" height="150"/></a> | <a href='https://github.com/KimDasom521'><img src="https://avatars.githubusercontent.com/u/83847755?v=4" width="150" height="150"/></a> | <a href='https://github.com/youmdang'><img src="https://avatars.githubusercontent.com/u/165889213?v=4" width="150" height="150"/></a> | <a href='https://github.com/ojm51'><img src="https://avatars.githubusercontent.com/u/51373392?v=4" width="150" height="150"/></a> |
-| :----------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------: |
-|                                       SeongGu Kang<br/>[@L1m3Kun](https://github.com/L1m3Kun)                                        |                                      woosung kim<br/>[@me92years](https://github.com/me92years)                                       |                                       DasomKim<br/>[@KimDasom521](https://github.com/KimDasom521)                                       |                                               [@youmdang](https://github.com/youmdang)                                                |                                        Jeongmin Oh<br/>[@ojm51](https://github.com/ojm51)                                         |
-|                                               회원가입 및 로그인<br/>OAuth2.0(카카오)                                                |                                                        링크 카드 및 링크 메뉴                                                         |                                                                즐겨찾기                                                                 |                                              랜딩 화면<br/>페이지 레이아웃<br/>링크 검색                                              |                                                  링크 추가<br/>폴더 및 폴더 메뉴                                                  |
+<br/><br/><br/>                                         |
 
 <br/>
 
