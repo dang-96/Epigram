@@ -10,7 +10,7 @@
 <br/><br/>
 
 ## 📄 배포 사이트
-[배포 사이트 링크](https://ott-moving.vercel.app/)
+[배포 사이트](https://epigram-share.vercel.app/)
 
 <br/>
 
@@ -18,29 +18,44 @@
 
 - 랜딩
 
-<img style='width: 333px;' src='./readmeSource/gif/landing-page.gif' alt='랜딩 미리보기'/>
+![랜딩-1](https://github.com/user-attachments/assets/11f64775-05e6-4161-a758-7d3da14eeb51)
+
 <br/>
 
-- 로그인 & 회원가입
+- 로그인
 
-<img style='width: 333px;' src='./readmeSource/gif/sign-form.gif' alt='로그인 & 회원가입 미리보기'/>
+![로그인-1](https://github.com/user-attachments/assets/d53fc5e3-a28f-4d55-be1a-f036d897cdaf)
+
+<br/>
+
+- 회원가입
+
+![회원가입-1](https://github.com/user-attachments/assets/3ebfdb99-81c2-4b4e-8f79-e3639ab2f3fb)
+
 <br/>
 
 - 메인페이지
 
-<img style='width: 333px;' src='./readmeSource/gif/link-page.gif' alt='링크 & 폴더 미리보기'/>
+![메인-1](https://github.com/user-attachments/assets/e5118888-b55c-482d-a7fe-ccc7756f33af)
+
 <br/>
 
-- 피드 페이지
+- 피드&상세 페이지
+  
+![피드 상세-1](https://github.com/user-attachments/assets/78ded334-4e3d-427c-8154-35503738cabd)
 
-<img style='width: 333px;' src='./readmeSource/gif/favorite-page.gif' alt='즐겨찾기 미리보기'/>
+
 <br/>
-
-- 피드 상세 페이지
 
 - 검색 페이지
 
+![검색-1](https://github.com/user-attachments/assets/94874a2b-d744-46c1-bfea-6796d46aada5)
+
+<br/>
+
 - 마이 페이지
+
+![마이](https://github.com/user-attachments/assets/2a1c48b0-320f-499b-925f-6208a8aad4f1)
 
 <br/>
 
