@@ -4,8 +4,7 @@
   <h1>감정상태에 따른 명언과 글귀들을 열람하고 공유하는 서비스</h1>
   
   <img width="729" alt="스크린샷 2025-04-08 오후 5 35 57" src="https://github.com/user-attachments/assets/c256a579-c017-4135-9d1b-4ac66c82cdbb" />
-  <br/>
-  <h2>[Epigram에서 감정에따른 명언과 글귀를 공유해보세요]</h2>
+  <p>[Epigram에서 감정에따른 명언과 글귀를 공유해보세요]</p>
 </div>
 
 <br/><br/>
@@ -43,11 +42,9 @@
 
 - 마이 페이지
 
-  
+<br/>
 
 ## 기술 스택
-
-### 개발
 
 <div>
 <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=TypeScript&logoColor=white"/>
@@ -60,6 +57,7 @@
 <img src="https://img.shields.io/badge/TsPattern-3178C6?style=flat-square&logo=TypeScript&logoColor=white"/>
 </div>
 
+<br/>
 
 ## 🙍‍♂️ 팀원 소개
 
