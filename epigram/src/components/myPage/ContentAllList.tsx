@@ -59,6 +59,7 @@ export default function ContentAllList() {
     },
     getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
     initialPageParam: 0,
+    enabled: !!userData?.id,
   });
 
   // 마이페이지 댓글 리스트 데이터

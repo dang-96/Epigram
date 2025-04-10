@@ -53,7 +53,7 @@ export default function MyCommentList({
   }, [commentData]);
   return (
     <div>
-      {commentData?.pages && commentData.pages?.length > 0 ? (
+      {commentData?.pages && commentData.pages?.[0].list.length > 0 ? (
         <>
           {commentData.pages?.flatMap(({ list }) =>
             list?.map((comment: CommentListType) => {
@@ -98,27 +98,14 @@ export default function MyCommentList({
           </div>
         </>
       ) : (
-        <div
-          className={clsx(
-            'my-10 flex flex-col items-center justify-center gap-2',
-            'sm:my-20 sm:gap-4',
-            'xl:my-40 xl:gap-6'
-          )}
-        >
+        <div className="my-40 flex flex-col items-center justify-center gap-6">
           <Image
             src="/images/not-content.png"
-            className={clsx('h-28 w-28', 'xl:h-36 xl:w-36')}
             width={144}
             height={144}
-            alt="댓글이 없는경우 아이콘"
+            alt="피드가 없는 경우 아이콘"
           />
-          <p
-            className={clsx(
-              'text-center text-sm font-normal leading-[1.5] text-black-600',
-              'sm:text-base',
-              'xl:text-xl'
-            )}
-          >
+          <p className="text-center text-xl font-normal leading-[1.5] text-black-600">
             아직 댓글이 없어요!
             <br />
             댓글을 달고 다른 사람들과 교류해보세요.

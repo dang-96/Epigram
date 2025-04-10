@@ -43,7 +43,7 @@ export default function MyEpigramList({
   }, [epigramData]);
   return (
     <div>
-      {epigramData?.pages && epigramData.pages.length > 0 ? (
+      {epigramData?.pages && epigramData?.pages?.[0].list.length > 0 ? (
         <>
           {epigramData.pages?.flatMap(({ list }) =>
             list?.map((epigram: EpigramType) => {
